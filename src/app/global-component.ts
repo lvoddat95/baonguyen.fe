@@ -5,7 +5,9 @@ export const GlobalComponent = {
     headerToken : {'Authorization': `Bearer ${sessionStorage.getItem('token')}`},
 
     // Auth Api
-    AUTH_API:"https://api-node.themesbrand.website/auth/",
+    // AUTH_API:"https://baonguyenbakery.io.vn/api/UserId/",
+    AUTH_API:"https://localhost:7090/api/UserId/",
+    // AUTH_API:"https://api-node.themesbrand.website/auth/",
     // AUTH_API:"http://127.0.0.1:3000/auth/",
 
     

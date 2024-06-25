@@ -1,32 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 // Login Auth
-import { environment } from '../../../environments/environment';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
-import { first } from 'rxjs/operators';
-import { ToastService } from './toast-service';
-import { Store } from '@ngrx/store';
-import { login } from 'src/app/store/Authentication/authentication.actions';
+import { environment } from "../../../environments/environment";
+import { AuthenticationService } from "../../core/services/auth.service";
+import { AuthfakeauthenticationService } from "../../core/services/authfake.service";
+import { first } from "rxjs/operators";
+import { ToastService } from "./toast-service";
+import { Store } from "@ngrx/store";
+import { login } from "src/app/store/Authentication/authentication.actions";
+import { md5Encrypt } from "src/app/shared/utils";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 
 /**
  * Login Component
  */
 export class LoginComponent implements OnInit {
-
   // Login Form
   loginForm!: UntypedFormGroup;
   submitted = false;
   fieldTextType!: boolean;
-  error = '';
+  error = "";
   returnUrl!: string;
 
   toast!: false;
@@ -34,51 +38,70 @@ export class LoginComponent implements OnInit {
   // set the current year
   year: number = new Date().getFullYear();
 
-  constructor(private formBuilder: UntypedFormBuilder,private authenticationService: AuthenticationService,private router: Router,
-    private authFackservice: AuthfakeauthenticationService, private route: ActivatedRoute, public toastService: ToastService,
-    private store: Store) {
-      // redirect to home if already logged in
-      if (this.authenticationService.currentUserValue) {
-        this.router.navigate(['/']);
-      }
-     }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private authFackservice: AuthfakeauthenticationService,
+    private route: ActivatedRoute,
+    public toastService: ToastService,
+    private store: Store
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(["/"]);
+    }
+  }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('currentUser')) {
-      this.router.navigate(['/']);
+    if (sessionStorage.getItem("currentUser")) {
+      this.router.navigate(["/"]);
     }
     /**
      * Form Validatyion
      */
-     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+    this.loginForm = this.formBuilder.group({
+      username: ["0387942323", [Validators.required]],
+      password: ["Vni@12345", [Validators.required]],
     });
     // get return url from route parameters or default to '/'
     // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   /**
    * Form submit
    */
-   onSubmit() {
+  onSubmit() {
     this.submitted = true;
 
-     // Login Api
-     this.store.dispatch(login({ email: this.f['email'].value, password: this.f['password'].value }));
-    // this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data:any) => { 
-    //   if(data.status == 'success'){
-    //     sessionStorage.setItem('toast', 'true');
-    //     sessionStorage.setItem('currentUser', JSON.stringify(data.data));
-    //     sessionStorage.setItem('token', data.token);
-    //     this.router.navigate(['/']);
-    //   } else {
-    //     this.toastService.show(data.data, { classname: 'bg-danger text-white', delay: 15000 });
-    //   }
-    // });
+    // Login Api
+    // this.store.dispatch(
+    //   login({
+    //     username: this.f["username"].value,
+    //     password: this.f["password"].value,
+    //   })
+    // );
+    this.authenticationService
+      .login(this.f["username"].value, md5Encrypt(this.f["password"].value))
+      .subscribe((data: any) => {
+        console.log(data);
+        if (data.code == "000") {
+          sessionStorage.setItem("toast", "true");
+          sessionStorage.setItem("currentUser", JSON.stringify(data.data[0]));
+          // sessionStorage.setItem('token', data.token);
+          this.router.navigate(["/"]);
+        } else {
+          this.toastService.show(data.message, {
+            classname: "bg-danger text-white",
+            delay: 15000,
+          });
+        }
+      });
 
     // stop here if form is invalid
     // if (this.loginForm.invalid) {
@@ -105,8 +128,7 @@ export class LoginComponent implements OnInit {
   /**
    * Password Hide/Show
    */
-   toggleFieldTextType() {
+  toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
-
 }
