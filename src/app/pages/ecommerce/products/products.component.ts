@@ -84,8 +84,8 @@ export class ProductsComponent {
     * BreadCrumb
     */
     this.breadCrumbItems = [
-      { label: 'Ecommerce' },
-      { label: 'Products', active: true }
+      { label: 'Sản phẩm' },
+      { label: 'Danh sách', active: true }
     ];
 
 
@@ -199,6 +199,7 @@ changePage() {
     }
     this.deleteId=''
   }
+  
 
   // Price Slider
   minValue = 0;

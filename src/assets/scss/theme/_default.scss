@@ -1,21 +1,27 @@
+@if $theme-minimal {
 
-@if $theme-default { 
+    // Google Font
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
     [data-theme="default"] { 
+
+        $primary:                   #25a0e2;
+        $secondary:                 #878a99;
+        $danger:                    #f06548;
+        $warning:                   #FFBC0A;
+        $info:                      #32ccff;
+        $success:                   #00bd9d;
+        $dark:                      #343a40;
+        $light:                     #f1f4f7;
         
         //Typography
-
-        // Font Family
-        --#{$prefix}font-family-primary:                                     'hkgrotesk', sans-serif;
-        --#{$prefix}font-family-secondary:                                   'Poppins', sans-serif;
-        
         $font-sizes: (
             "10":          0.625rem,
             "11":          0.6875rem,
             "12":          0.75rem,
             "13":          0.8125rem,
             "14":          0.875rem,
-            "base":        0.8125rem, //13px
+            "base":        0.875rem, //14px
             "15":          0.9375rem,
             "16":          1rem,
             "17":          1.0625rem,
@@ -38,29 +44,31 @@
             "bold"          700,
         );
 
+        // Font Family
+        --#{$prefix}font-family-primary:                                     'Open Sans', sans-serif;
+        --#{$prefix}font-family-secondary:                                   'Open Sans', sans-serif;
+        
         --#{$prefix}grid-gutter-width:                              1.5rem;
 
-        --#{$prefix}headings-font-weight:                           500;
+        --#{$prefix}body-bg:                                        #ffffff;
+        --#{$prefix}body-bg-rgb:                                    #(to-rgb(#ffffff));
+
+        --#{$prefix}headings-font-weight:                           600;
+        --#{$prefix}btn-font-weight-custom:                         500;
 
         --#{$prefix}element-shadow:                                 none;
 
         //cards
-        --#{$prefix}card-border-width-custom:                       0;
+        --#{$prefix}card-border-width-custom:                       1px;
         --#{$prefix}card-header-border-width:                       1px;
-        --#{$prefix}card-shadow:                                    #{$box-shadow};
-
+        --#{$prefix}card-shadow:                                    none;
         
         //sidebar menu
-        &:root {
-            --#{$prefix}vertical-menu-item-font-family:                     var(--#{$prefix}font-family-primary);
-            --#{$prefix}vertical-menu-sub-item-font-family:                 var(--#{$prefix}font-family-secondary);
-        }
-        --#{$prefix}headings-font-family:                               var(--#{$prefix}font-family-secondary);
-        --#{$prefix}vertical-menu-item-font-size:                       0.9375rem;
-        --#{$prefix}vertical-menu-sub-item-font-size:                   0.813rem;
+        --#{$prefix}vertical-menu-item-font-size:                   0.9375rem;
+        --#{$prefix}vertical-menu-sub-item-font-size:               0.875rem;
 
-        --#{$prefix}vertical-menu-bg:                                   #{$white};
-        --#{$prefix}vertical-menu-border:                               #{$white};
+        --#{$prefix}vertical-menu-bg:                                   #f6f8fa;
+        --#{$prefix}vertical-menu-border:                               var(--#{$prefix}border-color);
         --#{$prefix}vertical-menu-item-color:                           #{darken($gray-600, 10%)};
         --#{$prefix}vertical-menu-item-bg:                              #{rgba(var(--#{$prefix}primary-rgb), .15)};
         --#{$prefix}vertical-menu-item-hover-color:                     var(--#{$prefix}primary);
@@ -70,7 +78,7 @@
         --#{$prefix}vertical-menu-sub-item-hover-color:                 var(--#{$prefix}primary);
         --#{$prefix}vertical-menu-sub-item-active-color:                var(--#{$prefix}primary);
         --#{$prefix}vertical-menu-title-color:                          #919da9;
-        --#{$prefix}vertical-menu-box-shadow:                           0 2px 4px rgba(15, 34, 58, 0.12);
+        --#{$prefix}vertical-menu-box-shadow:                           none;
         --#{$prefix}vertical-menu-dropdown-box-shadow:                  0 2px 4px rgba(15, 34, 58, 0.12);
         --#{$prefix}sidebar-user-bg:                                    #{$light};
         --#{$prefix}sidebar-user-name-text:                             #{darken($gray-700, 10%)};
@@ -78,23 +86,23 @@
 
         &[data-sidebar="dark"] {
             //vertical dark
-            --#{$prefix}vertical-menu-bg:                               var(--#{$prefix}primary);
-            --#{$prefix}vertical-menu-border:                           var(--#{$prefix}primary);
-            --#{$prefix}vertical-menu-item-color:                       #abb9e8;
+            --#{$prefix}vertical-menu-bg:                               #1B65BC;
+            --#{$prefix}vertical-menu-border:                           #1B65BC;
+            --#{$prefix}vertical-menu-item-color:                       #9aaab3;
             --#{$prefix}vertical-menu-item-bg:                          #{rgba($white, .15)};
             --#{$prefix}vertical-menu-item-hover-color:                 #{$white};
             --#{$prefix}vertical-menu-item-active-color:                #{$white};
             --#{$prefix}vertical-menu-item-active-bg:                   #{rgba($white, .15)};
-            --#{$prefix}vertical-menu-sub-item-color:                   #abb9e8;
+            --#{$prefix}vertical-menu-sub-item-color:                   #9aaab3;
             --#{$prefix}vertical-menu-sub-item-hover-color:             #{$white};
             --#{$prefix}vertical-menu-sub-item-active-color:            #{$white};
-            --#{$prefix}vertical-menu-title-color:                      #838fb9;
-            --#{$prefix}twocolumn-menu-iconview-bg:                     #{darken($primary, 2%)};
-            --#{$prefix}vertical-menu-box-shadow:                       0 2px 4px rgba(15, 34, 58, 0.12);
+            --#{$prefix}vertical-menu-title-color:                      #aeafaf;
+            --#{$prefix}twocolumn-menu-iconview-bg:                     #092534;
+            --#{$prefix}vertical-menu-box-shadow:                       none;
             --#{$prefix}vertical-menu-dropdown-box-shadow:              0 2px 4px rgba(15, 34, 58, 0.12);
             --#{$prefix}sidebar-user-bg:                                #{rgba($white, .08)};
             --#{$prefix}sidebar-user-name-text:                         #{$white};
-            --#{$prefix}sidebar-user-name-sub-text:                     #{tint-color($primary, 65%)};
+            --#{$prefix}sidebar-user-name-sub-text:                     #{tint-color(#1B65BC, 65%)};
         }
 
         // Topbar - (Default Light)
@@ -109,12 +117,12 @@
         
         // Topbar - Dark
         &[data-topbar="dark"] {
-            --#{$prefix}header-bg:                                      var(--#{$prefix}primary);
-            --#{$prefix}header-border:                                  var(--#{$prefix}primary);
+            --#{$prefix}header-bg:                                      #133b50;
+            --#{$prefix}header-border:                                  #133b50;
             --#{$prefix}header-item-color:                              #{rgba($white, .85)};
-            --#{$prefix}header-item-bg:                                 #495c99;
+            --#{$prefix}header-item-bg:                                 #16445c;
             --#{$prefix}header-item-sub-color:                          #b0c4d9;
-            --#{$prefix}topbar-user-bg:                                 #52639c;
+            --#{$prefix}topbar-user-bg:                                 #214c62;
             --#{$prefix}topbar-search-bg:                               #{rgba($white, .05)};
             --#{$prefix}topbar-search-color:                            #{$white};
         }
@@ -144,21 +152,45 @@
         }
 
         //page title 
-        --#{$prefix}page-title-box-shadow:                              0 1px 2px rgba(56, 65, 74, 0.15);
-        --#{$prefix}page-title-border:                                  none;
+        --#{$prefix}page-title-box-shadow:                              none;
+        --#{$prefix}page-title-border:                                  var(--#{$prefix}border-color);
 
         //footer
-        --#{$prefix}footer-bg:                                          #{$white};
+        --#{$prefix}footer-bg:                                          #f6f8fa;
         --#{$prefix}footer-color:                                       #98a6ad;
-
+        
         //Boxed layout
-        --#{$prefix}boxed-body-bg:                                      #e5e5f2;
+        --#{$prefix}boxed-body-bg:                                      #f5f5f5;
         
-        --#{$prefix}timeline-color:                                     var(--#{$prefix}secondary-bg);
-        
+        --#{$prefix}timeline-color:                                     var(--#{$prefix}border-color);
+
         --#{$prefix}chat-primary-bg:                                    var(--#{$prefix}light);
-        --#{$prefix}chat-secondary-bg:                                  rgba(var(--#{$prefix}success-rgb), 0.15);
-        --#{$prefix}chat-secondary-color:                               var(--#{$prefix}success);
+        --#{$prefix}chat-secondary-bg:                                  rgba(var(--#{$prefix}primary-rgb), 0.15);
+        --#{$prefix}chat-secondary-color:                               var(--#{$prefix}primary);
+
+        $custom-theme-colors: (
+            "primary":          $primary,
+            "secondary":        $secondary,
+            "danger":           $danger,
+            "warning":          $warning,
+            "info":             $info,
+            "success":          $success,
+            "dark":             $dark,
+            "light":            $light
+        );
+        
+        @each $name, $value in $custom-theme-colors {   
+            --#{$prefix}#{$name}:                                        #{$value};
+            --#{$prefix}#{$name}-rgb:                                    #{to-rgb($value)};
+            --#{$prefix}#{$name}-bg-subtle:                              #{rgba($value, 0.15)};
+            --#{$prefix}#{$name}-border-subtle:                          #{rgba($value, 0.30)};
+            --#{$prefix}#{$name}-text-emphasis:                          #{shade-color($value, 25%)};
+        }
+
+        --#{$prefix}link-color:                                         #{$primary};
+        --#{$prefix}link-color-rgb:                                     #{to-rgb($primary)};
+        --#{$prefix}link-hover-color:                                   #{shade-color($primary, 20%)};
+        --#{$prefix}link-hover-color-rgb:                               #{to-rgb(shade-color($primary, 20%))};
 
         @each $name, $value in $font-sizes { 
             --#{$prefix}font-#{$name}:          #{$value};
@@ -168,12 +200,16 @@
             --#{$prefix}font-weight-#{$name}:   #{$value};
         }
 
+        .minimal-border {
+            border: 1px solid #{var(--#{$prefix}border-color)};
+        }
+
         &[data-theme-colors="green"] {
-            --#{$prefix}primary:                                        #{$green-700};
-            --#{$prefix}primary-rgb:                                    #{to-rgb($green-700)};
-            --#{$prefix}primary-bg-subtle:                              #{rgba($green-700, 0.15)};
-            --#{$prefix}primary-border-subtle:                          #{rgba($green-700, 0.30)};
-            --#{$prefix}primary-text-emphasis:                          #{shade-color($green-700, 25%)};
+            --#{$prefix}primary:                                        #{$green-600};
+            --#{$prefix}primary-rgb:                                    #{to-rgb($green-600)};
+            --#{$prefix}primary-bg-subtle:                              #{rgba($green-600, 0.15)};
+            --#{$prefix}primary-border-subtle:                          #{rgba($green-600, 0.30)};
+            --#{$prefix}primary-text-emphasis:                          #{shade-color($green-600, 25%)};
         }
 
         &[data-theme-colors="purple"] {
@@ -199,7 +235,7 @@
                 }
 
                 &[for="themeColor-02"] {
-                    background-color: $green-700; 
+                    background-color: $green-600; 
                 }
 
                 &[for="themeColor-03"] {
@@ -211,5 +247,7 @@
                 }
             }
         }
+
     }
+
 }
