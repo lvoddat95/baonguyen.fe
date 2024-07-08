@@ -67,7 +67,7 @@ export class AuthenticationService {
      * @param username email of user
      * @param password password of user
      */
-    login(username: string, password: string) {
+    login(username: string, password: string, id: number, token_noti: string) {
         // return getFirebaseBackend()!.loginUser(email, password).then((response: any) => {
         //     const user = response;
         //     return user;
@@ -75,7 +75,9 @@ export class AuthenticationService {
 
         return this.http.post(AUTH_API + 'SignIn', {
             username,
-            password
+            password,
+            id,
+            token_noti,
           }, httpOptions).pipe(
               map((response: any) => {
                 const user = response;

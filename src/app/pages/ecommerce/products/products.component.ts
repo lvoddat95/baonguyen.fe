@@ -1,24 +1,25 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { NgbModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { UntypedFormBuilder, UntypedFormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-// Range Slider
-import { Options } from 'ngx-slider-v2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormArray, UntypedFormControl, Validators } from '@angular/forms';
 
 // Sweet Alert
 import Swal from 'sweetalert2';
 
-// Products Services
+// Date Format
+import { DatePipe } from '@angular/common';
+
+// Rest Api Service
 import { restApiService } from "../../../core/services/rest-api.service";
 import { GlobalComponent } from '../../../global-component';
-import { Router } from '@angular/router';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { deleteProduct, fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
-import { selectDataLoading, selectProductData } from 'src/app/store/Ecommerce/ecommerce_selector';
-import { cloneDeep } from 'lodash';
 import { PaginationService } from 'src/app/core/services/pagination.service';
+import { addTask, deleteTask, fetchTaskListData, updateTask } from 'src/app/store/Task/task_action';
+import { selectTaskData, selectTaskLoading } from 'src/app/store/Task/task_selector';
+import { cloneDeep } from 'lodash';
+import { AssignedData } from 'src/app/core/data';
 
 @Component({
   selector: 'app-products',
@@ -33,51 +34,33 @@ export class ProductsComponent {
 
   // bread crumb items
   breadCrumbItems!: Array<{}>;
+  submitted = false;
+  tasksForm!: UntypedFormGroup;
+  // CustomersData!: any;
+  AssignedData!: any;
+  checkedList: any;
+  masterSelected!: boolean;
+  searchTerm: any;
+  status: any = '';
+  date: any;
 
   url = GlobalComponent.API_URL;
-  products!: any;
-  user = [];
-  Brand: any = [];
-  Rating: any = [];
-  discountRates: number[] = [];
-  contactsForm!: UntypedFormGroup;
-  total: any;
-  totalbrand: any;
-  totalrate: any;
-  totaldiscount: any;
-  allproduct: any;
-
-  allproducts: any;
-  activeindex = '1';
-  allpublish: any;
-  grocery: any = 0;
-  fashion: any = 0;
-  watches: any = 0;
-  electronics: any = 0;
-  furniture: any = 0;
-  accessories: any = 0;
-  appliance: any = 0;
-  kids: any = 0;
-  totalpublish: any = 0;
+  content?: any;
+  tasks?: any;
+  econtent?: any;
 
   // Table data
-  // allproductList: any;
-  searchTerm: any;
-  
-  searchproducts: any;
-  publishedproduct: any;
-  ProductFilter: any;
-  productRate: any;
-  productPrice: any;
+  alltasks: any;
   searchResults: any;
-
+  subItem: any;
 
   constructor(private modalService: NgbModal,
-    private router: Router,
     public service: PaginationService,
     private formBuilder: UntypedFormBuilder,
     private store: Store<{ data: RootReducerState }>,
-    public restApiService: restApiService) { }
+    private datePipe: DatePipe) {
+      this.subItem = []
+  }
 
   ngOnInit(): void {
     /**
@@ -87,102 +70,146 @@ export class ProductsComponent {
       { label: 'Sản phẩm' },
       { label: 'Danh sách', active: true }
     ];
-
-
-   
-     // Fetch Data
-     this.store.dispatch(fetchProductListData());
-     this.store.select(selectDataLoading).subscribe((data) => {
-       if (data == false) {
-         document.getElementById('elmLoader')?.classList.add('d-none');
-       }
-     });
- 
-     this.store.select(selectProductData).subscribe((data) => {
-       this.products = data;
-       this.allproduct = cloneDeep(data);
-       this.products = this.service.changePage(this.allproduct)
-     });
-
-    setTimeout(() => {
-      for (var i = 0; i < this.allproducts?.length; i++) {
-        if (this.allproducts[i].category == 'Kitchen Storage & Containers') {
-          this.grocery += 1
-        }
-        if (this.allproducts[i].category == 'Clothes') {
-          this.fashion += 1
-        }
-        if (this.allproducts[i].category == 'Watches') {
-          this.watches += 1
-        } if (this.allproducts[i].category == 'Electronics') {
-          this.electronics += 1
-        } if (this.allproducts[i].category == 'Furniture') {
-          this.furniture += 1
-        } if (this.allproducts[i].category == 'Bike Accessories') {
-          this.accessories += 1
-        }
-        if (this.allproducts[i].category == 'Tableware & Dinnerware') {
-          this.appliance += 1
-        }
-        if (this.allproducts[i].category == 'Bags, Wallets and Luggage') {
-          this.kids += 1
-        }
-        if (this.allproducts[i].status == 'published') {
-          this.totalpublish += 1
-        }
-      }
-    }, 2000);
+    
+    /**
+     * Form Validation
+     */
+    this.tasksForm = this.formBuilder.group({
+      taskId: [''],
+      ids: [''],
+      project: ['', [Validators.required]],
+      task: ['', [Validators.required]],
+      creater: ['', [Validators.required]],
+      dueDate: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      priority: ['', [Validators.required]]
+    });
 
     /**
-   * Form Validation
-   */
-    this.contactsForm = this.formBuilder.group({
-      subItem: this.formBuilder.array([]),
+     * fetches data
+     */
+
+    this.store.dispatch(fetchTaskListData());
+    this.store.select(selectTaskLoading).subscribe((data) => {
+      if (data == false) {
+        document.getElementById('elmLoader')?.classList.add('d-none');
+      }
     });
+
+    this.store.select(selectTaskData).subscribe((data) => {
+      this.tasks = data;
+      this.alltasks = cloneDeep(data);
+      this.tasks = this.service.changePage(this.alltasks)
+    });
+
+    this.AssignedData = AssignedData
+
   }
 
-// Search Data
-performSearch(): void {
-  this.searchResults = this.allproduct.filter((item: any) => {
-    return ( item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  });
-  // this.orderes = this.searchResults.slice(0, 10);
-  this.products = this.service.changePage(this.searchResults)
-}
+  num: number = 0;
+  option = {
+    startVal: this.num,
+    useEasing: true,
+    duration: 2,
+    decimalPlaces: 2,
+  };
 
-changePage() {
-  this.products = this.service.changePage(this.allproduct)
-}
-
-  /**
-* change navigation
-*/
-  onNavChange(changeEvent: NgbNavChangeEvent) {
-    if (changeEvent.nextId === 1) {
-      this.activeindex = '1'
-    }
-    if (changeEvent.nextId === 2) {
-      this.activeindex = '2'
-      this.products = this.allproduct.filter((product:any) => product.status == 'published');
-    }
-    if (changeEvent.nextId === 3) {
-      this.activeindex = '3'
-    }
+  changePage() {
+    this.tasks = this.service.changePage(this.alltasks)
   }
 
-  /**
-  * Sort table data
-  * @param param0 sort the column
-  *
-  */
   onSort(column: any) {
-    this.products = this.service.onSort(column, this.products)
+    this.tasks = this.service.onSort(column, this.tasks)
   }
 
   /**
-  * Delete Model Open
+  * Open modal
+  * @param content modal content
   */
+  openModal(content: any) {
+    this.submitted = false;
+    this.modalService.open(content, { size: 'md', centered: true });
+  }
+
+  /**
+ * Form data get
+ */
+  get form() {
+    return this.tasksForm.controls;
+  }
+
+  /**
+  * Save user
+  */
+  saveUser() {
+    if (this.tasksForm.valid) {
+      if (this.tasksForm.get('taskId')?.value) {
+        const updatedData = { subItem: this.econtent.subItem, ...this.tasksForm.value };
+        this.store.dispatch(updateTask({ updatedData }));
+      }
+      else {
+        const taskId = (this.alltasks.length + 1).toString();
+        this.tasksForm.controls['taskId'].setValue(taskId);
+        this.tasksForm.controls['ids'].setValue(taskId);
+        const newData = {subItem:this.subItem,...this.tasksForm.value};
+        this.store.dispatch(addTask({ newData }));
+        let timerInterval: any;
+        Swal.fire({
+          title: 'Task inserted successfully!',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+          }
+        });
+      }
+      this.modalService.dismissAll();
+    }
+    this.tasksForm.reset();
+    this.submitted = true
+  }
+
+  onCheckboxChange(e: any) {
+    for (var i = 0; i < this.AssignedData.length; i++){
+      if (this.AssignedData[i].img == e.target.value) {
+        if (this.subItem && this.subItem.includes(this.AssignedData[i])) {
+          this.subItem = this.subItem.filter((item:any) => item !== this.AssignedData[i]);
+        } else {
+          this.subItem.push(this.AssignedData[i])
+        }
+      }
+    }
+  }
+
+  /**
+   * Open Edit modal
+   * @param content modal content
+   */
+  editDataGet(id: any, content: any) {
+    this.submitted = false;
+    this.modalService.open(content, { size: 'md', centered: true });
+    var modelTitle = document.querySelector('.modal-title') as HTMLAreaElement;
+    modelTitle.innerHTML = 'Edit Task';
+    var updateBtn = document.getElementById('add-btn') as HTMLAreaElement;
+    updateBtn.innerHTML = "Update";
+    this.econtent = this.alltasks[id];
+    this.tasksForm.controls['project'].setValue(this.econtent.project);
+    this.tasksForm.controls['task'].setValue(this.econtent.task);
+    this.tasksForm.controls['creater'].setValue(this.econtent.creater);
+    this.tasksForm.controls['dueDate'].setValue(this.econtent.dueDate);
+    this.tasksForm.controls['status'].setValue(this.econtent.status);
+    this.tasksForm.controls['priority'].setValue(this.econtent.priority);
+    this.tasksForm.controls['ids'].setValue(this.econtent._id);
+    this.tasksForm.controls['taskId'].setValue(this.econtent.taskId);
+  }
+
+  /**
+   * Delete Swal data
+   */
   deleteId: any;
   confirm(content: any, id: any) {
     this.deleteId = id;
@@ -192,213 +219,91 @@ changePage() {
   // Delete Data
   deleteData(id: any) {
     if (id) {
-      this.store.dispatch(deleteProduct({ id: this.deleteId.toString() }));
+      this.store.dispatch(deleteTask({ id: this.deleteId.toString() }));
     } else {
-      this.store.dispatch(deleteProduct({ id: this.checkedValGet.toString() }));
-      (document.getElementById("selection-element") as HTMLElement).style.display = "none"
+      this.store.dispatch(deleteTask({ id: this.checkedValGet.toString() }));
     }
-    this.deleteId=''
+    this.deleteId = ''
+    this.masterSelected = false
   }
-  
-
-  // Price Slider
-  minValue = 0;
-  maxValue = 1000;
-  options: Options = {
-    floor: 0,
-    ceil: 1000
-  };
 
   /**
-   * Default Select2
-   */
-  multiDefaultOption = 'Watches';
-  selectedAccount = 'This is a placeholder';
-  Default = [
-    { name: 'Watches' },
-    { name: 'Headset' },
-    { name: 'Sweatshirt' },
-  ];
-
-  // Check Box Checked Value Get
+  * Multiple Delete
+  */
   checkedValGet: any[] = [];
-  // Select Checkbox value Get
-  onCheckboxChange(e: any) {
+  deleteMultiple(content: any) {
     var checkboxes: any = document.getElementsByName('checkAll');
-    var checkedVal: any[] = [];
     var result
+    var checkedVal: any[] = [];
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked) {
         result = checkboxes[i].value;
         checkedVal.push(result);
       }
     }
-    this.checkedValGet = checkedVal
-    var checkBoxCount: any = document.getElementById('select-content') as HTMLElement;
-    checkBoxCount.innerHTML = checkedVal.length;
-    checkedVal.length > 0 ? (document.getElementById("selection-element") as HTMLElement).style.display = "block" : (document.getElementById("selection-element") as HTMLElement).style.display = "none";
-  }
-  /**
-    * Brand Filter
-    */
-  changeBrand(e: any) {
-    if (e.target.checked) {
-      this.Brand.push(e.target.defaultValue)
-    } else {
-      for (var i = 0; i < this.Brand.length; i++) {
-        if (this.Brand[i] === e.target.defaultValue) {
-          this.Brand.splice(i, 1)
-        }
-      }
-    }
-    this.totalbrand = this.Brand.length
-  }
-
-  /**
-  * Discount Filter
-  */
-  changeDiscount(e: any) {
-    if (e.target.checked) {
-      this.discountRates.push(e.target.defaultValue)
-
-        this.products = this.allproduct.filter((product: any) => {
-          return product.rating > e.target.defaultValue;
-        });
-    } else {
-      for (var i = 0; i < this.discountRates.length; i++) {
-        if (this.discountRates[i] === e.target.defaultValue) {
-          this.discountRates.splice(i, 1)
-        }
-      }
-    }
-    this.totaldiscount = this.discountRates.length
-  }
-
-
-  /**
-   * Rating Filter
-   */
-  changeRating(e: any, rate: any) {
-    if (e.target.checked) {
-      this.Rating.push(e.target.defaultValue)
-      this.products = this.allproduct.filter((product:any) => product.rating >= rate);
+    if (checkedVal.length > 0) {
+      this.modalService.open(content, { centered: true });
     }
     else {
-      for (var i = 0; i < this.Rating.length; i++) {
-        if (this.Rating[i] === e.target.defaultValue) {
-          this.Rating.splice(i, 1)
-        }
-      }
-      this.productRate = rate;
+      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
     }
-    this.totalrate = this.Rating.length
+    this.checkedValGet = checkedVal;
   }
 
 
+  // The master checkbox will check/ uncheck all items
+  checkUncheckAll(ev: any) {
+    this.tasks.forEach((x: { state: any; }) => x.state = ev.target.checked)
+    var checkedVal: any[] = [];
+    var result
+    for (var i = 0; i < this.tasks.length; i++) {
+      if (this.tasks[i].state == true) {
+        result = this.tasks[i];
+        checkedVal.push(result);
+      }
+    }
+    this.checkedValGet = checkedVal
+    checkedVal.length > 0 ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block" : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
+  }
 
-  /**
-   * Product Filtering  
-   */
-  changeProducts(e: any, name: any, category: any) {
-    const iconItems = document.querySelectorAll('.filter-list');
-    iconItems.forEach((item: any) => {
-      var el = item.querySelectorAll('a')
-      el.forEach((item: any) => {
-        var element = item.querySelector('h5').innerHTML
-        if (element == category) {
-          item.classList.add("active");
-        } else {
-          item.classList.remove("active");
-        }
-      })
+  // Filtering
+  isstatus?: any
+  SearchData() {
+    var status = document.getElementById("idStatus") as HTMLInputElement;
+    var payment = document.getElementById("idPayment") as HTMLInputElement;
+    var date = document.getElementById("isDate") as HTMLInputElement;
+    var dateVal = date.value ? this.datePipe.transform(new Date(date.value), "yyyy-MM-dd") : '';
+    if (status.value != 'all' && status.value != '' || dateVal != '') {
+      this.tasks = this.content.filter((task: any) => {
+        return task.status === status.value || this.datePipe.transform(new Date(task.dueDate), "yyyy-MM-dd") == dateVal;
+      });
+    }
+    else {
+      this.tasks = this.content;
+    }
+  }
+
+  performSearch() {
+    this.searchResults = this.alltasks.filter((item: any) => {
+      return (
+        item.project.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.task.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.creater.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.priority.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.status.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
     });
-    this.products = this.allproduct.filter((product:any) => product.category == category);
+    this.tasks = this.service.changePage(this.searchResults)
   }
 
-
-  /**
-  * Search Product
-  */
-  search(value: string) {
-    if (this.activeindex == '1') {
-      if (value) {
-        this.products = this.allproducts.filter((val: any) =>
-          val.category.toLowerCase().includes(value)
-        );
-        this.total = this.products.length;
-      } else {
-        this.products = this.searchproducts
-        this.total = this.allproducts.length;
-      }
-    } else if (this.activeindex == '2') {
-      if (value) {
-        this.publishedproduct = this.publishedproduct.filter((val: any) =>
-          val.category.toLowerCase().includes(value)
-        );
-        this.total = this.publishedproduct.length;
-      } else {
-        this.publishedproduct = this.allpublish
-        this.total = this.publishedproduct.length;
-      }
+  statusFilter() {
+    if (this.status != '') {
+      this.tasks = this.alltasks.filter((task: any) => {
+        return task.status === this.status;
+      });
+    } else {
+      this.tasks = this.service.changePage(this.alltasks)
     }
-
-  }
-
-  /**
-  * Range Slider Wise Data Filter
-  */
-  valueChange(value: number, boundary: boolean): void {
-    if (value > 0 && value < 1000) {
-      if (this.activeindex == '1') {
-        if (boundary) {
-          this.minValue = value;
-        } else {
-          this.maxValue = value;
-        }
-      } else if (this.activeindex == '2') {
-        if (boundary) {
-          this.minValue = value;
-        } else {
-          this.maxValue = value;
-        }
-      }
-    }
-  }
-
-  clearall(ev: any) {
-    this.minValue = 0;
-    this.maxValue = 1000;
-    var checkboxes: any = document.getElementsByName('checkAll');
-    for (var i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].checked = false
-    }
-    // this.service.searchTerm = ''
-    this.totalbrand = 0;
-    this.totaldiscount = 0;
-    this.totalrate = 0;
-    this.Brand = []
-    this.Rating = []
-    this.discountRates = []
-    const iconItems = document.querySelectorAll('.filter-list');
-    iconItems.forEach((item: any) => {
-      var el = item.querySelectorAll('a')
-      el.forEach((item: any) => {
-        item.classList.remove("active");
-      })
-    });
-    this.searchTerm = '';
-    this.ProductFilter = '';
-    this.productRate = 0;
-    this.productPrice = 0;
-    this.products = this.allproduct
-  }
-
-  godetail(id: any) {
-    this.router.navigate(['/ecommerce/product-detail'])
-  }
-
-  gopublishdetail(id: any) {
-    this.router.navigate(['/ecommerce/product-detail/'])
   }
 
 }

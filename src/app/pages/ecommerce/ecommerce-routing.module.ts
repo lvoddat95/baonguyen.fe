@@ -12,6 +12,7 @@ import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { SellersComponent } from "./sellers/sellers.component";
 import { SellerDetailsComponent } from "./seller-details/seller-details.component";
+import { ProductCategoryComponent } from './product-category/product-category.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: "add-product",
     component: AddProductComponent
+  },
+  {
+    path: "product-category",
+    component: ProductCategoryComponent
   },
   {
     path: "orders",

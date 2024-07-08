@@ -48,6 +48,7 @@ import { SellersComponent } from './sellers/sellers.component';
 import { SellerDetailsComponent } from './seller-details/seller-details.component';
 
 import { DatePipe } from '@angular/common';
+import { ProductCategoryComponent } from './product-category/product-category.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://httpbin.org/post',
@@ -60,6 +61,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ProductsComponent,
     ProductDetailComponent,
     AddProductComponent,
+    ProductCategoryComponent,
     OrdersComponent,
     OrdersDetailsComponent,
     CustomersComponent,

@@ -29,7 +29,7 @@ export const MENU: MenuItem[] = [
       {
         id: 5,
         label: 'Danh mục sản phẩm',
-        link: '/ecommerce/add-product',
+        link: '/ecommerce/product-category',
         parentId: 2
       },
     ]

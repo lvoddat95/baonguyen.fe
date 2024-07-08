@@ -25,8 +25,8 @@ export class AddProductComponent implements OnInit {
     * BreadCrumb
     */
     this.breadCrumbItems = [
-      { label: 'Ecommerce' },
-      { label: 'Create Product', active: true }
+      { label: 'Sản phẩm' },
+      { label: 'Thêm mới', active: true }
     ];
   }
 

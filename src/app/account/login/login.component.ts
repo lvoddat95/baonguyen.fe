@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
     //   })
     // );
     this.authenticationService
-      .login(this.f["username"].value, md5Encrypt(this.f["password"].value))
+      .login(this.f["username"].value, md5Encrypt(this.f["password"].value), 0, "")
       .subscribe((data: any) => {
         console.log(data);
         if (data.code == "000") {
