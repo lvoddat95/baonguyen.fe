@@ -67,7 +67,7 @@ export class AuthenticationService {
      * @param username email of user
      * @param password password of user
      */
-    login(username: string, password: string, id: number, token_noti: string) {
+    login(username: string, password: string, id: number, token_noti: string, platform: string = "WEB") {
         // return getFirebaseBackend()!.loginUser(email, password).then((response: any) => {
         //     const user = response;
         //     return user;
@@ -78,6 +78,7 @@ export class AuthenticationService {
             password,
             id,
             token_noti,
+            platform,
           }, httpOptions).pipe(
               map((response: any) => {
                 const user = response;

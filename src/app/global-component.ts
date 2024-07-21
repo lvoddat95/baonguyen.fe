@@ -1,18 +1,15 @@
 export const GlobalComponent = {
     // Api Calling
-    API_URL : 'https://api-node.themesbrand.website/',
-    // API_URL : 'http://127.0.0.1:3000/',
+    API_URL : 'https://baonguyenbakery.io.vn/',
     headerToken : {'Authorization': `Bearer ${sessionStorage.getItem('token')}`},
 
     // Auth Api
-    // AUTH_API:"https://baonguyenbakery.io.vn/api/UserId/",
-    AUTH_API:"https://localhost:7090/api/UserId/",
-    // AUTH_API:"https://api-node.themesbrand.website/auth/",
-    // AUTH_API:"http://127.0.0.1:3000/auth/",
+    AUTH_API:"https://baonguyenbakery.io.vn/api/UserId/",
+    // AUTH_API:"https://localhost:7090/api/UserId/",
 
     
     // Products Api
-    product:'apps/product',
+    product:'GetProductByCondition',
     productDelete:'apps/product/',
 
     // Orders Api

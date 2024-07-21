@@ -20,6 +20,8 @@ import { addTask, deleteTask, fetchTaskListData, updateTask } from 'src/app/stor
 import { selectTaskData, selectTaskLoading } from 'src/app/store/Task/task_selector';
 import { cloneDeep } from 'lodash';
 import { AssignedData } from 'src/app/core/data';
+import { fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
+import { selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
 
 @Component({
   selector: 'app-products',
@@ -89,8 +91,9 @@ export class ProductsComponent {
      * fetches data
      */
 
-    this.store.dispatch(fetchTaskListData());
-    this.store.select(selectTaskLoading).subscribe((data) => {
+    this.store.dispatch(fetchProductListData());
+    this.store.select(selectDataLoading).subscribe((data) => {
+      console.log(data)
       if (data == false) {
         document.getElementById('elmLoader')?.classList.add('d-none');
       }
