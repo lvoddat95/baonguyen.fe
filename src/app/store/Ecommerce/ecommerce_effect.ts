@@ -1,17 +1,49 @@
 import { Injectable } from "@angular/core";
 
-import { of } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { of } from "rxjs";
+import { catchError, map, mergeMap, tap } from "rxjs/operators";
 
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import { restApiService } from "src/app/core/services/rest-api.service";
-import { addCustomer, addCustomerFailure, addCustomerSuccess, addOrder, addOrderFailure, addOrderSuccess, deleteCustomer, deleteCustomerFailure, deleteCustomerSuccess, deleteOrder, deleteOrderFailure, deleteOrderSuccess, deleteProduct, deleteProductFailure, deleteProductSuccess, fetchCustomerListData, fetchCustomerListFailure, fetchCustomerListSuccess, fetchProductListData, fetchProductListFailure, fetchProductListSuccess, fetchSellerListData, fetchSellerListFailure, fetchSellerListSuccess, fetchorderListData, fetchorderListFailure, fetchorderListSuccess, updateCustomer, updateCustomerFailure, updateCustomerSuccess, updateOrder, updateOrderFailure, updateOrderSuccess } from "./ecommerce_action";
-
+import {
+    addCustomer,
+    addCustomerFailure,
+    addCustomerSuccess,
+    addOrder,
+    addOrderFailure,
+    addOrderSuccess,
+    deleteCustomer,
+    deleteCustomerFailure,
+    deleteCustomerSuccess,
+    deleteOrder,
+    deleteOrderFailure,
+    deleteOrderSuccess,
+    deleteProduct,
+    deleteProductFailure,
+    deleteProductSuccess,
+    fetchCustomerListData,
+    fetchCustomerListFailure,
+    fetchCustomerListSuccess,
+    fetchProductListData,
+    fetchProductListFailure,
+    fetchProductListSuccess,
+    fetchSellerListData,
+    fetchSellerListFailure,
+    fetchSellerListSuccess,
+    fetchorderListData,
+    fetchorderListFailure,
+    fetchorderListSuccess,
+    updateCustomer,
+    updateCustomerFailure,
+    updateCustomerSuccess,
+    updateOrder,
+    updateOrderFailure,
+    updateOrderSuccess,
+} from "./ecommerce_action";
 
 @Injectable()
 export class EcommerceEffects {
-
     // Product
     fetchProductData$ = createEffect(() =>
         this.actions$.pipe(
@@ -19,15 +51,13 @@ export class EcommerceEffects {
             mergeMap(() =>
                 this.restApiService.getData().pipe(
                     map((product) => {
-                        const Product = JSON.parse(product).data;
-                        return fetchProductListSuccess({ Product })
+                        const Product = product.data;
+                        return fetchProductListSuccess({ Product });
                     }),
-                    catchError((error) =>
-                        of(fetchProductListFailure({ error }))
-                    )
+                    catchError((error) => of(fetchProductListFailure({ error })))
                 )
-            ),
-        ),
+            )
+        )
     );
 
     deleteProductData$ = createEffect(() =>
@@ -50,14 +80,12 @@ export class EcommerceEffects {
                 this.restApiService.getOrderData().pipe(
                     map((orders) => {
                         const order = JSON.parse(orders).data;
-                        return fetchorderListSuccess({ order })
+                        return fetchorderListSuccess({ order });
                     }),
-                    catchError((error) =>
-                        of(fetchorderListFailure({ error }))
-                    )
+                    catchError((error) => of(fetchorderListFailure({ error })))
                 )
-            ),
-        ),
+            )
+        )
     );
 
     addData$ = createEffect(() =>
@@ -65,25 +93,28 @@ export class EcommerceEffects {
             ofType(addOrder),
             mergeMap(({ newData }) =>
                 this.restApiService.postOrderData(newData).pipe(
-                    map((responseData) => addOrderSuccess({ newData: responseData.data })),
-                    catchError((error) => of(addOrderFailure({ error })))
-                )
-            )
-        )
-    )
-
-    updateData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(updateOrder),
-            mergeMap(({ updatedData }) =>
-                this.restApiService.patchOrderData(updatedData).pipe(
-                    map((responseData) => updateOrderSuccess({ updatedData: responseData.data })),
+                    map((responseData) =>
+                        addOrderSuccess({ newData: responseData.data })
+                    ),
                     catchError((error) => of(addOrderFailure({ error })))
                 )
             )
         )
     );
 
+    updateData$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(updateOrder),
+            mergeMap(({ updatedData }) =>
+                this.restApiService.patchOrderData(updatedData).pipe(
+                    map((responseData) =>
+                        updateOrderSuccess({ updatedData: responseData.data })
+                    ),
+                    catchError((error) => of(addOrderFailure({ error })))
+                )
+            )
+        )
+    );
 
     deleteData$ = createEffect(() =>
         this.actions$.pipe(
@@ -105,14 +136,12 @@ export class EcommerceEffects {
                 this.restApiService.getCustomerData().pipe(
                     map((Customers) => {
                         const Customer = JSON.parse(Customers).data;
-                        return fetchCustomerListSuccess({ Customer })
+                        return fetchCustomerListSuccess({ Customer });
                     }),
-                    catchError((error) =>
-                        of(fetchCustomerListFailure({ error }))
-                    )
+                    catchError((error) => of(fetchCustomerListFailure({ error })))
                 )
-            ),
-        ),
+            )
+        )
     );
 
     addCustomerData$ = createEffect(() =>
@@ -120,25 +149,28 @@ export class EcommerceEffects {
             ofType(addCustomer),
             mergeMap(({ newData }) =>
                 this.restApiService.postCustomerData(newData).pipe(
-                    map((responseData) => addCustomerSuccess({ newData: responseData.data })),
+                    map((responseData) =>
+                        addCustomerSuccess({ newData: responseData.data })
+                    ),
                     catchError((error) => of(addCustomerFailure({ error })))
                 )
             )
         )
-    )
+    );
 
     updateCustomerData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(updateCustomer),
             mergeMap(({ updatedData }) =>
                 this.restApiService.patchCustomerData(updatedData).pipe(
-                    map((responseData) => updateCustomerSuccess({ updatedData: responseData.data })),
+                    map((responseData) =>
+                        updateCustomerSuccess({ updatedData: responseData.data })
+                    ),
                     catchError((error) => of(updateCustomerFailure({ error })))
                 )
             )
         )
     );
-
 
     deleteCustomerData$ = createEffect(() =>
         this.actions$.pipe(
@@ -152,23 +184,20 @@ export class EcommerceEffects {
         )
     );
 
-      // Seller
-      fetchSellerData$ = createEffect(() =>
-      this.actions$.pipe(
-          ofType(fetchSellerListData),
-          mergeMap(() =>
-              this.restApiService.getSellerData().pipe(
-                  map((Seller) => {
-                      return fetchSellerListSuccess({ Seller })
-                  }),
-                  catchError((error) =>
-                      of(fetchSellerListFailure({ error }))
-                  )
-              )
-          ),
-      ),
-  );
-
+    // Seller
+    fetchSellerData$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fetchSellerListData),
+            mergeMap(() =>
+                this.restApiService.getSellerData().pipe(
+                    map((Seller) => {
+                        return fetchSellerListSuccess({ Seller });
+                    }),
+                    catchError((error) => of(fetchSellerListFailure({ error })))
+                )
+            )
+        )
+    );
 
     constructor(
         private actions$: Actions,

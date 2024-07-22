@@ -20,8 +20,8 @@ import { addTask, deleteTask, fetchTaskListData, updateTask } from 'src/app/stor
 import { selectTaskData, selectTaskLoading } from 'src/app/store/Task/task_selector';
 import { cloneDeep } from 'lodash';
 import { AssignedData } from 'src/app/core/data';
-import { fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
-import { selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
+import { deleteProduct, fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
+import { selectDataLoading, selectProductData } from 'src/app/store/Ecommerce/ecommerce_selector';
 
 @Component({
   selector: 'app-products',
@@ -55,6 +55,12 @@ export class ProductsComponent {
   alltasks: any;
   searchResults: any;
   subItem: any;
+
+
+  products!: any;
+  allproducts: any;
+  allproduct: any;
+
 
   constructor(private modalService: NgbModal,
     public service: PaginationService,
@@ -90,19 +96,18 @@ export class ProductsComponent {
     /**
      * fetches data
      */
-
     this.store.dispatch(fetchProductListData());
     this.store.select(selectDataLoading).subscribe((data) => {
-      console.log(data)
       if (data == false) {
         document.getElementById('elmLoader')?.classList.add('d-none');
       }
     });
 
-    this.store.select(selectTaskData).subscribe((data) => {
-      this.tasks = data;
-      this.alltasks = cloneDeep(data);
-      this.tasks = this.service.changePage(this.alltasks)
+    this.store.select(selectProductData).subscribe((data) => {
+      console.log(data)
+      this.products = data;
+      this.allproducts = cloneDeep(data);
+      this.products = this.service.changePage(this.allproducts)
     });
 
     this.AssignedData = AssignedData
@@ -118,7 +123,7 @@ export class ProductsComponent {
   };
 
   changePage() {
-    this.tasks = this.service.changePage(this.alltasks)
+    this.products = this.service.changePage(this.allproducts)
   }
 
   onSort(column: any) {

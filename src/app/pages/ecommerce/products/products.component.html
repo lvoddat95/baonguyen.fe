@@ -70,18 +70,19 @@
                       [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
                   </div>
                 </th>
+                <th class="sort" (click)="onSort('taskId')">STT</th>
                 <th class="sort" (click)="onSort('taskId')">ID</th>
                 <th class="sort" (click)="onSort('project')">Tên</th>
-                <th class="sort" (click)="onSort('task')">Mã sản phẩm</th>
+                <th class="sort" (click)="onSort('task')">Mô tả</th>
                 <th class="sort" (click)="onSort('creater')">Giá</th>
-                <th class="sort" (click)="onSort('subItem')">Danh mục</th>
-                <th class="sort" (click)="onSort('dueDate')">Thẻ</th>
+                <th class="sort" (click)="onSort('subItem')">Phân loại</th>
+                <th class="sort" (click)="onSort('dueDate')">Bonus</th>
                 <th class="sort" (click)="onSort('status')">Trạng thái</th>
                 <th class="sort" (click)="onSort('priority')">Ngày</th>
               </tr>
             </thead>
             <tbody>
-              @for(data of tasks; track data._id ){
+              @for(data of products; track $index ){
               <tr>
                 <th scope="row">
                   <div class="form-check">
@@ -89,58 +90,14 @@
                       [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
                   </div>
                 </th>
-                <td><a routerLink="/tasks/details">
-                    <ngb-highlight [result]="data.taskId" [term]="searchTerm">
-                    </ngb-highlight>
-                  </a></td>
-                <td>
-                  <ngb-highlight [result]="data.project" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td>
-                  <div class="d-flex">
-                    <div class="flex-grow-1 tasks_name">{{data.task}}</div>
-                    <div class="flex-shrink-0 ms-4">
-                      <ul class="list-inline tasks-list-menu mb-0">
-                        <li class="list-inline-item"><a routerLink="/tasks/details"><i
-                              class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
-                        </li>
-                        <li class="list-inline-item"><a class="edit-item-btn" href="javascript:void(0);"
-                            data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"
-                            (click)="editDataGet($index,content)"><i
-                              class="ri-pencil-fill align-bottom me-2 text-muted"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                          <a class="remove-item-btn" data-bs-toggle="modal" href="javascript:void(0);"
-                            (click)="confirm(deleteModel,data._id)">
-                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <ngb-highlight [result]="data.creater" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="assignedto">
-                  <div class="avatar-group">
-                    @for (img of data.subItem; track $index) {
-                    <a href="javascript: void(0);" class="avatar-group-item">
-                      <img src="assets/images/users/{{img.img ? img.img : img}}" alt=""
-                        class="rounded-circle avatar-xxs" />
-                    </a>
-                    }
-                  </div>
-                </td>
-                <td>
-                  <ngb-highlight [result]="data.dueDate | date :'longDate'" [term]="searchTerm"></ngb-highlight>
-                </td>
-                <td class="status"><span class="badge text-uppercase"
-                    [ngClass]=" { 'bg-secondary-subtle text-secondary': data.status === 'Inprogress', 'bg-info-subtle text-info': data.status === 'New', 'bg-success-subtle text-success': data.status === 'Completed', 'bg-warning-subtle text-warning': data.status === 'Pending' }">{{data.status}}</span>
-                </td>
-                <td class="priority"><span class="badge bg-warning text-uppercase"
-                    [ngClass]=" { 'bg-danger': data.priority === 'High', 'bg-success': data.priority === 'Low', 'bg-warning': data.priority === 'Medium'}">{{data.priority}}</span>
-                </td>
+                <td>{{$index+1}}</td>
+                <td>{{data.id}}</td>
+                <td>{{data.ten}}</td>
+                <td>{{data.mo_ta}}</td>
+                <td>{{data.don_gia}}</td>
+                <td>{{data.phan_loai}}</td>
+                <td>{{data.bonus}}</td>
+                <td>{{data.available}}</td>
               </tr>
               }
             </tbody>
@@ -150,7 +107,7 @@
           <!-- Pagination -->
           <div class="col col-sm-12">
             <div class="text-sm-right float-sm-end listjs-pagination">
-              <ngb-pagination [collectionSize]="alltasks?.length" [(page)]="service.page" [pageSize]="service.pageSize"
+              <ngb-pagination [collectionSize]="allproducts?.length" [(page)]="service.page" [pageSize]="service.pageSize"
                 (pageChange)="changePage()">
               </ngb-pagination>
             </div>
@@ -337,3 +294,4 @@
   </ng-template>
 </div>
 <!--End row-->
+
