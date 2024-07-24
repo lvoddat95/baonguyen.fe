@@ -8,19 +8,9 @@ export const selectProductData = createSelector(
     (state: EcommerceState) => state.Product
 );
 
-export const selectOrderData = createSelector(
+export const selectCategoryData = createSelector(
     selectDataState,
-    (state: EcommerceState) => state.order
-);
-
-export const selectCustomerData = createSelector(
-    selectDataState,
-    (state: EcommerceState) => state.Customer
-);
-
-export const selectSellerData = createSelector(
-    selectDataState,
-    (state: EcommerceState) => state.Seller
+    (state: EcommerceState) => state.Category
 );
 
 export const selectDataLoading = createSelector(

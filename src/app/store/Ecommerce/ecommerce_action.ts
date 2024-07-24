@@ -1,67 +1,57 @@
 import { createAction, props } from '@ngrx/store';
-import { CartModel, OrdersModel, customerModel, productModel, sellerModel } from './ecommerce_model';
+import { CartModel, categoryModel, customerModel, productModel, sellerModel } from './ecommerce_model';
 
 // Product
 export const fetchProductListData = createAction('[Data] Fetch ProductList');
 export const fetchProductListSuccess = createAction('[Data] Fetch ProductList Success',props<{ Product: productModel[] }>());
 export const fetchProductListFailure = createAction('[Data] Fetch ProductList Failure', props<{ error: string }>());
 
-// Order
-export const fetchorderListData = createAction('[Data] Fetch orderList');
-export const fetchorderListSuccess = createAction('[Data] Fetch orderList Success',props<{ order: OrdersModel[] }>());
-export const fetchorderListFailure = createAction('[Data] Fetch orderList Failure', props<{ error: string }>());
-
-// Customer
-export const fetchCustomerListData = createAction('[Data] Fetch CustomerList');
-export const fetchCustomerListSuccess = createAction('[Data] Fetch CustomerList Success',props<{ Customer: customerModel[] }>());
-export const fetchCustomerListFailure = createAction('[Data] Fetch CustomerList Failure', props<{ error: string }>());
-
-// Seller
-export const fetchSellerListData = createAction('[Data] Fetch SellerList');
-export const fetchSellerListSuccess = createAction('[Data] Fetch SellerList Success',props<{ Seller: sellerModel[] }>());
-export const fetchSellerListFailure = createAction('[Data] Fetch SellerList Failure', props<{ error: string }>());
+// Category
+export const fetchCategoryListData = createAction('[Data] Fetch CategoryList');
+export const fetchCategoryListSuccess = createAction('[Data] Fetch CategoryList Success',props<{ Category: categoryModel[] }>());
+export const fetchCategoryListFailure = createAction('[Data] Fetch CategoryList Failure', props<{ error: string }>());
 
 
 // Add Data
-export const addOrder = createAction(
-    '[Data] Add Order',
-    props<{ newData: OrdersModel }>()
+export const addCategory = createAction(
+    '[Data] Add Category',
+    props<{ newData: categoryModel }>()
 );
-export const addOrderSuccess = createAction(
-    '[Data] Add Order Success',
-    props<{ newData: OrdersModel }>()
+export const addCategorySuccess = createAction(
+    '[Data] Add Category Success',
+    props<{ newData: categoryModel }>()
 );
-export const addOrderFailure = createAction(
-    '[Data] Add Order Failure',
+export const addCategoryFailure = createAction(
+    '[Data] Add Category Failure',
     props<{ error: string }>()
 );
 
 // Update Data
-export const updateOrder = createAction(
-    '[Data] Update Order',
-    props<{ updatedData: OrdersModel }>()
+export const updateCategory = createAction(
+    '[Data] Update Category',
+    props<{ updatedData: categoryModel }>()
 );
-export const updateOrderSuccess = createAction(
-    '[Data] Update Order Success',
-    props<{ updatedData: OrdersModel }>()
+export const updateCategorySuccess = createAction(
+    '[Data] Update Category Success',
+    props<{ updatedData: categoryModel }>()
 );
-export const updateOrderFailure = createAction(
-    '[Data] Update Order Failure',
+export const updateCategoryFailure = createAction(
+    '[Data] Update Category Failure',
     props<{ error: string }>()
 );
 
 
-// Delete Order Data
-export const deleteOrder = createAction(
-    '[Data] Delete Order',
+// Delete Category Data
+export const deleteCategory = createAction(
+    '[Data] Delete Category',
     props<{ id: string }>()
 );
-export const deleteOrderSuccess = createAction(
-    '[Data] Delete Order Success',
+export const deleteCategorySuccess = createAction(
+    '[Data] Delete Category Success',
     props<{ id: string }>()
 );
-export const deleteOrderFailure = createAction(
-    '[Data] Delete Order Failure',
+export const deleteCategoryFailure = createAction(
+    '[Data] Delete Category Failure',
     props<{ error: string }>()
 );
 
@@ -76,48 +66,5 @@ export const deleteProductSuccess = createAction(
 );
 export const deleteProductFailure = createAction(
     '[Data] Delete Product Failure',
-    props<{ error: string }>()
-);
-
-// Add Customer Data
-export const addCustomer = createAction(
-    '[Data] Add Customer',
-    props<{ newData: customerModel }>()
-);
-export const addCustomerSuccess = createAction(
-    '[Data] Add Customer Success',
-    props<{ newData: customerModel }>()
-);
-export const addCustomerFailure = createAction(
-    '[Data] Add Customer Failure',
-    props<{ error: string }>()
-);
-
-// Update Data
-export const updateCustomer = createAction(
-    '[Data] Update Customer',
-    props<{ updatedData: customerModel }>()
-);
-export const updateCustomerSuccess = createAction(
-    '[Data] Update Customer Success',
-    props<{ updatedData: customerModel }>()
-);
-export const updateCustomerFailure = createAction(
-    '[Data] Update Customer Failure',
-    props<{ error: string }>()
-);
-
-
-// Delete Customer Data
-export const deleteCustomer = createAction(
-    '[Data] Delete Customer',
-    props<{ id: string }>()
-);
-export const deleteCustomerSuccess = createAction(
-    '[Data] Delete Customer Success',
-    props<{ id: string }>()
-);
-export const deleteCustomerFailure = createAction(
-    '[Data] Delete Customer Failure',
     props<{ error: string }>()
 );

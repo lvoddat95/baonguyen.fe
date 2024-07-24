@@ -22,18 +22,8 @@ import { GlobalComponent } from "../../../global-component";
 import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";
 import { PaginationService } from "src/app/core/services/pagination.service";
-import {
-  addTask,
-  deleteTask,
-  fetchTaskListData,
-  updateTask,
-} from "src/app/store/Task/task_action";
-import {
-  selectTaskData,
-  selectTaskLoading,
-} from "src/app/store/Task/task_selector";
+
 import { cloneDeep } from "lodash";
-import { AssignedData } from "src/app/core/data";
 
 @Component({
   selector: "app-product-category",
@@ -104,20 +94,19 @@ export class ProductCategoryComponent {
      * fetches data
      */
 
-    this.store.dispatch(fetchTaskListData());
-    this.store.select(selectTaskLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+    // this.store.dispatch(fetchTaskListData());
+    // this.store.select(selectTaskLoading).subscribe((data) => {
+    //   if (data == false) {
+    //     document.getElementById("elmLoader")?.classList.add("d-none");
+    //   }
+    // });
 
-    this.store.select(selectTaskData).subscribe((data) => {
-      this.tasks = data;
-      this.alltasks = cloneDeep(data);
-      this.tasks = this.service.changePage(this.alltasks);
-    });
+    // this.store.select(selectTaskData).subscribe((data) => {
+    //   this.tasks = data;
+    //   this.alltasks = cloneDeep(data);
+    //   this.tasks = this.service.changePage(this.alltasks);
+    // });
 
-    this.AssignedData = AssignedData;
   }
 
   num: number = 0;
@@ -156,37 +145,7 @@ export class ProductCategoryComponent {
    * Save user
    */
   saveUser() {
-    if (this.tasksForm.valid) {
-      if (this.tasksForm.get("taskId")?.value) {
-        const updatedData = {
-          subItem: this.econtent.subItem,
-          ...this.tasksForm.value,
-        };
-        this.store.dispatch(updateTask({ updatedData }));
-      } else {
-        const taskId = (this.alltasks.length + 1).toString();
-        this.tasksForm.controls["taskId"].setValue(taskId);
-        this.tasksForm.controls["ids"].setValue(taskId);
-        const newData = { subItem: this.subItem, ...this.tasksForm.value };
-        this.store.dispatch(addTask({ newData }));
-        let timerInterval: any;
-        Swal.fire({
-          title: "Task inserted successfully!",
-          icon: "success",
-          timer: 2000,
-          timerProgressBar: true,
-          willClose: () => {
-            clearInterval(timerInterval);
-          },
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-          }
-        });
-      }
-      this.modalService.dismissAll();
-    }
-    this.tasksForm.reset();
-    this.submitted = true;
+   
   }
 
   onCheckboxChange(e: any) {
@@ -236,13 +195,7 @@ export class ProductCategoryComponent {
 
   // Delete Data
   deleteData(id: any) {
-    if (id) {
-      this.store.dispatch(deleteTask({ id: this.deleteId.toString() }));
-    } else {
-      this.store.dispatch(deleteTask({ id: this.checkedValGet.toString() }));
-    }
-    this.deleteId = "";
-    this.masterSelected = false;
+
   }
 
   /**
@@ -284,11 +237,11 @@ export class ProductCategoryComponent {
     this.checkedValGet = checkedVal;
     checkedVal.length > 0
       ? ((
-          document.getElementById("remove-actions") as HTMLElement
-        ).style.display = "block")
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "block")
       : ((
-          document.getElementById("remove-actions") as HTMLElement
-        ).style.display = "none");
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "none");
   }
 
   // Filtering
@@ -305,7 +258,7 @@ export class ProductCategoryComponent {
         return (
           task.status === status.value ||
           this.datePipe.transform(new Date(task.dueDate), "yyyy-MM-dd") ==
-            dateVal
+          dateVal
         );
       });
     } else {

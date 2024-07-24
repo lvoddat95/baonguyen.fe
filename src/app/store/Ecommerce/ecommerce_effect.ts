@@ -7,39 +7,24 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import { restApiService } from "src/app/core/services/rest-api.service";
 import {
-    addCustomer,
-    addCustomerFailure,
-    addCustomerSuccess,
-    addOrder,
-    addOrderFailure,
-    addOrderSuccess,
-    deleteCustomer,
-    deleteCustomerFailure,
-    deleteCustomerSuccess,
-    deleteOrder,
-    deleteOrderFailure,
-    deleteOrderSuccess,
+    addCategory,
+    addCategoryFailure,
+    addCategorySuccess,
+    deleteCategory,
+    deleteCategoryFailure,
+    deleteCategorySuccess,
     deleteProduct,
     deleteProductFailure,
     deleteProductSuccess,
-    fetchCustomerListData,
-    fetchCustomerListFailure,
-    fetchCustomerListSuccess,
     fetchProductListData,
     fetchProductListFailure,
     fetchProductListSuccess,
-    fetchSellerListData,
-    fetchSellerListFailure,
-    fetchSellerListSuccess,
-    fetchorderListData,
-    fetchorderListFailure,
-    fetchorderListSuccess,
-    updateCustomer,
-    updateCustomerFailure,
-    updateCustomerSuccess,
-    updateOrder,
-    updateOrderFailure,
-    updateOrderSuccess,
+    fetchCategoryListData,
+    fetchCategoryListFailure,
+    fetchCategoryListSuccess,
+    updateCategory,
+    updateCategoryFailure,
+    updateCategorySuccess,
 } from "./ecommerce_action";
 
 @Injectable()
@@ -72,128 +57,57 @@ export class EcommerceEffects {
         )
     );
 
-    // Order
-    fetchData$ = createEffect(() =>
+    // Category
+    fetchCategoryData$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(fetchorderListData),
+            ofType(fetchCategoryListData),
             mergeMap(() =>
-                this.restApiService.getOrderData().pipe(
-                    map((orders) => {
-                        const order = JSON.parse(orders).data;
-                        return fetchorderListSuccess({ order });
+                this.restApiService.getCategoryData().pipe(
+                    map((category) => {
+                        const Category = JSON.parse(category).data;
+                        return fetchCategoryListSuccess({ Category });
                     }),
-                    catchError((error) => of(fetchorderListFailure({ error })))
+                    catchError((error) => of(fetchCategoryListFailure({ error })))
                 )
             )
         )
     );
 
-    addData$ = createEffect(() =>
+    addCategoryData$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(addOrder),
+            ofType(addCategory),
             mergeMap(({ newData }) =>
-                this.restApiService.postOrderData(newData).pipe(
+                this.restApiService.postCategoryData(newData).pipe(
                     map((responseData) =>
-                        addOrderSuccess({ newData: responseData.data })
+                        addCategorySuccess({ newData: responseData.data })
                     ),
-                    catchError((error) => of(addOrderFailure({ error })))
+                    catchError((error) => of(addCategoryFailure({ error })))
                 )
             )
         )
     );
 
-    updateData$ = createEffect(() =>
+    updateCategoryData$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(updateOrder),
+            ofType(updateCategory),
             mergeMap(({ updatedData }) =>
-                this.restApiService.patchOrderData(updatedData).pipe(
+                this.restApiService.patchCategoryData(updatedData).pipe(
                     map((responseData) =>
-                        updateOrderSuccess({ updatedData: responseData.data })
+                        updateCategorySuccess({ updatedData: responseData.data })
                     ),
-                    catchError((error) => of(addOrderFailure({ error })))
+                    catchError((error) => of(addCategoryFailure({ error })))
                 )
             )
         )
     );
 
-    deleteData$ = createEffect(() =>
+    deleteCategoryData$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(deleteOrder),
+            ofType(deleteCategory),
             mergeMap(({ id }) =>
-                this.restApiService.deleteOrder(id).pipe(
-                    map(() => deleteOrderSuccess({ id })),
-                    catchError((error) => of(deleteOrderFailure({ error })))
-                )
-            )
-        )
-    );
-
-    // Customer
-    fetchCustomerData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(fetchCustomerListData),
-            mergeMap(() =>
-                this.restApiService.getCustomerData().pipe(
-                    map((Customers) => {
-                        const Customer = JSON.parse(Customers).data;
-                        return fetchCustomerListSuccess({ Customer });
-                    }),
-                    catchError((error) => of(fetchCustomerListFailure({ error })))
-                )
-            )
-        )
-    );
-
-    addCustomerData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(addCustomer),
-            mergeMap(({ newData }) =>
-                this.restApiService.postCustomerData(newData).pipe(
-                    map((responseData) =>
-                        addCustomerSuccess({ newData: responseData.data })
-                    ),
-                    catchError((error) => of(addCustomerFailure({ error })))
-                )
-            )
-        )
-    );
-
-    updateCustomerData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(updateCustomer),
-            mergeMap(({ updatedData }) =>
-                this.restApiService.patchCustomerData(updatedData).pipe(
-                    map((responseData) =>
-                        updateCustomerSuccess({ updatedData: responseData.data })
-                    ),
-                    catchError((error) => of(updateCustomerFailure({ error })))
-                )
-            )
-        )
-    );
-
-    deleteCustomerData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(deleteCustomer),
-            mergeMap(({ id }) =>
-                this.restApiService.deleteCustomer(id).pipe(
-                    map(() => deleteCustomerSuccess({ id })),
-                    catchError((error) => of(deleteCustomerFailure({ error })))
-                )
-            )
-        )
-    );
-
-    // Seller
-    fetchSellerData$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(fetchSellerListData),
-            mergeMap(() =>
-                this.restApiService.getSellerData().pipe(
-                    map((Seller) => {
-                        return fetchSellerListSuccess({ Seller });
-                    }),
-                    catchError((error) => of(fetchSellerListFailure({ error })))
+                this.restApiService.deleteCategory(id).pipe(
+                    map(() => deleteCategorySuccess({ id })),
+                    catchError((error) => of(deleteCategoryFailure({ error })))
                 )
             )
         )

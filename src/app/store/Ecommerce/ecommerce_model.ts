@@ -1,15 +1,12 @@
 export interface productModel {
-  _id?: any;
-  image?: any;
-  name?: any;
-  category?: any;
-  stock?: any;
-  price?: any;
-  orders?: any;
-  rating?: any;
-  publishedDate?: any;
-  time?: any;
-  status?: any;
+  id?: any;
+  anh?: any;
+  available?: any;
+  bonus?: any;
+  don_gia?: any;
+  mo_ta?: any;
+  phan_loai?: any;
+  ten?: any;
 }
 
 // tslint:disable-next-line: class-name
@@ -42,27 +39,22 @@ export class productListModel {
   manufacture_brand?: string;
 }
 
-export interface OrdersModel {
-  _id: any;
-  orderId: string;
-  customer: string;
-  amount: string;
-  orderDate: string;
-  payment: string;
-  product: string;
-  status: string;
-  isSelected?: any;
+export interface categoryModel {
+  id: string;
+  ma: string;
+  ten: string;
+  anh?: any;
 }
 
 export interface customerModel {
-  _id:any;
+  _id: any;
   customer: string;
   email: string;
   phone: string;
   date: string;
   status: string;
   statusClass: string;
-  isSelected?:any;
+  isSelected?: any;
 }
 
 export interface CartModel {
@@ -92,7 +84,7 @@ import {
   ApexTooltip,
   ApexLegend,
   ApexAnnotations,
-  ApexTheme
+  ApexTheme,
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -114,7 +106,7 @@ export type ChartOptions = {
   toolbar?: any;
   subtitle?: ApexTitleSubtitle;
   plotOptions?: ApexPlotOptions;
-  theme?: ApexTheme
+  theme?: ApexTheme;
 };
 
 export interface sellerModel {
@@ -123,5 +115,5 @@ export interface sellerModel {
   sellername: string;
   stock: string;
   ballence: string;
-  category:string;
+  category: string;
 }

@@ -14,17 +14,21 @@ const httpOptions = {
   providedIn: "root",
 })
 export class restApiService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Product Rest Api
    */
   // Get
-  getData(phan_loai: string = "", id_product: number = 0, gia: any = ""): Observable<any> {
+  getData(
+    phan_loai: string = "",
+    id_product: number = 0,
+    gia: any = ""
+  ): Observable<any> {
     const data = {
-      "phan_loai": phan_loai,
-      "id_product": id_product,
-      "gia": gia,
+      phan_loai: phan_loai,
+      id_product: id_product,
+      gia: gia,
     };
     return this.http.post(
       GlobalComponent.API_URL + GlobalComponent.product,
@@ -44,56 +48,54 @@ export class restApiService {
   }
 
   /**
-   * Order Rest Api
+   * Category Rest Api
    */
 
   // Get
-  getOrderData(): Observable<any> {
-    var headerToken = {
-      Authorization: `Bearer ` + sessionStorage.getItem("token"),
-    };
-    return this.http.get(GlobalComponent.API_URL + GlobalComponent.order, {
-      headers: headerToken,
-      responseType: "text",
-    });
+  getCategoryData(): Observable<any> {
+    return this.http.post(
+      GlobalComponent.API_URL + GlobalComponent.category,
+      {},
+      httpOptions
+    );
   }
 
   // POST
-  postOrderData(employee: any): Observable<any> {
+  postCategoryData(employee: any): Observable<any> {
     return this.http.post(
-      GlobalComponent.API_URL + GlobalComponent.order,
+      GlobalComponent.API_URL + GlobalComponent.category,
       JSON.stringify(employee),
       httpOptions
     );
   }
 
   // Single
-  getSingleOrderData(id: any): Observable<any> {
+  getSingleCategoryData(id: any): Observable<any> {
     var headerToken = {
       Authorization: `Bearer ` + sessionStorage.getItem("token"),
     };
     return this.http.get(
-      GlobalComponent.API_URL + GlobalComponent.orderId + id,
+      GlobalComponent.API_URL + GlobalComponent.categoryId + id,
       { headers: headerToken, responseType: "text" }
     );
   }
 
-  //Order Patch
-  patchOrderData(employee: any): Observable<any> {
+  //Category Patch
+  patchCategoryData(employee: any): Observable<any> {
     return this.http.patch(
-      GlobalComponent.API_URL + GlobalComponent.orderId + employee.ids,
+      GlobalComponent.API_URL + GlobalComponent.categoryId + employee.ids,
       JSON.stringify(employee),
       httpOptions
     );
   }
 
-  // Order Delete
-  deleteOrder(id: any): Observable<any> {
+  // Category Delete
+  deleteCategory(id: any): Observable<any> {
     var headerToken = {
       Authorization: `Bearer ` + sessionStorage.getItem("token"),
     };
     return this.http.delete(
-      GlobalComponent.API_URL + GlobalComponent.orderId + id,
+      GlobalComponent.API_URL + GlobalComponent.categoryId + id,
       { headers: headerToken, responseType: "text" }
     );
   }
@@ -418,9 +420,9 @@ export class restApiService {
     });
   }
 
-  // Crypto Order
-  getCryptoOrderData(): Observable<any[]> {
-    return this.http.get<any[]>("/app/cryptoOrder");
+  // Crypto Category
+  getCryptoCategoryData(): Observable<any[]> {
+    return this.http.get<any[]>("/app/cryptoCategory");
   }
 
   // Crypto Transaction

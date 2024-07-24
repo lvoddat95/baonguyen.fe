@@ -39,13 +39,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AddProductComponent } from './add-product/add-product.component';
-import { OrdersComponent } from './orders/orders.component';
-import { OrdersDetailsComponent } from './orders-details/orders-details.component';
-import { CustomersComponent } from './customers/customers.component';
+
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { SellersComponent } from './sellers/sellers.component';
-import { SellerDetailsComponent } from './seller-details/seller-details.component';
 
 import { DatePipe } from '@angular/common';
 import { ProductCategoryComponent } from './product-category/product-category.component';
@@ -62,13 +58,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ProductDetailComponent,
     AddProductComponent,
     ProductCategoryComponent,
-    OrdersComponent,
-    OrdersDetailsComponent,
-    CustomersComponent,
     CartComponent,
     CheckoutComponent,
-    SellersComponent,
-    SellerDetailsComponent
   ],
   imports: [
     CommonModule,

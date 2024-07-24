@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { Transactions, apikeys, application, cryptoOrders, deals, folderData, projectListWidgets, recentData, sellerDetail, sellerDetals, tasks } from '../data';
+import { apikeys, application} from '../data';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -118,138 +118,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return throwError({ status: 401, error: { message: 'Unauthorised' } });
                 }
             }
-
-            // get seller
-            if (request.url.endsWith('/app/seller') && request.method === 'GET') {
-                if (sellerDetals) {
-                    return of(new HttpResponse({ status: 200, body: sellerDetals }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // get Project
-            if (request.url.endsWith('/app/project') && request.method === 'GET') {
-                if (projectListWidgets) {
-                    return of(new HttpResponse({ status: 200, body: projectListWidgets }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-
-            // get Kanban
-            if (request.url.endsWith('/app/kanban') && request.method === 'GET') {
-                if (tasks) {
-                    return of(new HttpResponse({ status: 200, body: tasks }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // get Deal
-            if (request.url.endsWith('/app/deal') && request.method === 'GET') {
-                if (deals) {
-                    return of(new HttpResponse({ status: 200, body: deals }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // get Crypto Order
-            if (request.url.endsWith('/app/cryptoOrder') && request.method === 'GET') {
-                if (cryptoOrders) {
-                    return of(new HttpResponse({ status: 200, body: cryptoOrders }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // get Transaction
-            if (request.url.endsWith('/app/transaction') && request.method === 'GET') {
-                if (Transactions) {
-                    return of(new HttpResponse({ status: 200, body: Transactions }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // get folder
-            if (request.url.endsWith('/app/folder') && request.method === 'GET') {
-                if (folderData) {
-                    return of(new HttpResponse({ status: 200, body: folderData }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            if (request.url.endsWith('/app/folder') && request.method === 'POST') {
-                const newUser = request.body;
-                if (folderData) {
-                    return of(new HttpResponse({ status: 200, body: newUser }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // Update listingGrid
-            if (request.url.endsWith('/app/folder') && request.method === 'PUT') {
-                const updatedUser = request.body;
-                if (folderData) {
-                    return of(new HttpResponse({ status: 200, body: updatedUser }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // DELETE listingGrid
-            if (request.url.endsWith('/app/folder') && request.method === 'DELETE') {
-                const updatedUser = request.body;
-                if (folderData) {
-                    return of(new HttpResponse({ status: 200, body: updatedUser })); // respond 200 OK
-                } else {
-                    return throwError({ status: 401, error: { message: 'Unauthorised' } });
-                }
-            }
-
-            // get file
-            if (request.url.endsWith('/app/file') && request.method === 'GET') {
-                if (recentData) {
-                    return of(new HttpResponse({ status: 200, body: recentData }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            if (request.url.endsWith('/app/file') && request.method === 'POST') {
-                const newUser = request.body;
-                if (recentData) {
-                    return of(new HttpResponse({ status: 200, body: newUser }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // Update listingGrid
-            if (request.url.endsWith('/app/file') && request.method === 'PUT') {
-                const updatedUser = request.body;
-                if (recentData) {
-                    return of(new HttpResponse({ status: 200, body: updatedUser }));
-                } else {
-                    return throwError({ status: 401, error: { message: 'No Data Found' } });
-                }
-            }
-
-            // DELETE listingGrid
-            if (request.url.endsWith('/app/file') && request.method === 'DELETE') {
-                const updatedUser = request.body;
-                if (recentData) {
-                    return of(new HttpResponse({ status: 200, body: updatedUser })); // respond 200 OK
-                } else {
-                    return throwError({ status: 401, error: { message: 'Unauthorised' } });
-                }
-            }
-
              // get application
              if (request.url.endsWith('/app/application') && request.method === 'GET') {
                 if (application) {
