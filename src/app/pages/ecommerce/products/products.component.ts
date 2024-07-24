@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { Component, QueryList, ViewChildren } from "@angular/core";
 import { DecimalPipe } from "@angular/common";
-import { Observable, Subscription } from "rxjs";
+import { Observable } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   UntypedFormBuilder,
@@ -45,7 +45,7 @@ import { ToastService } from "./toast-service";
 /**
  * Products Components
  */
-export class ProductsComponent implements OnInit, OnDestroy  {
+export class ProductsComponent {
   breadCrumbItems!: Array<{}>;
   ProductData!: any;
   checkedList: any;
@@ -62,7 +62,7 @@ export class ProductsComponent implements OnInit, OnDestroy  {
   allproduct: any;
 
   categories!: any;
-  dataLoading: boolean = false;
+
   constructor(
     public toastService: ToastService,
     private modalService: NgbModal,
@@ -71,7 +71,7 @@ export class ProductsComponent implements OnInit, OnDestroy  {
   ) {
     this.subItem = [];
   }
-  private subscriptions: Subscription = new Subscription();
+
   ngOnInit(): void {
     /**
      * BreadCrumb
@@ -81,35 +81,30 @@ export class ProductsComponent implements OnInit, OnDestroy  {
       { label: "Danh sách", active: true },
     ];
 
-    // this.store.dispatch(fetchProductListData());
+    /**
+     * fetches data
+     */
+    this.store.dispatch(fetchProductListData());
+
+    this.store.select(selectDataLoading).subscribe((data) => {
+      if (data == false) {
+        document.getElementById("elmLoader")?.classList.add("d-none");
+      }
+    });
+
+    this.store.select(selectProductData).subscribe((data) => {
+      this.products = data;
+      this.allproducts = cloneDeep(data);
+      this.products = this.service.changePage(this.allproducts);
+    });
+
+
     this.store.dispatch(fetchCategoryListData());
+    this.store.select(selectCategoryData).subscribe((data) => {
+      this.categories = data;
+    });
 
-    this.subscriptions.add(
-      this.store.select(selectDataLoading).subscribe((loading) => {
-        this.dataLoading = loading;
-        if (loading === false) {
-          document.getElementById("elmLoader")?.classList.add("d-none");
-        }
-      })
-    );
-
-    // this.subscriptions.add(
-    //   this.store.select(selectProductData).subscribe((products) => {
-    //     this.products = products;
-    //     console.log(products)
-    //   })
-    // );
-
-    this.subscriptions.add(
-      this.store.select(selectCategoryData).subscribe((categories) => {
-        this.categories = categories;
-        console.log(categories)
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.ProductData = Products;
   }
 
   num: number = 0;
