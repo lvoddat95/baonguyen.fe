@@ -1,26 +1,19 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import {
-  addCategorySuccess,
-  deleteCategorySuccess,
-  deleteProductSuccess,
   fetchProductListData,
   fetchProductListFailure,
   fetchProductListSuccess,
-  fetchCategoryListData,
-  fetchCategoryListFailure,
-  fetchCategoryListSuccess,
+  deleteProductSuccess,
 } from "./ecommerce_action";
 
 export interface EcommerceState {
   Product: any[];
-  Category: any[];
   loading: boolean;
   error: any;
 }
 
 export const initialState: EcommerceState = {
   Product: [],
-  Category: [],
   loading: false,
   error: null,
 };
@@ -42,17 +35,6 @@ export const ecommercerReducer = createReducer(
       (product) => !id.includes(product._id)
     );
     return { ...state, Product: updatedProduct, error: null };
-  }),
-
-  // Category
-  on(fetchCategoryListData, (state) => {
-    return { ...state, loading: true, error: null };
-  }),
-  on(fetchCategoryListSuccess, (state, { Category }) => {
-    return { ...state, Category, loading: false };
-  }),
-  on(fetchCategoryListFailure, (state, { error }) => {
-    return { ...state, error, loading: false };
   }),
 
 );

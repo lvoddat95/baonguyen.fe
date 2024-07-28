@@ -30,7 +30,7 @@
           </div>
           <!--end col-->
 
-          <!-- <div class="col-xxl-3 col-sm-4">
+          <div class="col-xxl-3 col-sm-4">
             <div class="input-light">
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
                 name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
@@ -39,16 +39,17 @@
                 <option value=false>Hết hàng</option>
               </select>
             </div>
-          </div> -->
+          </div>
           <!--end col-->
 
           <div class="col-xxl-3 col-sm-4">
             <div class="input-light">
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
-                name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
-                <option value="" selected>Trạng thái</option>
-                <option value=true>Hoạt động</option>
-                <option value=false>Không hoạt động</option>
+                name="choices-single-default" id="idCategory" [(ngModel)]="category">
+                <option value="" selected>Danh mục</option>
+                @for (item of categories; track $index) {
+                  <option value="{{item}}">{{item.ten}}</option>
+                }
               </select>
             </div>
           </div>
@@ -104,7 +105,8 @@
                 <td>{{getNameFromCode(data.phan_loai)}}</td>
                 <td class="priority">
                   <span class="badge bg-warning text-uppercase"
-                    [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-warning': data.bonus === true}">{{ data.bonus ?
+                    [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-warning': data.bonus === true}">{{
+                    data.bonus ?
                     'Có' : 'Không' }}</span>
                 </td>
                 <td class="status"><span class="badge text-uppercase"

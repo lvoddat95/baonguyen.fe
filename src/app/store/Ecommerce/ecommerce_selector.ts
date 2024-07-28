@@ -8,11 +8,6 @@ export const selectProductData = createSelector(
     (state: EcommerceState) => state.Product
 );
 
-export const selectCategoryData = createSelector(
-    selectDataState,
-    (state: EcommerceState) => state.Category
-);
-
 export const selectDataLoading = createSelector(
     selectDataState,
     (state: EcommerceState) => state.loading

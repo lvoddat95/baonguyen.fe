@@ -24,17 +24,13 @@ import { Store } from "@ngrx/store";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { cloneDeep } from "lodash";
 import { Products } from "src/app/core/data";
-import {
-  deleteProduct,
-  fetchProductListData,
-  fetchCategoryListData,
-} from "src/app/store/Ecommerce/ecommerce_action";
-import {
-  selectCategoryData,
-  selectDataLoading,
-  selectProductData,
-} from "src/app/store/Ecommerce/ecommerce_selector";
 import { ToastService } from "./toast-service";
+
+import { fetchProductListData } from "src/app/store/Ecommerce/ecommerce_action";
+import { selectDataLoading, selectProductData } from "src/app/store/Ecommerce/ecommerce_selector";
+
+import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/product-category.action";
+import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
 
 @Component({
   selector: "app-products",
@@ -47,11 +43,11 @@ import { ToastService } from "./toast-service";
  */
 export class ProductsComponent {
   breadCrumbItems!: Array<{}>;
-  ProductData!: any;
   checkedList: any;
   masterSelected!: boolean;
   searchTerm: any;
   status: any = "";
+  category: any = "";
   date: any;
 
   searchResults: any;
@@ -85,6 +81,7 @@ export class ProductsComponent {
      * fetches data
      */
     this.store.dispatch(fetchProductListData());
+    this.store.dispatch(fetchCategoryListData());
 
     this.store.select(selectDataLoading).subscribe((data) => {
       if (data == false) {
@@ -97,14 +94,20 @@ export class ProductsComponent {
       this.allproducts = cloneDeep(data);
       this.products = this.service.changePage(this.allproducts);
     });
+    this.store.select(selectAllCategories).subscribe((data) => {
 
+      if (data && data.cake_menu) {
+        const combinedMenu = [
 
-    this.store.dispatch(fetchCategoryListData());
-    this.store.select(selectCategoryData).subscribe((data) => {
-      this.categories = data;
+          ...Object.values(data.cake_menu),
+          ...data.accessory_menu,
+          ...data.snack_menu
+        ].filter(item => item.id !== 0);
+        this.categories = combinedMenu;
+      }
+
     });
 
-    this.ProductData = Products;
   }
 
   num: number = 0;
@@ -116,6 +119,10 @@ export class ProductsComponent {
   };
 
   getNameFromCode(code: string): string {
+    if (!this.categories || !Array.isArray(this.categories)) {
+      return "Không tìm thấy";
+    }
+
     const item = this.categories.find(
       (menuItem: { ma: string }) => menuItem.ma === code
     );
@@ -201,11 +208,11 @@ export class ProductsComponent {
     this.checkedValGet = checkedVal;
     checkedVal.length > 0
       ? ((
-          document.getElementById("remove-actions") as HTMLElement
-        ).style.display = "block")
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "block")
       : ((
-          document.getElementById("remove-actions") as HTMLElement
-        ).style.display = "none");
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "none");
   }
 
   // Filtering

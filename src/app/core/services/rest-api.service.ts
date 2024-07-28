@@ -20,7 +20,7 @@ export class restApiService {
    * Product Rest Api
    */
   // Get
-  getData(
+  getProductData(
     phan_loai: string = "",
     id_product: number = 0,
     gia: any = ""
@@ -40,7 +40,7 @@ export class restApiService {
   }
 
   // Delete
-  deleteData(id: any): Observable<any> {
+  deleteProductData(id: any): Observable<any> {
     return this.http.delete(
       GlobalComponent.API_URL + GlobalComponent.productDelete + id,
       { responseType: "text" }
@@ -50,7 +50,6 @@ export class restApiService {
   /**
    * Category Rest Api
    */
-
   // Get
   getCategoryData(): Observable<any> {
     return this.http.post(

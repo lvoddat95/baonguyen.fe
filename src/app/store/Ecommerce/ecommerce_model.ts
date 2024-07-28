@@ -1,4 +1,4 @@
-export interface productModel {
+export interface ProductModel {
   id?: any;
   anh?: any;
   available?: any;

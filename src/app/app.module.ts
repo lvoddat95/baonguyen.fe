@@ -36,6 +36,7 @@ import { EcommerceEffects } from "./store/Ecommerce/ecommerce_effect";
 import { FileManagerEffects } from "./store/File Manager/filemanager_effect";
 import { ApikeyEffects } from "./store/APIKey/apikey_effect";
 import { AuthenticationEffects } from "./store/Authentication/authentication.effects";
+import { CategoryEffects } from "./store/Ecommerce/product-category/product-category.effect";
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -73,6 +74,7 @@ if (environment.defaultauth === "firebase") {
       EcommerceEffects,
       FileManagerEffects,
       ApikeyEffects,
+      CategoryEffects,
     ]),
     PagesModule,
     NgPipesModule,
