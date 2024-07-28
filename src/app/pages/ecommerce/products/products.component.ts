@@ -219,13 +219,15 @@ export class ProductsComponent {
   isstatus?: any;
   SearchData() {
     var status = document.getElementById("idStatus") as HTMLInputElement;
-    var payment = document.getElementById("idPayment") as HTMLInputElement;
+    var category = document.getElementById("idCategory") as HTMLInputElement;
     if (status.value != "") {
       this.products = this.allproducts.filter((product: any) => {
         return product.available.toString() == status.value;
       });
-
-      console.log(status.value);
+    } else if (category.value != '') {
+      this.products = this.allproducts.filter((product: any) => {
+        return product.phan_loai.toString() == category.value;
+      });
     } else {
       this.products = this.service.changePage(this.allproducts);
     }
@@ -250,6 +252,17 @@ export class ProductsComponent {
     if (this.status != "") {
       this.products = this.allproducts.filter((product: any) => {
         return product.available.toString() == this.status;
+      });
+    } else {
+      this.products = this.service.changePage(this.allproducts);
+    }
+  }
+
+  categoryFilter() {
+    console.log(this.category)
+    if (this.category != "") {
+      this.products = this.allproducts.filter((product: any) => {
+        return product.phan_loai.toString() == this.category;
       });
     } else {
       this.products = this.service.changePage(this.allproducts);
