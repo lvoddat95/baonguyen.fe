@@ -1,19 +1,28 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import {
   fetchProductListData,
-  fetchProductListFailure,
   fetchProductListSuccess,
+  fetchProductListFailure,
   deleteProductSuccess,
+
+  fetchOrderListData,
+  fetchOrderListSuccess,
+  fetchOrderListFailure,
+  updateOrderStatus,
+  updateOrderStatusSuccess,
+  updateOrderStatusFailure,
 } from "./ecommerce_action";
 
 export interface EcommerceState {
   Product: any[];
+  Order: any[];
   loading: boolean;
   error: any;
 }
 
 export const initialState: EcommerceState = {
   Product: [],
+  Order: [],
   loading: false,
   error: null,
 };
@@ -36,6 +45,36 @@ export const ecommercerReducer = createReducer(
     );
     return { ...state, Product: updatedProduct, error: null };
   }),
+
+
+  // Order
+  on(fetchOrderListData, (state) => {
+    return { ...state, loading: true, error: null };
+  }),
+  on(fetchOrderListSuccess, (state, { Order }) => {
+    return { ...state, Order, loading: false };
+  }),
+  on(fetchOrderListFailure, (state, { error }) => {
+    return { ...state, error, loading: false };
+  }),
+
+
+ on(updateOrderStatus, (state) => ({
+    ...state,
+    updatingOrderStatus: true,
+    updateOrderStatusError: null,
+  })),
+  on(updateOrderStatusSuccess, (state) => ({
+    ...state,
+    updatingOrderStatus: false,
+    updateOrderStatusError: null,
+  })),
+  on(updateOrderStatusFailure, (state, { error }) => ({
+    ...state,
+    updatingOrderStatus: false,
+    updateOrderStatusError: error,
+  })),
+
 
 );
 

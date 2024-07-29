@@ -9,6 +9,20 @@ export interface ProductModel {
   ten?: any;
 }
 
+export interface OrdersModel {
+  id?: any;
+  sdt?: any;
+  dchi?: any;
+  tong_diem?: any;
+  tong_tien?: any;
+  tuoi?: any;
+  ngay_nhan?: any;
+  id_user?: any;
+  trang_thai?: any;
+  ngay_nhap?: any;
+  ten_sp?: any;
+}
+
 // tslint:disable-next-line: class-name
 export class arrayModel {
   key!: string;

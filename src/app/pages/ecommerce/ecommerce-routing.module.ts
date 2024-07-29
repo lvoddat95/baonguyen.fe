@@ -5,9 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from "./products/products.component";
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
 import { AddProductComponent } from "./add-product/add-product.component";
-import { CartComponent } from "./cart/cart.component";
-import { CheckoutComponent } from "./checkout/checkout.component";
 import { ProductCategoryComponent } from './product-category/product-category.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
   {
@@ -27,12 +26,8 @@ const routes: Routes = [
     component: ProductCategoryComponent
   },
   {
-    path: "cart",
-    component: CartComponent
-  },
-  {
-    path: "checkout",
-    component: CheckoutComponent
+    path: "orders",
+    component: OrdersComponent
   },
 
 ];

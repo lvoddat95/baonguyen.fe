@@ -59,6 +59,14 @@ export class ProductsComponent {
 
   categories!: any;
 
+  num: number = 0;
+  option = {
+    startVal: this.num,
+    useEasing: true,
+    duration: 2,
+    decimalPlaces: 2,
+  };
+
   constructor(
     public toastService: ToastService,
     private modalService: NgbModal,
@@ -95,10 +103,8 @@ export class ProductsComponent {
       this.products = this.service.changePage(this.allproducts);
     });
     this.store.select(selectAllCategories).subscribe((data) => {
-
       if (data && data.cake_menu) {
         const combinedMenu = [
-
           ...Object.values(data.cake_menu),
           ...data.accessory_menu,
           ...data.snack_menu
@@ -109,14 +115,6 @@ export class ProductsComponent {
     });
 
   }
-
-  num: number = 0;
-  option = {
-    startVal: this.num,
-    useEasing: true,
-    duration: 2,
-    decimalPlaces: 2,
-  };
 
   getNameFromCode(code: string): string {
     if (!this.categories || !Array.isArray(this.categories)) {

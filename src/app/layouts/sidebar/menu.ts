@@ -11,24 +11,24 @@ export const MENU: MenuItem[] = [
     label: 'Sản phẩm',
     icon: ' ri-product-hunt-line',
     isCollapsed: true,
-    link: '/analytics',
+    link: '/',
 
     subItems: [
       {
         id: 3,
-        label: 'Danh sách sản phẩm',
+        label: 'Tất cả sản phẩm',
         link: '/ecommerce/products',
         parentId: 2
       },
       {
         id: 4,
-        label: 'Thêm mới sản phẩm',
-        link: '/ecommerce/add-product',
+        label: 'Đơn hàng',
+        link: '/ecommerce/orders',
         parentId: 2
       },
       {
         id: 5,
-        label: 'Danh mục sản phẩm',
+        label: 'Danh mục',
         link: '/ecommerce/product-category',
         parentId: 2
       },
@@ -39,20 +39,54 @@ export const MENU: MenuItem[] = [
     label: 'Khách hàng',
     icon: '  ri-gift-line',
     isCollapsed: true,
-    link: '/analytics',
+    link: '/',
 
     subItems: [
       {
         id: 7,
         label: 'Lịch sử đổi điểm',
-        link: '/ecommerce/products',
+        link: '/customer/products',
         parentId: 6
       },
       {
         id: 8,
         label: 'Sinh nhật',
-        link: '/ecommerce/products',
+        link: '/customer/products',
         parentId: 6
+      },
+    ]
+  },
+  {
+    id: 9,
+    label: 'Cấu hình',
+    icon: ' ri-settings-4-line',
+    isCollapsed: true,
+    link: '/',
+
+    subItems: [
+      {
+        id: 10,
+        label: 'Quản lý thông báo',
+        link: '/setting/notification',
+        parentId: 9
+      },
+      {
+        id: 11,
+        label: 'Gợi ý',
+        link: '/setting/tips',
+        parentId: 9
+      },
+      {
+        id: 12,
+        label: 'Videos',
+        link: '/setting/videos',
+        parentId: 9
+      },
+      {
+        id: 13,
+        label: 'Gifts',
+        link: '/setting/gifts',
+        parentId: 9
       },
     ]
   },

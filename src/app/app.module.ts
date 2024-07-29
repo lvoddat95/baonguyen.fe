@@ -33,8 +33,6 @@ import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
 import { EcommerceEffects } from "./store/Ecommerce/ecommerce_effect";
-import { FileManagerEffects } from "./store/File Manager/filemanager_effect";
-import { ApikeyEffects } from "./store/APIKey/apikey_effect";
 import { AuthenticationEffects } from "./store/Authentication/authentication.effects";
 import { CategoryEffects } from "./store/Ecommerce/product-category/product-category.effect";
 
@@ -72,8 +70,6 @@ if (environment.defaultauth === "firebase") {
     EffectsModule.forRoot([
       AuthenticationEffects,
       EcommerceEffects,
-      FileManagerEffects,
-      ApikeyEffects,
       CategoryEffects,
     ]),
     PagesModule,

@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule, NgbTypeaheadModule, NgbDropdownModule, NgbNavModule, NgbAccordionModule, NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 // Mask
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask'
@@ -39,12 +40,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { ProductsComponent } from './products/products.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AddProductComponent } from './add-product/add-product.component';
-
-import { CartComponent } from './cart/cart.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-
-import { DatePipe } from '@angular/common';
 import { ProductCategoryComponent } from './product-category/product-category.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://httpbin.org/post',
@@ -58,8 +55,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ProductDetailComponent,
     AddProductComponent,
     ProductCategoryComponent,
-    CartComponent,
-    CheckoutComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,
