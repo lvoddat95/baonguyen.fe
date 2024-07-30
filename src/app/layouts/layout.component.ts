@@ -24,10 +24,14 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.store.select('layout').subscribe((data) => {
       this.layoutType = data.LAYOUT;
+
+      const themeMode = sessionStorage.getItem('theme-mode');
+      const modeValue = themeMode ? JSON.parse(themeMode) : 'light';
+
       document.documentElement.setAttribute('data-layout', data.LAYOUT);
       document.documentElement.setAttribute('data-theme', data.LAYOUT_THEME);
       document.documentElement.setAttribute('data-theme-colors', data.LAYOUT_THEME_COLOR);
-      document.documentElement.setAttribute('data-bs-theme', data.LAYOUT_MODE);
+      document.documentElement.setAttribute('data-bs-theme', modeValue);
       document.documentElement.setAttribute('data-layout-width', data.LAYOUT_WIDTH);
       document.documentElement.setAttribute('data-layout-position', data.LAYOUT_POSITION);
       document.documentElement.setAttribute('data-topbar', data.TOPBAR);

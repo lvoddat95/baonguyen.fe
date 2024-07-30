@@ -40,15 +40,15 @@
               <select class="form-control" data-choices data-choices-search-false name="choices-single-default"
                 id="idStatus" [(ngModel)]="status" (ngModelChange)="filterStatus()">
                 <option value="" selected>Trạng thái</option>
-                <option value="DD" >DD</option>
-                <option value="DS" >DS</option>
-                <option value="HUY" >HUY</option>
+                <option value="DD">DD</option>
+                <option value="DS">DS</option>
+                <option value="HUY">HUY</option>
               </select>
             </div>
           </div>
           <!--end col-->
           <div class="col-xxl-2 col-sm-4">
-       
+
           </div>
           <!--end col-->
           <div class="col-xxl-1 col-sm-4">
@@ -83,13 +83,10 @@
                               [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
                           </div>
                         </th>
-                        <th class="sort" (click)="onSort('id')">ID</th>
-                        <th class="sort" (click)="onSort('ten_sp')">Sản phẩm</th>
-                        <th class="sort" (click)="onSort('sdt')">SĐT</th>
-                        <th class="sort" (click)="onSort('tuoi')">Tuổi</th>
-                        <th class="sort" (click)="onSort('dchi')">Địa chỉ</th>
-                        <th class="sort" (click)="onSort('tong_tien')">Tổng tiền</th>
-                        <th class="sort" (click)="onSort('tong_diem')">Tổng điểm</th>
+                        <th class="sort" (click)="onSort('id')">ID/Sản phẩm</th>
+                        <th class="sort" (click)="onSort('sdt')">Thông tin</th>
+                        <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
+                        <th class="sort" (click)="onSort('tong_diem')">Điểm</th>
                         <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
                         <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
                         <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
@@ -105,20 +102,24 @@
                               [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
                           </div>
                         </th>
-                        <td><a routerLink="/ecommerce/order-details">
-                            <ngb-highlight [result]="data.id" [term]="searchTerm"></ngb-highlight>
-                          </a></td>
                         <td>
                           <ngb-highlight [result]="data.ten_sp" [term]="searchTerm"></ngb-highlight>
+                          <p class="mb-0">
+                            <a routerLink="/ecommerce/order-details">
+                              <ngb-highlight [result]="data.id" [term]="searchTerm"></ngb-highlight>
+                            </a>
+                          </p>
                         </td>
                         <td>
-                          <ngb-highlight [result]="data.sdt" [term]="searchTerm"></ngb-highlight>
-                        </td>
-                        <td>
-                          <ngb-highlight [result]="data.tuoi" [term]="searchTerm"></ngb-highlight>
-                        </td>
-                        <td>
-                          <ngb-highlight [result]="data.dchi" [term]="searchTerm"></ngb-highlight>
+                          <div class="block text-xss">
+                            SĐT: <ngb-highlight [result]="data.sdt" [term]="searchTerm"></ngb-highlight>
+                          </div>
+                          <div class="block text-xs">
+                            Tuổi: <ngb-highlight [result]="data.tuoi" [term]="searchTerm"></ngb-highlight>
+                          </div>
+                          <div class="block text-xs">
+                            Đ/c: <ngb-highlight [result]="data.dchi" [term]="searchTerm"></ngb-highlight>
+                          </div>
                         </td>
                         <td>
                           <ngb-highlight [result]="data.tong_tien" [term]="searchTerm"></ngb-highlight>
@@ -206,8 +207,8 @@
                         <th class="sort" (click)="onSort('sdt')">SĐT</th>
                         <th class="sort" (click)="onSort('tuoi')">Tuổi</th>
                         <th class="sort" (click)="onSort('dchi')">Địa chỉ</th>
-                        <th class="sort" (click)="onSort('tong_tien')">Tổng tiền</th>
-                        <th class="sort" (click)="onSort('tong_diem')">Tổng điểm</th>
+                        <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
+                        <th class="sort" (click)="onSort('tong_diem')">Điểm</th>
                         <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
                         <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
                         <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
@@ -324,8 +325,8 @@
                         <th class="sort" (click)="onSort('sdt')">SĐT</th>
                         <th class="sort" (click)="onSort('tuoi')">Tuổi</th>
                         <th class="sort" (click)="onSort('dchi')">Địa chỉ</th>
-                        <th class="sort" (click)="onSort('tong_tien')">Tổng tiền</th>
-                        <th class="sort" (click)="onSort('tong_diem')">Tổng điểm</th>
+                        <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
+                        <th class="sort" (click)="onSort('tong_diem')">Điểm</th>
                         <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
                         <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
                         <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
@@ -443,8 +444,8 @@
                         <th class="sort" (click)="onSort('sdt')">SĐT</th>
                         <th class="sort" (click)="onSort('tuoi')">Tuổi</th>
                         <th class="sort" (click)="onSort('dchi')">Địa chỉ</th>
-                        <th class="sort" (click)="onSort('tong_tien')">Tổng tiền</th>
-                        <th class="sort" (click)="onSort('tong_diem')">Tổng điểm</th>
+                        <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
+                        <th class="sort" (click)="onSort('tong_diem')">Điểm</th>
                         <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
                         <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
                         <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
@@ -541,7 +542,7 @@
                 </div>
               </ng-template>
             </li>
-    
+
           </ul>
 
           <!-- Tab panes -->

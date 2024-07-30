@@ -44,14 +44,14 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         id: 7,
-        label: 'Lịch sử đổi điểm',
-        link: '/customer/products',
+        label: 'Cộng điểm',
+        link: '/customer/bonus',
         parentId: 6
       },
       {
         id: 8,
         label: 'Sinh nhật',
-        link: '/customer/products',
+        link: '/customer/birthday',
         parentId: 6
       },
     ]

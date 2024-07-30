@@ -23,7 +23,6 @@ import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { cloneDeep } from "lodash";
-import { Products } from "src/app/core/data";
 import { ToastService } from "./toast-service";
 
 import { fetchProductListData } from "src/app/store/Ecommerce/ecommerce_action";

@@ -133,8 +133,12 @@ export class TopbarComponent implements OnInit {
   changeMode(mode: string) {
     this.mode = mode;
     this.eventService.broadcast('changeMode', mode);
+    sessionStorage.setItem('theme-mode', JSON.stringify(mode));
 
-    switch (mode) {
+    const themeMode = sessionStorage.getItem('theme-mode');
+    const modeValue = themeMode ? JSON.parse(themeMode) : 'light';
+
+    switch (modeValue) {
       case 'light':
         document.documentElement.setAttribute('data-bs-theme', "light");
         break;
@@ -146,7 +150,7 @@ export class TopbarComponent implements OnInit {
         break;
     }
   }
-
+  
   /***
    * Language Listing
    */

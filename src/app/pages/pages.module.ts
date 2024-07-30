@@ -26,6 +26,7 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { WidgetModule } from '../shared/widget/widget.module';
 import { EcommerceModule } from "./ecommerce/ecommerce.module";
+import { CustomerModule } from './customer/customer.module';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { EcommerceModule } from "./ecommerce/ecommerce.module";
     WidgetModule,
     SlickCarouselModule,
     LightboxModule,
-    EcommerceModule
+    EcommerceModule,
+    CustomerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

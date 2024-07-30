@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Products Services
 import { restApiService } from "../../../core/services/rest-api.service";
 
-import { productList } from 'src/app/core/data/product';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
 import { selectProductData } from 'src/app/store/Ecommerce/ecommerce_selector';
@@ -36,7 +35,6 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(public restApiService: restApiService) {
 
-    this.productDetail = productList;
   }
 
   ngOnInit(): void {
