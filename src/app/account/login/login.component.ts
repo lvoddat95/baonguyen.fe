@@ -11,10 +11,10 @@ import { environment } from "../../../environments/environment";
 import { AuthenticationService } from "../../core/services/auth.service";
 import { AuthfakeauthenticationService } from "../../core/services/authfake.service";
 import { first } from "rxjs/operators";
-import { ToastService } from "./toast-service";
 import { Store } from "@ngrx/store";
 import { login } from "src/app/store/Authentication/authentication.actions";
 import { md5Encrypt } from "src/app/shared/utils";
+import { ToastService } from "src/app/core/services/toast.service";
 
 @Component({
   selector: "app-login",
@@ -84,22 +84,21 @@ export class LoginComponent implements OnInit {
     //   login({
     //     username: this.f["username"].value,
     //     password: this.f["password"].value,
+    //     id: 0,
+    //     token_noti: ""
     //   })
     // );
     this.authenticationService
       .login(this.f["username"].value, md5Encrypt(this.f["password"].value), 0, "")
       .subscribe((data: any) => {
-        console.log(data);
         if (data.code == "000") {
           sessionStorage.setItem("toast", "true");
           sessionStorage.setItem("currentUser", JSON.stringify(data.data[0]));
           // sessionStorage.setItem('token', data.token);
+          // this.toastService.show(data.message, { classname: "bg-success text-white", delay: 15000, });
           this.router.navigate(["/"]);
         } else {
-          this.toastService.show(data.message, {
-            classname: "bg-danger text-white",
-            delay: 15000,
-          });
+          this.toastService.show(data.message, { classname: "bg-danger text-white", delay: 7000, });
         }
       });
 

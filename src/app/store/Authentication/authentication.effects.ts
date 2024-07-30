@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../core/services/auth.service';
 import { login, loginSuccess, loginFailure, logout, logoutSuccess, Register} from './authentication.actions';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { md5Encrypt } from "src/app/shared/utils";
 
 @Injectable()
 export class AuthenticationEffects {
@@ -29,24 +30,18 @@ export class AuthenticationEffects {
   this.actions$.pipe(
     ofType(login),
     exhaustMap(({ username, password, id, token_noti }) => {
-      if (environment.defaultauth === "fakebackend") {
-        return this.AuthenticationService.login(username, password, id, token_noti).pipe(
+        return this.AuthenticationService.login(username, md5Encrypt(password), id, token_noti).pipe(
           map((user) => {
-            if (user.status === 'success') {
+            if (user.code == "000") {
               sessionStorage.setItem('toast', 'true');
-              sessionStorage.setItem('currentUser', JSON.stringify(user.data));
-              sessionStorage.setItem('token', user.token);
+              sessionStorage.setItem('currentUser', JSON.stringify(user.data[0]));
+              // sessionStorage.setItem('token', user.token);
               this.router.navigate(['/']);
             }
             return loginSuccess({ user });
           }),
           catchError((error) => of(loginFailure({ error })), // Closing parenthesis added here
         ));
-      } else if (environment.defaultauth === "firebase") {
-        return of(); // Return an observable, even if it's empty
-      } else {
-        return of(); // Return an observable, even if it's empty
-      }
     })
   )
 );

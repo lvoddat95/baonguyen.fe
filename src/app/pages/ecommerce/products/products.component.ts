@@ -23,13 +23,14 @@ import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { cloneDeep } from "lodash";
-import { ToastService } from "./toast-service";
 
 import { fetchProductListData } from "src/app/store/Ecommerce/ecommerce_action";
 import { selectDataLoading, selectProductData } from "src/app/store/Ecommerce/ecommerce_selector";
 
 import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/product-category.action";
 import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
+import { ToastService } from "src/app/core/services/toast.service";
+import { listStatus } from 'src/app/core/data';
 
 @Component({
   selector: "app-products",
@@ -57,6 +58,7 @@ export class ProductsComponent {
   allproduct: any;
 
   categories!: any;
+  listStatus!: any;
 
   num: number = 0;
   option = {
@@ -65,6 +67,7 @@ export class ProductsComponent {
     duration: 2,
     decimalPlaces: 2,
   };
+
 
   constructor(
     public toastService: ToastService,
@@ -76,6 +79,13 @@ export class ProductsComponent {
   }
 
   ngOnInit(): void {
+    this.listStatus = listStatus;
+
+    if (sessionStorage.getItem('toast')) {
+      this.toastService.show('Đăng nhập thành công.', { classname: 'bg-success text-center text-white', delay: 5000 });
+      sessionStorage.removeItem('toast');
+    };
+
     /**
      * BreadCrumb
      */

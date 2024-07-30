@@ -19,6 +19,7 @@ import { selectDataLoading, selectOrderData } from 'src/app/store/Ecommerce/ecom
 import { cloneDeep } from 'lodash';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
+import { listStatus } from 'src/app/core/data';
 
 @Component({
   selector: 'app-orders',
@@ -61,6 +62,8 @@ export class OrdersComponent {
   searchTerm: any;
   userData: any;
 
+  listStatus!: any;
+
   constructor(
     private modalService: NgbModal,
     private formBuilder: UntypedFormBuilder,
@@ -70,6 +73,7 @@ export class OrdersComponent {
   }
 
   ngOnInit(): void {
+    this.listStatus = listStatus;
 
     this.userData = this.tokenStorageService.getUser();
 

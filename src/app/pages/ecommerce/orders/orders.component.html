@@ -40,9 +40,9 @@
               <select class="form-control" data-choices data-choices-search-false name="choices-single-default"
                 id="idStatus" [(ngModel)]="status" (ngModelChange)="filterStatus()">
                 <option value="" selected>Trạng thái</option>
-                <option value="DD">DD</option>
-                <option value="DS">DS</option>
-                <option value="HUY">HUY</option>
+                @for (item of listStatus; track $index) {
+                <option value="{{item.ma}}">{{item.ma}} - {{item.ten}}</option>
+                }
               </select>
             </div>
           </div>
@@ -564,9 +564,9 @@
                   <label for="delivered-status" class="form-label">Trạng thái</label>
                   <select class="form-control" data-trigger name="delivered-status" id="delivered-status" required
                     formControlName="trang_thai" [ngClass]="{ 'is-invalid': submitted && form['trang_thai'].errors }">
-                    <option value="DD">Giao thành công</option>
-                    <option value="DS">Hoàn trả lại</option>
-                    <option value="HUY">Huỷ</option>
+                    @for (item of listStatus; track $index) {
+                    <option value="{{item.ma}}">{{item.ma}} - {{item.ten}}</option>
+                    }
                   </select>
                   @if(submitted && form['trang_thai'].errors){
                   <div class="invalid-feedback" align="left">

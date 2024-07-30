@@ -35,8 +35,9 @@
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
                 name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
                 <option value="" selected>Trạng thái</option>
-                <option value=true>Còn hàng</option>
-                <option value=false>Hết hàng</option>
+                @for (item of listStatus; track $index) {
+                  <option value="{{item.ma}}">{{item.ten}}</option>
+                }
               </select>
             </div>
           </div>
@@ -179,3 +180,5 @@
   </ng-template>
 </div>
 <!--End row-->
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

@@ -19,6 +19,7 @@ export const GlobalComponent = {
 
     // Customers Api
     customer:'customer',
+    customerUpdateBonus:'BonusForUser',
 
     // Orders Api
     order:'GetOrderByUser',

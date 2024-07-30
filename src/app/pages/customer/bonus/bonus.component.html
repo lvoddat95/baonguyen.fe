@@ -1,3 +1,43 @@
 <!-- Start Breadcrumbs -->
 <app-breadcrumbs title="Cộng điểm" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
+
+<div class="row g-3">
+    <div class="col-xl-3">
+        <form (ngSubmit)="saveForm()" [formGroup]="sForm">
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                    <label for="sdt" class="form-label">Số điện thoại</label>
+                </div>
+                <div class="col-lg-8">
+                    <input required type="number" id="sdt" formControlName="sdt" class="form-control" placeholder=""/>
+                  
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                    <label for="thanh_tien" class="form-label">Điểm Bonus</label>
+                </div>
+                <div class="col-lg-8">
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control text-end" id="thanh_tien" formControlName="thanh_tien"
+                            mask="0*.00" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-8">
+                    <button type="submit" class="btn btn-primary"> <i class="ri-add-circle-line align-middle me-1"></i>Cộng điểm</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
