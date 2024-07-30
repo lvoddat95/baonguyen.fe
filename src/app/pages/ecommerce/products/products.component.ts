@@ -31,6 +31,7 @@ import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/
 import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
 import { ToastService } from "src/app/core/services/toast.service";
 import { listStatus } from 'src/app/core/data';
+import { Ultils } from "src/app/shared/utils";
 
 @Component({
   selector: "app-products",
@@ -68,6 +69,7 @@ export class ProductsComponent {
     decimalPlaces: 2,
   };
 
+  ultils = new Ultils();
 
   constructor(
     public toastService: ToastService,
@@ -123,17 +125,6 @@ export class ProductsComponent {
 
     });
 
-  }
-
-  getNameFromCode(code: string): string {
-    if (!this.categories || !Array.isArray(this.categories)) {
-      return "Không tìm thấy";
-    }
-
-    const item = this.categories.find(
-      (menuItem: { ma: string }) => menuItem.ma === code
-    );
-    return item ? item.ten : "Không tìm thấy";
   }
 
   changePage() {
@@ -245,11 +236,7 @@ export class ProductsComponent {
       return (
         item.ten.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.mo_ta.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        item.phan_loai.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        item.don_gia
-          .toString()
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase())
+        item.don_gia.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     });
     this.products = this.service.changePage(this.searchResults);

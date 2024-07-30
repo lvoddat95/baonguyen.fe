@@ -36,7 +36,7 @@
                 name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
                 <option value="" selected>Trạng thái</option>
                 @for (item of listStatus; track $index) {
-                  <option value="{{item.ma}}">{{item.ten}}</option>
+                <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
             </div>
@@ -49,7 +49,7 @@
                 name="choices-single-default" id="idCategory" [(ngModel)]="category" (ngModelChange)="categoryFilter()">
                 <option value="" selected>Danh mục</option>
                 @for (item of categories; track $index) {
-                  <option value="{{item.ma}}">{{item.ten}}</option>
+                <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
               <!-- <ng-select [items]="categories" bindLabel="ten" bindValue="ma" [(ngModel)]="category"
@@ -110,14 +110,14 @@
                 <td>#{{data.id}} - {{data.ten}}</td>
                 <td>{{data.mo_ta}}</td>
                 <td>{{data.don_gia}}</td>
-                <td>{{getNameFromCode(data.phan_loai)}}</td>
+                <td>{{ultils.fviewTextCode(categories,data.phan_loai)}}</td>
                 <td class="priority">
-                  <span class="badge bg-warning text-uppercase"
+                  <span class="badge bg-warning"
                     [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-warning': data.bonus === true}">{{
                     data.bonus ?
                     'Có' : 'Không' }}</span>
                 </td>
-                <td class="status"><span class="badge text-uppercase"
+                <td class="status"><span class="badge"
                     [ngClass]=" { 'bg-secondary-subtle text-secondary': data.available === false, 'bg-info-subtle text-info': data.available === true}">{{
                     data.available ? 'Hoạt động' : 'Không hoạt động' }}</span>
                 </td>

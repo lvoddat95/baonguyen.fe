@@ -9,5 +9,15 @@ export function md5Encrypt(input: string): string {
   return CryptoJS.MD5(input).toString(CryptoJS.enc.Hex);
 }
 
-// Hằng số, ví dụ như URL endpoint
-export const apiUrl = 'https://example.com/api';
+export class Ultils {
+  public fviewTextCode(data: any, code: string): string {
+    if (!data || !Array.isArray(data)) {
+      return "Không tìm thấy";
+    }
+    const item = data.find(
+      (menuItem: { ma: string }) => menuItem.ma === code
+    );
+    return item ? item.ten : "Không tìm thấy";
+  }
+
+}

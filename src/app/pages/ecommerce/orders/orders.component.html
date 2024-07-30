@@ -105,21 +105,22 @@
                         <td>
                           <ngb-highlight [result]="data.ten_sp" [term]="searchTerm"></ngb-highlight>
                           <p class="mb-0">
+                            <span>ID:&nbsp;</span>
                             <a routerLink="/ecommerce/order-details">
                               <ngb-highlight [result]="data.id" [term]="searchTerm"></ngb-highlight>
                             </a>
                           </p>
                         </td>
                         <td>
-                          <div class="block text-xss">
+                          <small class="d-block text-[12px]">
                             SĐT: <ngb-highlight [result]="data.sdt" [term]="searchTerm"></ngb-highlight>
-                          </div>
-                          <div class="block text-xs">
+                          </small>
+                          <small class="d-block text-[12px]">
                             Tuổi: <ngb-highlight [result]="data.tuoi" [term]="searchTerm"></ngb-highlight>
-                          </div>
-                          <div class="block text-xs">
+                          </small>
+                          <small class="d-block text-[12px]">
                             Đ/c: <ngb-highlight [result]="data.dchi" [term]="searchTerm"></ngb-highlight>
-                          </div>
+                          </small>
                         </td>
                         <td>
                           <ngb-highlight [result]="data.tong_tien" [term]="searchTerm"></ngb-highlight>
@@ -133,8 +134,10 @@
                         <td>
                           <ngb-highlight [result]="data.ngay_nhap" [term]="searchTerm"></ngb-highlight>
                         </td>
-                        <td class="status"><span class="badge text-uppercase"
-                            [ngClass]=" { 'bg-warning-subtle text-warning': data.trang_thai === 'DD', 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-secondary-subtle text-secondary': data.trang_thai === 'DS', 'bg-info-subtle text-info': data.trang_thai === 'Pickups', 'bg-primary-subtle text-primary': data.trang_thai === 'Returns', 'bg-success-subtle text-success': data.trang_thai === 'Delivered' }">{{data.trang_thai}}</span>
+                        <td class="status"><span class="badge "
+                            [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'XN', 'bg-secondary-subtle text-secondary': data.trang_thai === 'DD', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
+                            {{ultils.fviewTextCode(listStatus,data.trang_thai)}}
+                          </span>
                         </td>
                         <td>
                           <ul class="list-inline hstack gap-2 mb-0">

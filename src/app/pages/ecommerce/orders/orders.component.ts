@@ -20,6 +20,7 @@ import { cloneDeep } from 'lodash';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { listStatus } from 'src/app/core/data';
+import { Ultils } from "src/app/shared/utils";
 
 @Component({
   selector: 'app-orders',
@@ -63,6 +64,8 @@ export class OrdersComponent {
   userData: any;
 
   listStatus!: any;
+
+  ultils = new Ultils();
 
   constructor(
     private modalService: NgbModal,
@@ -120,13 +123,13 @@ export class OrdersComponent {
   performSearch(): void {
     this.searchResults = this.allorderes.filter((item: any) => {
       return (
-        item.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        item.sdt.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.id.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        item.sdt.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.dchi.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.ten_sp.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.ngay_nhan.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.ngay_nhap.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        item.tong_tien.toLowerCase().includes(this.searchTerm.toLowerCase())
+        item.tong_tien.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     });
     // this.orderes = this.searchResults.slice(0, 10);
