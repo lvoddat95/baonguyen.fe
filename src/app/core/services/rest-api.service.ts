@@ -51,10 +51,10 @@ export class RestApiService {
    * Category Rest Api
    */
   // Getl All
-  getCategoryData(): Observable<any> {
+  getCategoryData(danh_muc: string): Observable<any> {
     return this.http.post(
       GlobalComponent.API_URL + GlobalComponent.category,
-      {},
+      { data: JSON.stringify({ danh_muc: danh_muc }) },
       httpOptions
     );
   }

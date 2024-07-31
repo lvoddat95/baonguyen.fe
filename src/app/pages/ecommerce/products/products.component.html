@@ -35,7 +35,7 @@
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
                 name="choices-single-default" id="idCategory" [(ngModel)]="category" (ngModelChange)="categoryFilter()">
                 <option value="" selected>Danh mục</option>
-                @for (item of productCategory; track $index) {
+                @for (item of categories; track $index) {
                 <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
@@ -84,8 +84,9 @@
                 <th class="sort" (click)="onSort('mo_ta')">Mô tả</th>
                 <th class="sort" (click)="onSort('don_gia')">Giá</th>
                 <th class="sort" (click)="onSort('ma_cap_1')">Danh mục</th>
-                <th class="sort">Có Bonus ?</th>
-                <th class="sort">Hiển thị</th>
+                <th class="text-center">Có Bonus ?</th>
+                <th class="text-center">Hiển thị</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -93,7 +94,7 @@
               <tr>
                 <th scope="row">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="checkAll" value="{{data._id}}"
+                    <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}"
                       [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
                   </div>
                 </th>
@@ -103,8 +104,8 @@
                 </td>
                 <td>#{{data.id}} - {{data.ten}}</td>
                 <td>{{data.mo_ta}}</td>
-                <td>{{data.don_gia}}</td>
-                <td>{{ultils.fViewTextCode(productCategory,data.danh_muc)}}</td>
+                <td>{{data.don_gia | currency:'VND':'symbol'}}</td>
+                <td>{{ultils.f_ViewTextCode(categories,data.ma_cap_1)}}</td>
                 <td class="text-center">
                   <span class="badge"
                     [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-success': data.bonus === true}">
@@ -115,6 +116,31 @@
                     [ngClass]=" { 'bg-secondary-subtle text-secondary': data.available === false, 'bg-info-subtle text-info': data.available === true}">
                     {{data.available ? 'Hiện' : 'Ẩn' }}
                   </span>
+                </td>
+                <td class="text-center">
+                  <ul class="list-inline justify-content-center hstack gap-2 mb-0">
+                    <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                      ngbTooltip="Xem" placement="top">
+                      <a  href="javascript:void(0);" routerLink="/ecommerce/order-details" class="text-warning d-inline-block">
+                        <i class="ri-eye-fill fs-16"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                      ngbTooltip="Sửa" placement="top">
+                      <a href="javascript:void(0);" data-bs-toggle="modal"
+                        class="text-primary d-inline-block edit-item-btn" data-bs-toggle="modal" id="create-btn"
+                        data-bs-target="#showModal" (click)="editDataGet(data,content)">
+                        <i class="ri-pencil-fill fs-16"></i>
+                      </a>
+                    </li> -->
+                    <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top"
+                      data-bs-toggle="tooltip" data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
+                      <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
+                        data-bs-target="#deleteOrder">
+                        <i class="ri-delete-bin-5-fill fs-16"></i>
+                      </a>
+                    </li> 
+                  </ul>
                 </td>
               </tr>
               }
@@ -158,17 +184,18 @@
           <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
             colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
           <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-            <h4>You are about to delete a task ?</h4>
-            <p class="text-muted mx-4 mb-0">Deleting your task will remove all of your information from our
-              database.</p>
+            <h4>Bạn có muốn xoá bản ghi này ?</h4>
+            <p class="text-muted mx-4 mb-0">
+              Bản ghi bị xoá sẽ không thể khôi phục lại.
+            </p>
           </div>
         </div>
         <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-          <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" id="deleteRecord-close"
-            data-bs-dismiss="modal" (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
-            Close</button>
+          <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+            id="deleteRecord-close" (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
+            Huỷ</button>
           <button type="button" class="btn w-sm btn-danger " id="delete-product" (click)="deleteData(deleteId)"
-            (click)="modal.close('Close click')">Yes, Delete It!</button>
+            (click)="modal.close('Close click')">Đồng ý</button>
         </div>
       </div>
     </div><!-- /.modal-content -->

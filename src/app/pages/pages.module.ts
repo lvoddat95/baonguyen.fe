@@ -24,7 +24,6 @@ import lottie from 'lottie-web';
 // Pages Routing
 import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
-import { WidgetModule } from '../shared/widget/widget.module';
 import { EcommerceModule } from "./ecommerce/ecommerce.module";
 import { CustomerModule } from './customer/customer.module';
 
@@ -45,7 +44,6 @@ import { CustomerModule } from './customer/customer.module';
     SimplebarAngularModule,
     PagesRoutingModule,
     SharedModule,
-    WidgetModule,
     SlickCarouselModule,
     LightboxModule,
     EcommerceModule,

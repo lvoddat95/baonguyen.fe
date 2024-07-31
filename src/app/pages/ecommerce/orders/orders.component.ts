@@ -261,24 +261,30 @@ export class OrdersComponent {
       this.modalService.open(content, { centered: true });
     }
     else {
-      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
+      Swal.fire({ text: 'Chưa chọn item nào!', confirmButtonColor: '#299cdb', });
     }
     this.checkedValGet = checkedVal;
   }
 
   // The master checkbox will check/ uncheck all items
   checkUncheckAll(ev: any) {
-    this.orderes.forEach((x: { state: any; }) => x.state = ev.target.checked)
+    this.orderes.forEach((x: { state: any }) => (x.state = ev.target.checked));
     var checkedVal: any[] = [];
-    var result
+    var result;
     for (var i = 0; i < this.orderes.length; i++) {
       if (this.orderes[i].state == true) {
         result = this.orderes[i];
         checkedVal.push(result);
       }
     }
-    this.checkedValGet = checkedVal
-    checkedVal.length > 0 ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block" : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
+    this.checkedValGet = checkedVal;
+    checkedVal.length > 0
+      ? ((
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "block")
+      : ((
+        document.getElementById("remove-actions") as HTMLElement
+      ).style.display = "none");
   }
 
 
@@ -293,7 +299,9 @@ export class OrdersComponent {
       }
     }
     this.checkedValGet = checkedVal
-    checkedVal.length > 0 ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block" : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
+    checkedVal.length > 0
+      ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block"
+      : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
   }
 
 

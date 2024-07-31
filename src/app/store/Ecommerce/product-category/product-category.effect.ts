@@ -16,8 +16,8 @@ export class CategoryEffects {
     fetchCategoryData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(fetchCategoryListData),
-            mergeMap(() =>
-                this.restApiService.getCategoryData().pipe(
+            mergeMap((action) =>
+                this.restApiService.getCategoryData(action.danh_muc).pipe(
                     map((category) => {
                         const Category = category.data;
                         return fetchCategoryListSuccess({ Category });

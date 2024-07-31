@@ -63,9 +63,6 @@
       </div>
       <div class="card-body pt-0">
         <div>
-          {{this.orderes.length}}
-          {{this.allOrderes.length}}
-          {{paginationService.collectionSize}}
           <!-- Nav tabs -->
           <ul ngbNav #nav="ngbNav" [activeId]="1" (navChange)="onNavChange($event)"
             class="nav nav-tabs nav-tabs-custom nav-success mb-3">
@@ -91,7 +88,7 @@
                         <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
                         <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
                         <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
-                        <th class="sort">Action</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -124,10 +121,12 @@
                           </small>
                         </td>
                         <td>
-                          <ngb-highlight [result]="data.tong_tien" [term]="searchTerm"></ngb-highlight>
+                          <ngb-highlight [result]="data.tong_tien | currency:'VND':'symbol'"
+                            [term]="searchTerm"></ngb-highlight>
                         </td>
                         <td>
-                          <ngb-highlight [result]="data.tong_diem" [term]="searchTerm"></ngb-highlight>
+                          <ngb-highlight [result]="data.tong_diem | currency:'VND':'symbol'"
+                            [term]="searchTerm"></ngb-highlight>
                         </td>
                         <td>
                           <ngb-highlight [result]="data.ngay_nhan" [term]="searchTerm"></ngb-highlight>
@@ -137,32 +136,33 @@
                         </td>
                         <td class="status"><span class="badge "
                             [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'XN', 'bg-secondary-subtle text-secondary': data.trang_thai === 'DD', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
-                            {{ultils.fViewTextCode(orderStatus,data.trang_thai)}}
+                            {{ultils.f_ViewTextCode(orderStatus,data.trang_thai)}}
                           </span>
                         </td>
-                        <td>
-                          <ul class="list-inline hstack gap-2 mb-0">
+                        <td class="text-center">
+                          <ul class="list-inline justify-content-center hstack gap-2 mb-0">
                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                              ngbTooltip="View" placement="top">
-                              <a routerLink="/ecommerce/order-details" class="text-primary d-inline-block">
+                              ngbTooltip="Xem" placement="top">
+                              <a href="javascript:void(0);" routerLink="/ecommerce/order-details"
+                                class="text-warning d-inline-block">
                                 <i class="ri-eye-fill fs-16"></i>
                               </a>
                             </li>
                             <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                              ngbTooltip="Edit" placement="top">
+                              ngbTooltip="Sửa" placement="top">
                               <a href="javascript:void(0);" data-bs-toggle="modal"
                                 class="text-primary d-inline-block edit-item-btn" data-bs-toggle="modal" id="create-btn"
                                 data-bs-target="#showModal" (click)="editDataGet(data,content)">
                                 <i class="ri-pencil-fill fs-16"></i>
                               </a>
                             </li>
-                            <li class="list-inline-item me-0" ngbTooltip="Remove" placement="top"
+                            <!-- <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top"
                               data-bs-toggle="tooltip" data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
-                              <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
+                              <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteOrder">
                                 <i class="ri-delete-bin-5-fill fs-16"></i>
                               </a>
-                            </li>
+                            </li> -->
                           </ul>
                         </td>
                       </tr>
@@ -289,9 +289,9 @@
           <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
             colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
           <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-            <h4>Bạn có muốn xoá đơn hàng này ?</h4>
+            <h4>Bạn có muốn xoá bản ghi này ?</h4>
             <p class="text-muted mx-4 mb-0">
-              Việc xóa đơn hàng của bạn sẽ xóa tất cả thông tin về đơn hàng này không thể khôi phục.
+              Bản ghi bị xoá sẽ không thể khôi phục lại.
             </p>
           </div>
         </div>
@@ -305,3 +305,5 @@
       </div>
     </div><!-- /.modal-content -->
   </ng-template>
+
+</div>

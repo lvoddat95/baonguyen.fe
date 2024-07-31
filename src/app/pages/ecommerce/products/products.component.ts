@@ -102,7 +102,7 @@ export class ProductsComponent {
      * fetches data
      */
     this.store.dispatch(fetchProductListData({ 'phan_loai': '', 'id_product': 0, 'gia': 'DESC', 'ma_cap_2': '' }));
-    this.store.dispatch(fetchCategoryListData());
+    this.store.dispatch(fetchCategoryListData({ 'danh_muc': '' }));
 
     this.store.select(selectDataLoading).subscribe((data) => {
       if (data == false) {
@@ -116,13 +116,8 @@ export class ProductsComponent {
       this.products = this.service.changePage(this.allproducts);
     });
     this.store.select(selectAllCategories).subscribe((data) => {
-      if (data && data.cake_menu) {
-        const combinedMenu = [
-          ...Object.values(data.cake_menu),
-          ...data.accessory_menu,
-          ...data.snack_menu
-        ].filter(item => item.id !== 0);
-        this.categories = combinedMenu;
+      if (data && data.menu) {
+        this.categories = data.menu;
       }
 
     });
@@ -137,18 +132,6 @@ export class ProductsComponent {
     this.products = this.service.onSort(column, this.products);
   }
 
-  onCheckboxChange(e: any) {
-    // for (var i = 0; i < this.AssignedData.length; i++) {
-    //   if (this.AssignedData[i].img == e.target.value) {
-    //     if (this.subItem && this.subItem.includes(this.AssignedData[i])) {
-    //       this.subItem = this.subItem.filter((item: any) => item !== this.AssignedData[i]);
-    //     } else {
-    //       this.subItem.push(this.AssignedData[i])
-    //     }
-    //   }
-    // }
-  }
-
   /**
    * Delete Swal data
    */
@@ -160,6 +143,10 @@ export class ProductsComponent {
 
   // Delete Data
   deleteData(id: any) {
+    console.log(id)
+    console.log(this.checkedValGet)
+
+    
     // if (id) {
     //   this.store.dispatch(deleteTask({ id: this.deleteId.toString() }));
     // } else {
@@ -174,8 +161,8 @@ export class ProductsComponent {
    */
   checkedValGet: any[] = [];
   deleteMultiple(content: any) {
-    var checkboxes: any = document.getElementsByName("checkAll");
-    var result;
+    var checkboxes: any = document.getElementsByName('checkAll');
+    var result
     var checkedVal: any[] = [];
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked) {
@@ -183,13 +170,12 @@ export class ProductsComponent {
         checkedVal.push(result);
       }
     }
+
     if (checkedVal.length > 0) {
       this.modalService.open(content, { centered: true });
-    } else {
-      Swal.fire({
-        text: "Please select at least one checkbox",
-        confirmButtonColor: "#299cdb",
-      });
+    }
+    else {
+      Swal.fire({ text: 'Chưa chọn item nào!', confirmButtonColor: '#299cdb', });
     }
     this.checkedValGet = checkedVal;
   }
@@ -215,6 +201,21 @@ export class ProductsComponent {
       ).style.display = "none");
   }
 
+  onCheckboxChange(e: any) {
+    var checkedVal: any[] = [];
+    var result
+    for (var i = 0; i < this.products.length; i++) {
+      if (this.products[i].state == true) {
+        result = this.products[i];
+        checkedVal.push(result);
+      }
+    }
+    this.checkedValGet = checkedVal
+    checkedVal.length > 0
+      ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block"
+      : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
+  }
+
   // Filtering
   isstatus?: any;
   SearchData() {
@@ -226,7 +227,7 @@ export class ProductsComponent {
       });
     } else if (category.value != '') {
       this.products = this.allproducts.filter((product: any) => {
-        return product.phan_loai.toString() == category.value;
+        return product.ma_cap_1.toString() == category.value;
       });
     } else {
       this.products = this.service.changePage(this.allproducts);
@@ -258,7 +259,7 @@ export class ProductsComponent {
     console.log(this.category)
     if (this.category != "") {
       this.products = this.allproducts.filter((product: any) => {
-        return product.phan_loai.toString() == this.category;
+        return product.ma_cap_1.toString() == this.category;
       });
     } else {
       this.products = this.service.changePage(this.allproducts);
