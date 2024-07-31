@@ -33,9 +33,9 @@
           <div class="col-xxl-3 col-sm-4">
             <div class="input-light">
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
-                name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
-                <option value="" selected>Trạng thái</option>
-                @for (item of listStatus; track $index) {
+                name="choices-single-default" id="idCategory" [(ngModel)]="category" (ngModelChange)="categoryFilter()">
+                <option value="" selected>Danh mục</option>
+                @for (item of categories; track $index) {
                 <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
@@ -46,22 +46,16 @@
           <div class="col-xxl-3 col-sm-4">
             <div class="input-light">
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
-                name="choices-single-default" id="idCategory" [(ngModel)]="category" (ngModelChange)="categoryFilter()">
-                <option value="" selected>Danh mục</option>
-                @for (item of categories; track $index) {
+                name="choices-single-default" id="idStatus" [(ngModel)]="status" (ngModelChange)="statusFilter()">
+                <option value="" selected>Hiển thị</option>
+                @for (item of productAvailable; track $index) {
                 <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
-              <!-- <ng-select [items]="categories" bindLabel="ten" bindValue="ma" [(ngModel)]="category"
-                (ngModelChange)="categoryFilter()">
-                <ng-option [value]="null">Danh mục</ng-option>
-                @for (cat of categories; track cat.id) {
-                <ng-option [value]="cat.ma">{{cat.name}}</ng-option>
-                }
-              </ng-select> -->
             </div>
           </div>
           <!--end col-->
+
           <div class="col-xxl-1 col-sm-4">
             <button type="button" class="btn btn-primary w-100" (click)="SearchData();"> <i
                 class="ri-equalizer-fill mx-1 align-bottom"></i>
@@ -84,14 +78,14 @@
                       [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
                   </div>
                 </th>
-                <th>STT</th>
-                <th></th>
+                <th class="text-center">STT</th>
+                <th class="text-center"></th>
                 <th class="sort" (click)="onSort('ten')">Tên</th>
                 <th class="sort" (click)="onSort('mo_ta')">Mô tả</th>
                 <th class="sort" (click)="onSort('don_gia')">Giá</th>
                 <th class="sort" (click)="onSort('phan_loai')">Phân loại</th>
-                <th class="sort" (click)="onSort('bonus')">Bonus</th>
-                <th class="sort" (click)="onSort('available')">Trạng thái</th>
+                <th class="sort">Có Bonus ?</th>
+                <th class="sort">Hiển thị</th>
               </tr>
             </thead>
             <tbody>
@@ -103,23 +97,24 @@
                       [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
                   </div>
                 </th>
-                <td>{{$index+1}}</td>
-                <td>
+                <td class="text-center">{{$index+1}}</td>
+                <td class="text-center">
                   <img *ngIf="data.anh" [src]="data.anh" alt="" class="avatar-xs" />
                 </td>
                 <td>#{{data.id}} - {{data.ten}}</td>
                 <td>{{data.mo_ta}}</td>
                 <td>{{data.don_gia}}</td>
-                <td>{{ultils.fviewTextCode(categories,data.phan_loai)}}</td>
-                <td class="priority">
-                  <span class="badge bg-warning"
-                    [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-warning': data.bonus === true}">{{
-                    data.bonus ?
-                    'Có' : 'Không' }}</span>
+                <td>{{ultils.fViewTextCode(categories,data.phan_loai)}}</td>
+                <td class="text-center">
+                  <span class="badge"
+                    [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-success': data.bonus === true}">
+                    {{ data.bonus ? 'Có' : 'Không' }}</span>
                 </td>
-                <td class="status"><span class="badge"
-                    [ngClass]=" { 'bg-secondary-subtle text-secondary': data.available === false, 'bg-info-subtle text-info': data.available === true}">{{
-                    data.available ? 'Hoạt động' : 'Không hoạt động' }}</span>
+                <td class="text-center">
+                  <span class="badge"
+                    [ngClass]=" { 'bg-secondary-subtle text-secondary': data.available === false, 'bg-info-subtle text-info': data.available === true}">
+                    {{data.available ? 'Hiện' : 'Ẩn' }}
+                  </span>
                 </td>
               </tr>
               }

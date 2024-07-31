@@ -11,7 +11,7 @@ import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
 
 // Rest Api Service
-import { restApiService } from "../../../core/services/rest-api.service";
+import { RestApiService } from "../../../core/services/rest-api.service";
 import { fetchOrderListData, updateOrderStatus } from 'src/app/store/Ecommerce/ecommerce_action';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
@@ -19,13 +19,12 @@ import { selectDataLoading, selectOrderData } from 'src/app/store/Ecommerce/ecom
 import { cloneDeep } from 'lodash';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { listStatus } from 'src/app/core/data';
+import { orderStatus } from 'src/app/core/data';
 import { Ultils } from "src/app/shared/utils";
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
 })
 
 /**
@@ -63,7 +62,7 @@ export class OrdersComponent {
   searchTerm: any;
   userData: any;
 
-  listStatus!: any;
+  orderStatus!: any;
 
   ultils = new Ultils();
 
@@ -76,7 +75,7 @@ export class OrdersComponent {
   }
 
   ngOnInit(): void {
-    this.listStatus = listStatus;
+    this.orderStatus = orderStatus;
 
     this.userData = this.tokenStorageService.getUser();
 

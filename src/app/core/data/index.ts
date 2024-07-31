@@ -1,6 +1,7 @@
-import { listStatus } from "./product";
+import { orderStatus, productAvailable } from "./product";
 
 
 export {
-    listStatus
+    orderStatus, 
+    productAvailable
 }

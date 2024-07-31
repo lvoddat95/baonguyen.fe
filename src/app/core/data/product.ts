@@ -1,4 +1,18 @@
-const listStatus = [
+const productAvailable = [
+    {
+        ma: true,
+        ten: 'Hiện',
+    },
+    {
+        ma: false,
+        ten: 'Ẩn',
+    },
+];
+const orderStatus = [
+    {
+        ma: 'DD',
+        ten: 'Đã đặt hàng',
+    },
     {
         ma: 'XN',
         ten: 'Đã xác nhận',
@@ -17,4 +31,4 @@ const listStatus = [
     },
 ];
 
-export { listStatus }
+export { orderStatus, productAvailable }

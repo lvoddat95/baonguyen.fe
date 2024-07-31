@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import { DatePipe } from "@angular/common";
 
 // Rest Api Service
-import { restApiService } from "../../../core/services/rest-api.service";
+import { RestApiService } from "../../../core/services/rest-api.service";
 import { GlobalComponent } from "../../../global-component";
 import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";

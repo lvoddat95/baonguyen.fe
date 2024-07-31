@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Products Services
-import { restApiService } from "../../../core/services/rest-api.service";
+import { RestApiService } from "../../../core/services/rest-api.service";
 
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { fetchProductListData } from 'src/app/store/Ecommerce/ecommerce_action';
@@ -33,7 +33,7 @@ export class ProductDetailComponent implements OnInit {
 
   @ViewChild('slickModal') slickModal!: SlickCarouselComponent;
 
-  constructor(public restApiService: restApiService) {
+  constructor(public restApiService: RestApiService) {
 
   }
 

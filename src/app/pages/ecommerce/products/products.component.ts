@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import { DatePipe } from "@angular/common";
 
 // Rest Api Service
-import { restApiService } from "../../../core/services/rest-api.service";
+import { RestApiService } from "../../../core/services/rest-api.service";
 import { GlobalComponent } from "../../../global-component";
 import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";
@@ -30,13 +30,13 @@ import { selectDataLoading, selectProductData } from "src/app/store/Ecommerce/ec
 import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/product-category.action";
 import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
 import { ToastService } from "src/app/core/services/toast.service";
-import { listStatus } from 'src/app/core/data';
+import { productAvailable } from 'src/app/core/data';
 import { Ultils } from "src/app/shared/utils";
+import { ProductModel } from "src/app/store/Ecommerce/ecommerce_model";
 
 @Component({
   selector: "app-products",
   templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"],
 })
 
 /**
@@ -59,7 +59,7 @@ export class ProductsComponent {
   allproduct: any;
 
   categories!: any;
-  listStatus!: any;
+  productAvailable!: any;
 
   num: number = 0;
   option = {
@@ -81,7 +81,7 @@ export class ProductsComponent {
   }
 
   ngOnInit(): void {
-    this.listStatus = listStatus;
+    this.productAvailable = productAvailable;
 
     if (sessionStorage.getItem('toast')) {
       this.toastService.show('Đăng nhập thành công.', { classname: 'bg-success text-center text-white', delay: 5000 });
@@ -244,7 +244,7 @@ export class ProductsComponent {
 
   statusFilter() {
     if (this.status != "") {
-      this.products = this.allproducts.filter((product: any) => {
+      this.products = this.allproducts.filter((product: ProductModel) => {
         return product.available.toString() == this.status;
       });
     } else {

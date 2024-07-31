@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { restApiService } from "src/app/core/services/rest-api.service";
+import { RestApiService } from "src/app/core/services/rest-api.service";
 import {
     deleteProduct,
     deleteProductFailure,
@@ -23,7 +23,7 @@ import {
 export class EcommerceEffects {
     constructor(
         private actions$: Actions,
-        private restApiService: restApiService
+        private restApiService: RestApiService
     ) { }
 
     // Product

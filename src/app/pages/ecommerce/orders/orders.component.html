@@ -40,7 +40,7 @@
               <select class="form-control" data-choices data-choices-search-false name="choices-single-default"
                 id="idStatus" [(ngModel)]="status" (ngModelChange)="filterStatus()">
                 <option value="" selected>Trạng thái</option>
-                @for (item of listStatus; track $index) {
+                @for (item of orderStatus; track $index) {
                 <option value="{{item.ma}}">{{item.ma}} - {{item.ten}}</option>
                 }
               </select>
@@ -136,7 +136,7 @@
                         </td>
                         <td class="status"><span class="badge "
                             [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'XN', 'bg-secondary-subtle text-secondary': data.trang_thai === 'DD', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
-                            {{ultils.fviewTextCode(listStatus,data.trang_thai)}}
+                            {{ultils.fViewTextCode(orderStatus,data.trang_thai)}}
                           </span>
                         </td>
                         <td>
@@ -192,7 +192,7 @@
             </li>
             <li [ngbNavItem]="2">
               <a ngbNavLink>
-                <i class="ri-checkbox-circle-line me-1 align-bottom"></i> Giao thành công
+                <i class="ri-checkbox-circle-line me-1 align-bottom"></i> Đã đặt hàng
               </a>
               <ng-template ngbNavContent>
                 <div class="table-responsive table-card mb-0">
@@ -567,7 +567,7 @@
                   <label for="delivered-status" class="form-label">Trạng thái</label>
                   <select class="form-control" data-trigger name="delivered-status" id="delivered-status" required
                     formControlName="trang_thai" [ngClass]="{ 'is-invalid': submitted && form['trang_thai'].errors }">
-                    @for (item of listStatus; track $index) {
+                    @for (item of orderStatus; track $index) {
                     <option value="{{item.ma}}">{{item.ma}} - {{item.ten}}</option>
                     }
                   </select>

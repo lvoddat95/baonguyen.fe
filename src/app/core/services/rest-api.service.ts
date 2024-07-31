@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable({
   providedIn: "root",
 })
-export class restApiService {
+export class RestApiService {
   constructor(private http: HttpClient) { }
 
   /**

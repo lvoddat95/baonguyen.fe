@@ -10,7 +10,7 @@ export function md5Encrypt(input: string): string {
 }
 
 export class Ultils {
-  public fviewTextCode(data: any, code: string): string {
+  public fViewTextCode(data: any, code: string): string {
     if (!data || !Array.isArray(data)) {
       return "Không tìm thấy";
     }
