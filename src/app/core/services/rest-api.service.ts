@@ -23,12 +23,14 @@ export class RestApiService {
   getProductData(
     phan_loai: string = "",
     id_product: number = 0,
-    gia: any = ""
+    gia: any = "",
+    ma_cap_2: any = "",
   ): Observable<any> {
     const data = {
       phan_loai: phan_loai,
       id_product: id_product,
       gia: gia,
+      ma_cap_2: ma_cap_2,
     };
     return this.http.post(
       GlobalComponent.API_URL + GlobalComponent.product,

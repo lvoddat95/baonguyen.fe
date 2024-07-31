@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { ProductModel, OrdersModel } from './ecommerce_model';
 
 // Product
-export const fetchProductListData = createAction('[Data] Fetch ProductList');
+export const fetchProductListData = createAction('[Data] Fetch ProductList', props<{ phan_loai: string, id_product: number, gia: string, ma_cap_2: string }>());
 export const fetchProductListSuccess = createAction('[Data] Fetch ProductList Success', props<{ Product: ProductModel[] }>());
 export const fetchProductListFailure = createAction('[Data] Fetch ProductList Failure', props<{ error: string }>());
 

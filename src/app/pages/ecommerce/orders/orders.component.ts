@@ -4,9 +4,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 // Date Format
 import { DatePipe } from '@angular/common';
 
-// Csv File Export
-import { ngxCsv } from 'ngx-csv/ngx-csv';
-
 // Sweet Alert
 import Swal from 'sweetalert2';
 
@@ -57,12 +54,13 @@ export class OrdersComponent {
   page: any = 1;
   pageSize: any = 8;
 
-  allorderes: any;
+  allOrderes: any;
   searchResults: any;
   searchTerm: any;
   userData: any;
 
   orderStatus!: any;
+  filteredData: any[] = [];
 
   ultils = new Ultils();
 
@@ -70,7 +68,7 @@ export class OrdersComponent {
     private modalService: NgbModal,
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
-    public service: PaginationService,
+    public paginationService: PaginationService,
     private store: Store<{ data: RootReducerState }>) {
   }
 
@@ -96,7 +94,7 @@ export class OrdersComponent {
     });
 
     // Fetch Data
-    this.store.dispatch(fetchOrderListData({ userid: 5, role: "USER" }));
+    this.store.dispatch(fetchOrderListData({ userid: this.userData.id, role: "ADMIN" }));
     this.store.select(selectDataLoading).subscribe((data) => {
       if (data == false) {
         document.getElementById('elmLoader')?.classList.add('d-none');
@@ -105,22 +103,23 @@ export class OrdersComponent {
 
     this.store.select(selectOrderData).subscribe((data) => {
       this.orderes = data;
-      this.allorderes = cloneDeep(data);
-      this.orderes = this.service.changePage(this.allorderes)
+      this.allOrderes = cloneDeep(data);
+      this.orderes = this.paginationService.changePage(this.allOrderes)
+      this.paginationService.collectionSize = this.allOrderes.length;
     });
   }
 
   changePage() {
-    this.orderes = this.service.changePage(this.allorderes)
+    this.orderes = this.paginationService.changePage(this.allOrderes)
   }
 
   onSort(column: any) {
-    this.orderes = this.service.onSort(column, this.orderes)
+    this.orderes = this.paginationService.onSort(column, this.orderes)
   }
 
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allorderes.filter((item: any) => {
+    this.searchResults = this.allOrderes.filter((item: any) => {
       return (
         item.id.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         item.sdt.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -132,7 +131,7 @@ export class OrdersComponent {
       );
     });
     // this.orderes = this.searchResults.slice(0, 10);
-    this.orderes = this.service.changePage(this.searchResults)
+    this.orderes = this.paginationService.changePage(this.searchResults)
     // if (this.searchResults.length == 0) {
     //   (document.querySelector('.noresult') as HTMLElement).style.display = 'block'
     // } else {
@@ -142,16 +141,16 @@ export class OrdersComponent {
 
   onNavChange(changeEvent: NgbNavChangeEvent) {
     if (changeEvent.nextId === 1) {
-      this.orderes = this.service.changePage(this.allorderes)
+      this.orderes = this.paginationService.changePage(this.allOrderes)
     }
     if (changeEvent.nextId === 2) {
-      this.orderes = this.service.changePage(this.allorderes.filter((order: any) => order.trang_thai === 'DD'))
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'DD'))
     }
     if (changeEvent.nextId === 3) {
-      this.orderes = this.service.changePage(this.allorderes.filter((order: any) => order.trang_thai === 'DS'))
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'DS'))
     }
     if (changeEvent.nextId === 4) {
-      this.orderes = this.service.changePage(this.allorderes.filter((order: any) => order.trang_thai === 'HUY'))
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'HUY'))
     }
   }
 
@@ -202,8 +201,8 @@ export class OrdersComponent {
             // Cập nhật lại danh sách orders với danh sách mới
             this.store.select(selectOrderData).subscribe((data) => {
               this.orderes = data;
-              this.allorderes = cloneDeep(data);
-              this.orderes = this.service.changePage(this.allorderes);
+              this.allOrderes = cloneDeep(data);
+              this.orderes = this.paginationService.changePage(this.allOrderes);
             });
           },
         }).then((result) => {
@@ -221,14 +220,13 @@ export class OrdersComponent {
    * Open Edit modal
    * @param content modal content
    */
-  editDataGet(id: any, content: any) {
+  editDataGet(data: any, content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: 'md', centered: true });
     var modelTitle = document.querySelector('.modal-title') as HTMLAreaElement;
     modelTitle.innerHTML = 'Cập nhật';
-    this.econtent = this.allorderes[id];
-    this.ordersForm.controls['id'].setValue(this.econtent.id);
-    this.ordersForm.controls['trang_thai'].setValue(this.econtent.trang_thai);
+    this.ordersForm.controls['id'].setValue(data.id);
+    this.ordersForm.controls['trang_thai'].setValue(data.trang_thai);
   }
 
   /**
@@ -298,34 +296,40 @@ export class OrdersComponent {
     checkedVal.length > 0 ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block" : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
   }
 
-  // Csv File Export
-  csvFileExport() {
-    var orders = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'Order Data',
-      useBom: true,
-      noDownload: false,
-      headers: ["id", "order Id", "customer", "product", "orderDate", "amount", "payment", "status"]
-    };
-    new ngxCsv(this.orderes, "orders", orders);
-  }
+
   /**
   * Sort table data
   * @param param0 sort the column
   *
   */
-
-
   filterStatus() {
+    let filteredData = this.allOrderes;
     if (this.status != '') {
-      this.orderes = this.allorderes.filter((order: any) => order.trang_thai == this.status);
+      filteredData = this.allOrderes.filter((order: any) => order.trang_thai == this.status);
+      this.orderes = this.paginationService.changePage(filteredData);
     } else {
-      this.orderes = this.service.changePage(this.allorderes)
+      this.orderes = this.paginationService.changePage(this.allOrderes)
     }
+    this.paginationService.collectionSize = filteredData.length;
   }
 
+  filterDate() {
+    console.log(this.date)
+  }
+
+  SearchData() {
+    // var status = document.getElementById("idStatus") as HTMLInputElement;
+    // var category = document.getElementById("idCategory") as HTMLInputElement;
+    // if (status.value != "") {
+    //   this.products = this.allproducts.filter((product: any) => {
+    //     return product.available.toString() == status.value;
+    //   });
+    // } else if (category.value != '') {
+    //   this.products = this.allproducts.filter((product: any) => {
+    //     return product.phan_loai.toString() == category.value;
+    //   });
+    // } else {
+    //   this.products = this.paginationService.changePage(this.allproducts);
+    // }
+  }
 }

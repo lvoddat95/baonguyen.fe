@@ -35,7 +35,7 @@
               <select class="form-control bg-light border-light" data-choices data-choices-search-false
                 name="choices-single-default" id="idCategory" [(ngModel)]="category" (ngModelChange)="categoryFilter()">
                 <option value="" selected>Danh mục</option>
-                @for (item of categories; track $index) {
+                @for (item of productCategory; track $index) {
                 <option value="{{item.ma}}">{{item.ten}}</option>
                 }
               </select>
@@ -83,7 +83,7 @@
                 <th class="sort" (click)="onSort('ten')">Tên</th>
                 <th class="sort" (click)="onSort('mo_ta')">Mô tả</th>
                 <th class="sort" (click)="onSort('don_gia')">Giá</th>
-                <th class="sort" (click)="onSort('phan_loai')">Phân loại</th>
+                <th class="sort" (click)="onSort('ma_cap_1')">Danh mục</th>
                 <th class="sort">Có Bonus ?</th>
                 <th class="sort">Hiển thị</th>
               </tr>
@@ -104,7 +104,7 @@
                 <td>#{{data.id}} - {{data.ten}}</td>
                 <td>{{data.mo_ta}}</td>
                 <td>{{data.don_gia}}</td>
-                <td>{{ultils.fViewTextCode(categories,data.phan_loai)}}</td>
+                <td>{{ultils.fViewTextCode(productCategory,data.danh_muc)}}</td>
                 <td class="text-center">
                   <span class="badge"
                     [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-success': data.bonus === true}">

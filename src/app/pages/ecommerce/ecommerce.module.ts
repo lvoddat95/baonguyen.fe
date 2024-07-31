@@ -22,6 +22,7 @@ import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 // Flat Picker
 import { FlatpickrModule } from 'angularx-flatpickr';
+import l10n from 'flatpickr/dist/l10n/vn.js';
 // Ng Select
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -74,7 +75,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     SlickCarouselModule,
     CKEditorModule,
     DropzoneModule,
-    FlatpickrModule.forRoot(),
+    FlatpickrModule.forRoot({ locale: l10n.vn }),
     NgSelectModule,
     NgApexchartsModule,
     CountUpModule,

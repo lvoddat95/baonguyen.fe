@@ -30,7 +30,7 @@ import { selectDataLoading, selectProductData } from "src/app/store/Ecommerce/ec
 import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/product-category.action";
 import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
 import { ToastService } from "src/app/core/services/toast.service";
-import { productAvailable } from 'src/app/core/data';
+import { productAvailable, productCategory } from 'src/app/core/data';
 import { Ultils } from "src/app/shared/utils";
 import { ProductModel } from "src/app/store/Ecommerce/ecommerce_model";
 
@@ -60,6 +60,7 @@ export class ProductsComponent {
 
   categories!: any;
   productAvailable!: any;
+  productCategory!: any;
 
   num: number = 0;
   option = {
@@ -82,6 +83,7 @@ export class ProductsComponent {
 
   ngOnInit(): void {
     this.productAvailable = productAvailable;
+    this.productCategory = productCategory;
 
     if (sessionStorage.getItem('toast')) {
       this.toastService.show('Đăng nhập thành công.', { classname: 'bg-success text-center text-white', delay: 5000 });
@@ -99,7 +101,7 @@ export class ProductsComponent {
     /**
      * fetches data
      */
-    this.store.dispatch(fetchProductListData());
+    this.store.dispatch(fetchProductListData({ 'phan_loai': '', 'id_product': 0, 'gia': 'DESC', 'ma_cap_2': '' }));
     this.store.dispatch(fetchCategoryListData());
 
     this.store.select(selectDataLoading).subscribe((data) => {

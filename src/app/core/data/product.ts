@@ -8,6 +8,21 @@ const productAvailable = [
         ten: 'Ẩn',
     },
 ];
+
+const productCategory = [
+    {
+        ma: 'BANH',
+        ten: 'Bánh',
+    },
+    {
+        ma: 'AN_VAT',
+        ten: 'Ăn vặt',
+    }, {
+        ma: 'PHU_KIEN',
+        ten: 'Phụ kiện',
+    },
+];
+
 const orderStatus = [
     {
         ma: 'DD',
@@ -31,4 +46,4 @@ const orderStatus = [
     },
 ];
 
-export { orderStatus, productAvailable }
+export { orderStatus, productAvailable, productCategory }

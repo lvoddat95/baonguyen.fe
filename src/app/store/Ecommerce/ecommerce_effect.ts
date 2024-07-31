@@ -30,8 +30,8 @@ export class EcommerceEffects {
     fetchProductData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(fetchProductListData),
-            mergeMap(() =>
-                this.restApiService.getProductData().pipe(
+            mergeMap((action) =>
+                this.restApiService.getProductData(action.phan_loai, action.id_product, action.gia, action.ma_cap_2).pipe(
                     map((product) => {
                         const Product = product.data;
                         return fetchProductListSuccess({ Product });

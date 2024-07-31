@@ -7,10 +7,22 @@ import { Injectable } from '@angular/core';
 export class PaginationService {
     pageSize: any = 8;
     page: any = 1;
+    collectionSize: any = 1;
     direction: any = 'asc';
     startIndex: number = 1;
     endIndex: number = 9;
-
+    getPageSize(): number {
+        return this.pageSize;
+    }
+    setPageSize(pageSize: number) {
+        this.pageSize = pageSize;
+    }
+    getPage(): number {
+        return this.page;
+    }
+    setPage(page: number) {
+        this.page = page;
+    }
     // Pagination
     changePage(alldata: any[]) {
         const startItem = (this.page - 1) * this.pageSize + 1;

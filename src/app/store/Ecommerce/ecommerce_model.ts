@@ -5,7 +5,9 @@ export interface ProductModel {
   bonus?: any;
   don_gia?: any;
   mo_ta?: any;
-  phan_loai?: any;
+  ma_cap_1?: any;
+  ma_cap_2?: any;
+  sales?: any;
   ten?: any;
 }
 
