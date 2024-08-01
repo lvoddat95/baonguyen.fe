@@ -37,12 +37,6 @@ export class OrdersComponent {
   checkedList: any;
   customerName?: any;
 
-  Pending = 'Pending';
-  Inprogress = 'Inprogress';
-  Cancelled = 'Cancelled';
-  Pickups = 'Pickups';
-  Returns = 'Returns';
-  Delivered = 'Delivered';
   payment: any = '';
   date: any;
   status: any = '';
@@ -140,6 +134,7 @@ export class OrdersComponent {
   }
 
   onNavChange(changeEvent: NgbNavChangeEvent) {
+    console.log(changeEvent)
     if (changeEvent.nextId === 1) {
       this.orderes = this.paginationService.changePage(this.allOrderes)
     }
@@ -147,9 +142,15 @@ export class OrdersComponent {
       this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'DD'))
     }
     if (changeEvent.nextId === 3) {
-      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'DS'))
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'XN'))
     }
     if (changeEvent.nextId === 4) {
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'HT'))
+    }
+    if (changeEvent.nextId === 5) {
+      this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'DS'))
+    }
+    if (changeEvent.nextId === 6) {
       this.orderes = this.paginationService.changePage(this.allOrderes.filter((order: any) => order.trang_thai === 'HUY'))
     }
   }

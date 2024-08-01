@@ -35,13 +35,9 @@ import { defineElement } from "@lordicon/element";
 import lottie from 'lottie-web';
 
 // Component Pages
-import { EcommerceRoutingModule } from './ecommerce-routing.module';
+import { SettingRoutingModule } from './setting-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { ProductsComponent } from './products/products.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { AddProductComponent } from './add-product/add-product.component';
-import { ProductCategoryComponent } from './product-category/product-category.component';
-import { OrdersComponent } from './orders/orders.component';
+import { VideoComponent } from './video/video.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://httpbin.org/post',
@@ -51,11 +47,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 
 @NgModule({
   declarations: [
-    ProductsComponent,
-    ProductDetailComponent,
-    AddProductComponent,
-    ProductCategoryComponent,
-    OrdersComponent,
+    VideoComponent,
   ],
   imports: [
     CommonModule,
@@ -77,7 +69,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     NgSelectModule,
     NgApexchartsModule,
     CountUpModule,
-    EcommerceRoutingModule,
+    SettingRoutingModule,
     SharedModule,
     NgxMaskDirective,
     NgxMaskPipe
@@ -92,7 +84,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class EcommerceModule {
+export class SettingModule {
   constructor() {
     defineElement(lottie.loadAnimation);
   }

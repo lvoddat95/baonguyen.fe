@@ -6,37 +6,37 @@ import { RestApiService } from "../../../core/services/rest-api.service";
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { ProductDetailModel } from 'src/app/store/Ecommerce/ecommerce_model';
+import { OrderDetailModel } from 'src/app/store/Ecommerce/ecommerce_model';
 import { Ultils } from 'src/app/shared/utils';
 
-import { fetchProductDetailData } from 'src/app/store/Ecommerce/ecommerce_action';
-import { selectProductDetailData, selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
+import { fetchOrderDetailData } from 'src/app/store/Ecommerce/ecommerce_action';
+import { selectOrderDetailData, selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
 
 import { selectAllCategories } from 'src/app/store/Ecommerce/product-category/product-category.selector';
 import { fetchCategoryListData } from 'src/app/store/Ecommerce/product-category/product-category.action';
+import { orderStatus } from 'src/app/core/data';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.component.html',
 })
 
 /**
- * ProductDetail Component
+ * OrderDetail Component
  */
-export class ProductDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit {
 
   // bread crumb items
   breadCrumbItems!: Array<{}>;
-  productDetail!: ProductDetailModel[];
+  OrderDetail!: OrderDetailModel[];
 
   dataInfo: any;
-  dataSize: any;
-  dataTang: any;
-  dataNhan: any;
+  listProduct: any;
 
   categories: any;
   
   ultils = new Ultils();
+  orderStatus!: any;
 
   constructor(
     public toastService: ToastService,
@@ -53,26 +53,21 @@ export class ProductDetailComponent implements OnInit {
    * BreadCrumb
    */
     this.breadCrumbItems = [
-      { label: 'Sản phẩm' },
+      { label: 'Đơn hàng' },
       { label: 'Chi tiết', active: true }
     ];
-
-    const idParam = this.route.snapshot.paramMap.get('id_product');
+     this.orderStatus = orderStatus;
+    const idParam = this.route.snapshot.paramMap.get('id_don');
 
     if (idParam !== null) {
       const id = parseInt(idParam);
       if (!isNaN(id)) {
-        this.store.dispatch(fetchProductDetailData({ 'id_product': id }));
-        this.store.select(selectProductDetailData).subscribe((res: any) => {
+        this.store.dispatch(fetchOrderDetailData({ 'id_don': id }));
+        this.store.select(selectOrderDetailData).subscribe((res: any) => {
           if (res.code === '000') {
             if (res.data) {
-              this.dataInfo = res.data.prod_info[0];
-              this.dataSize = res.data.size;
-              this.dataTang = res.data.tang;
-              this.dataNhan = res.data.nhan;
-
-              console.log(res.data)
-              console.log(this.dataSize)
+              this.dataInfo = res.data.info[0];
+              this.listProduct = res.data.list_product;
             }
           }
         });

@@ -59,11 +59,12 @@ export class BonusComponent {
         .subscribe((data: any) => {
           if (data.code == "000") {
             this.toastService.show(data.message, { classname: "bg-success text-white", delay: 10000, });
+            this.sForm.reset();
+            this.submitted = false;
           } else {
             this.toastService.show(data.message, { classname: "bg-danger text-white", delay: 10000, });
           }
         });
-      this.sForm.reset();
     }
   }
 

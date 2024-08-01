@@ -102,7 +102,11 @@
                 <td class="text-center">
                   <img *ngIf="data.anh" [src]="data.anh" alt="" class="avatar-xs" />
                 </td>
-                <td>#{{data.id}} - {{data.ten}}</td>
+                <td>
+                  <a routerLink="/ecommerce/product-detail/{{data.id}}">
+                    #{{data.id}} - {{data.ten}}
+                  </a>
+                </td>
                 <td>{{data.mo_ta}}</td>
                 <td>{{data.don_gia | currency:'VND':'symbol'}}</td>
                 <td>{{ultils.f_ViewTextCode(categories,data.ma_cap_1)}}</td>
@@ -133,13 +137,13 @@
                         <i class="ri-pencil-fill fs-16"></i>
                       </a>
                     </li> -->
-                    <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top"
-                      data-bs-toggle="tooltip" data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
-                      <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
-                        data-bs-target="#deleteOrder">
+                    <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top" data-bs-toggle="tooltip"
+                      data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
+                      <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn"
+                        data-bs-toggle="modal" data-bs-target="#deleteOrder">
                         <i class="ri-delete-bin-5-fill fs-16"></i>
                       </a>
-                    </li> 
+                    </li>
                   </ul>
                 </td>
               </tr>

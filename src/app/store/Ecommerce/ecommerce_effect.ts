@@ -7,16 +7,26 @@ import {
     deleteProduct,
     deleteProductFailure,
     deleteProductSuccess,
+
     fetchProductListData,
     fetchProductListSuccess,
     fetchProductListFailure,
 
+    fetchProductDetailData,
+    fetchProductDetailSuccess,
+    fetchProductDetailFailure,
+
     fetchOrderListData,
     fetchOrderListSuccess,
     fetchOrderListFailure,
+
+    fetchOrderDetailData,
+    fetchOrderDetailSuccess,
+    fetchOrderDetailFailure,
+
+    updateOrderStatusFailure,
     updateOrderStatus,
     updateOrderStatusSuccess,
-    updateOrderStatusFailure,
 } from "./ecommerce_action";
 
 @Injectable()
@@ -41,7 +51,7 @@ export class EcommerceEffects {
             )
         )
     );
-
+    // Product Delete
     deleteProductData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(deleteProduct),
@@ -53,10 +63,21 @@ export class EcommerceEffects {
             )
         )
     );
+    // Product Detail
+    fetchProductDetail$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fetchProductDetailData),
+            mergeMap(({ id_product }) =>
+                this.restApiService.getProductById(id_product).pipe(
+                    map((ProductDetail) => fetchProductDetailSuccess({ ProductDetail })),
+                    catchError((error) => of(fetchProductDetailFailure({ error })))
+                )
+            )
+        )
+    );
 
 
     // Order
-
     fetchOrderData$ = createEffect(() =>
         this.actions$.pipe(
             ofType(fetchOrderListData),
@@ -73,7 +94,20 @@ export class EcommerceEffects {
             ),
         ),
     );
+    // Order Detail
+    fetchOrderDetail$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fetchOrderDetailData),
+            mergeMap(({ id_don }) =>
+                this.restApiService.getOrderById(id_don).pipe(
+                    map((OrderDetail) => fetchOrderDetailSuccess({ OrderDetail })),
+                    catchError((error) => of(fetchOrderDetailFailure({ error })))
+                )
+            )
+        )
+    );
 
+    // Order Update Status
     updateOrderStatus$ = createEffect(() =>
         this.actions$.pipe(
             ofType(updateOrderStatus),
@@ -85,6 +119,5 @@ export class EcommerceEffects {
             )
         )
     );
-
-
+    
 }

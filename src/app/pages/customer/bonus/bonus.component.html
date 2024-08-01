@@ -10,8 +10,16 @@
                     <label for="sdt" class="form-label">Số điện thoại</label>
                 </div>
                 <div class="col-lg-8">
-                    <input required type="number" id="sdt" formControlName="sdt" class="form-control" placeholder=""/>
-                  
+                    <input required type="tel" class="form-control" id="sdt" formControlName="sdt" placeholder=""
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                        [ngClass]="{ 'is-invalid': submitted && form['sdt'].errors }" />
+                    @if(submitted && form['sdt'].errors){
+                    <div class="invalid-feedback" align="left">
+                        @if(form['sdt'].errors['required']){
+                        <div>Nhập số điện thoại.</div>
+                        }
+                    </div>
+                    }
                 </div>
             </div>
 
@@ -20,11 +28,18 @@
                     <label for="thanh_tien" class="form-label">Điểm Bonus</label>
                 </div>
                 <div class="col-lg-8">
-                    <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="text" class="form-control text-end" id="thanh_tien" formControlName="thanh_tien"
-                            mask="0*.00" placeholder="0">
+                    <input required type="text" class="form-control" id="thanh_tien" formControlName="thanh_tien"
+                        placeholder="0"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                        [ngClass]="{ 'is-invalid': submitted && form['thanh_tien'].errors }">
+
+                    @if(submitted && form['thanh_tien'].errors){
+                    <div class="invalid-feedback" align="left">
+                        @if(form['thanh_tien'].errors['required']){
+                        <div>Nhập số điểm bonus.</div>
+                        }
                     </div>
+                    }
                 </div>
             </div>
 
@@ -32,7 +47,8 @@
                 <div class="col-lg-4">
                 </div>
                 <div class="col-lg-8">
-                    <button type="submit" class="btn btn-primary"> <i class="ri-add-circle-line align-middle me-1"></i>Cộng điểm</button>
+                    <button type="submit" class="btn btn-primary"> <i
+                            class="ri-add-circle-line align-middle me-1"></i>Cộng điểm</button>
                 </div>
             </div>
 

@@ -1,0 +1,120 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Chi tiết đơn đặt hàng" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row justify-content-center">
+    <div class="col-xxl-9">
+        <div class="card" id="demo">
+            <div class="row">
+                <div *ngIf="dataInfo" class="col-lg-12">
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-lg-3 col-6">
+                                <p class="text-muted mb-2 text-uppercase fw-semibold">ID đơn đặt</p>
+                                <h5 class="fs-14 mb-0">#<span id="invoice-no">{{dataInfo.id}}</span></h5>
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-3 col-6">
+                                <p class="text-muted mb-2 text-uppercase fw-semibold">Ngày nhận</p>
+                                <h5 class="fs-14 mb-0">
+                                    <span id="invoice-date">{{dataInfo.ngay_nhan | date:'dd/MM/yyyy HH:mm'}}</span>
+                                </h5>
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-3 col-6">
+                                <p class="text-muted mb-2 text-uppercase fw-semibold">Trạng thái</p>
+                                <span class="badge fs-11" id="payment-status"
+                                    [ngClass]=" { 'bg-danger-subtle text-danger': dataInfo.trang_thai === 'HUY', 'bg-info-subtle text-info': dataInfo.trang_thai === 'DD', 'bg-secondary-subtle text-secondary': dataInfo.trang_thai === 'XN', 'bg-primary-subtle text-primary': dataInfo.trang_thai === 'DS', 'bg-success-subtle text-success': dataInfo.trang_thai === 'HT' }">
+                                    {{ultils.f_ViewTextCode(orderStatus,dataInfo.trang_thai)}}
+                                </span>
+                            </div>
+                            <!--end col-->
+                            <div class="col-lg-3 col-6">
+                                <p class="text-muted mb-2 text-uppercase fw-semibold">Tổng tiền</p>
+                                <h5 class="fs-14 mb-0"><span id="total-amount">{{dataInfo.tong_tien |
+                                        currency:'VND':''}} VNĐ</span></h5>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </div>
+                    <!--end card-body-->
+                </div><!--end col-->
+                <div *ngIf="dataInfo" class="col-lg-12">
+                    <div class="card-body p-4 border-top border-top-dashed">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <h6 class="text-muted text-uppercase fw-semibold mb-3">Thông tin khách hàng</h6>
+                                <p class="fw-medium mb-2" id="billing-name">UserID: {{dataInfo.id_user}}</p>
+                                <p class="text-muted mb-1"><span>SĐT: </span><span>{{dataInfo.sdt}}</span></p>
+                                <p class="text-muted mb-0"><span>Tuổi: </span><span>{{dataInfo.tuoi}}</span>
+                                </p>
+                            </div>
+                            <!--end col-->
+                            <div class="col-6">
+                                <h6 class="text-muted text-uppercase fw-semibold mb-3">&nbsp;</h6>
+                                <p class="fw-medium mb-2" id="shipping-name">Địa chỉ: {{dataInfo.dchi}}</p>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </div>
+                    <!--end card-body-->
+                </div><!--end col-->
+
+                <div class="col-lg-12">
+                    <div class="card-body p-4">
+                        <div class="table-responsive">
+                            <table class="table table-borderless text-center table-nowrap align-middle mb-0">
+                                <thead>
+                                    <tr class="table-active">
+                                        <th scope="col" style="width: 50px;">#</th>
+                                        <th scope="col" style="width: 50px;"></th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col" class="text-end">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-list">
+                                    @for (data of listProduct; track $index) {
+                                    <tr id="o_{{data.id}}">
+                                        <th scope="row">{{$index+1}}</th>
+                                        <th class="text-center"><img src="{{data.anh}}" alt="" height="32">
+                                        <td class="text-start">
+                                            <p class="fw-medium mb-1">{{data.ten_sp}}</p>
+                                            <span *ngIf="data.size" class="text-muted fs-12 mb-0 me-3">Size:
+                                                {{data.size}}</span>
+                                            <span *ngIf="data.nhan" class="text-muted fs-12 mb-0 me-3">Nhân:
+                                                {{data.nhan}}</span>
+                                            <span *ngIf="data.tang" class="text-muted fs-12 mb-0 me-3">Tầng:
+                                                {{data.tang}}</span>
+                                        </td>
+                                        <td>{{data.don_gia | currency:'VND':'symbol'}}</td>
+                                        <td>{{data.so_luong}}</td>
+                                        <td class="text-end">{{data.thanh_tien | currency:'VND':'symbol'}}</td>
+                                    </tr>
+                                    }
+                            </table><!--end table-->
+                        </div>
+                        <div class="border-top border-top-dashed mt-2">
+                            <table class="table table-borderless table-nowrap align-middle mb-0 ms-auto"
+                                style="width:250px">
+                                <tbody>
+                                    <tr class="border-top border-top-dashed fs-15">
+                                        <th scope="row">Tổng tiền</th>
+                                        <th class="text-end">{{dataInfo.tong_tien | currency:'VND':'symbol' }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--end table-->
+                        </div>
+                    </div>
+                    <!--end card-body-->
+                </div><!--end col-->
+            </div>
+
+
+        </div>
+    </div>
+</div>

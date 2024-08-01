@@ -43,6 +43,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { AddProductComponent } from './add-product/add-product.component';
 import { ProductCategoryComponent } from './product-category/product-category.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://httpbin.org/post',
@@ -57,6 +58,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     AddProductComponent,
     ProductCategoryComponent,
     OrdersComponent,
+    OrderDetailComponent,
   ],
   imports: [
     CommonModule,

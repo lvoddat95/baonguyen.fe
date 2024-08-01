@@ -115,11 +115,11 @@ export class ProductsComponent {
       this.allproducts = cloneDeep(data);
       this.products = this.service.changePage(this.allproducts);
     });
+    
     this.store.select(selectAllCategories).subscribe((data) => {
       if (data && data.menu) {
         this.categories = data.menu;
       }
-
     });
 
   }

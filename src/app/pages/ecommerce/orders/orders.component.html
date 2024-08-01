@@ -81,6 +81,7 @@
                               [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
                           </div>
                         </th>
+                        <th class="text-center">STT</th>
                         <th class="sort" (click)="onSort('id')">ID/Sản phẩm</th>
                         <th class="sort" (click)="onSort('sdt')">Thông tin</th>
                         <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
@@ -100,11 +101,12 @@
                               [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
                           </div>
                         </th>
+                        <td class="text-center">{{$index+1}}</td>
                         <td>
                           <ngb-highlight [result]="data.ten_sp" [term]="searchTerm"></ngb-highlight>
                           <p class="mb-0">
                             <span>ID:&nbsp;</span>
-                            <a routerLink="/ecommerce/order-details">
+                            <a routerLink="/ecommerce/order-detail/{{data.id}}">
                               <ngb-highlight [result]="data.id" [term]="searchTerm"></ngb-highlight>
                             </a>
                           </p>
@@ -134,8 +136,9 @@
                         <td>
                           <ngb-highlight [result]="data.ngay_nhap" [term]="searchTerm"></ngb-highlight>
                         </td>
-                        <td class="status"><span class="badge "
-                            [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'XN', 'bg-secondary-subtle text-secondary': data.trang_thai === 'DD', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
+                        <td class="status">
+                          <span class="badge "
+                            [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'DD', 'bg-secondary-subtle text-secondary': data.trang_thai === 'XN', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
                             {{ultils.f_ViewTextCode(orderStatus,data.trang_thai)}}
                           </span>
                         </td>
@@ -143,7 +146,7 @@
                           <ul class="list-inline justify-content-center hstack gap-2 mb-0">
                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                               ngbTooltip="Xem" placement="top">
-                              <a href="javascript:void(0);" routerLink="/ecommerce/order-details"
+                              <a href="javascript:void(0);" routerLink="/ecommerce/order-detail/{{data.id}}"
                                 class="text-warning d-inline-block">
                                 <i class="ri-eye-fill fs-16"></i>
                               </a>
@@ -156,13 +159,6 @@
                                 <i class="ri-pencil-fill fs-16"></i>
                               </a>
                             </li>
-                            <!-- <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top"
-                              data-bs-toggle="tooltip" data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
-                              <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteOrder">
-                                <i class="ri-delete-bin-5-fill fs-16"></i>
-                              </a>
-                            </li> -->
                           </ul>
                         </td>
                       </tr>
@@ -192,34 +188,130 @@
                 </div>
               </ng-template>
             </li>
-            <li [ngbNavItem]="2">
+            @for (status of orderStatus; track $index) {
+            <li [ngbNavItem]="$index + 2">
               <a ngbNavLink>
-                <i class=" ri-shopping-bag-3-line me-1 align-bottom"></i> Đã đặt hàng
+                <i class="{{status.icon}} me-1 align-bottom"></i> {{status.ten}}
               </a>
-
+              <ng-template ngbNavContent>
+                <div class="table-responsive table-card mb-0">
+                  <table class="table">
+                    <thead>
+                      <tr class="bg-light text-muted text-uppercase">
+                        <th scope="col" style="width: 25px;">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="checkAll" value="option"
+                              [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
+                          </div>
+                        </th>
+                        <th class="text-center">STT</th>
+                        <th class="sort" (click)="onSort('id')">ID/Sản phẩm</th>
+                        <th class="sort" (click)="onSort('sdt')">Thông tin</th>
+                        <th class="sort" (click)="onSort('tong_tien')">Tiền</th>
+                        <th class="sort" (click)="onSort('tong_diem')">Điểm</th>
+                        <th class="sort" (click)="onSort('ngay_nhan')">Ngày nhận</th>
+                        <th class="sort" (click)="onSort('ngay_nhap')">Ngày nhập</th>
+                        <th class="sort" (click)="onSort('trang_thai')">Trạng thái</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (data of orderes; track $index) {
+                      <tr id="o_{{data.id}}">
+                        <th scope="row">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}"
+                              [(ngModel)]="data.state" (change)="onCheckboxChange($event)">
+                          </div>
+                        </th>
+                        <td class="text-center">{{$index+1}}</td>
+                        <td>
+                          <ngb-highlight [result]="data.ten_sp" [term]="searchTerm"></ngb-highlight>
+                          <p class="mb-0">
+                            <span>ID:&nbsp;</span>
+                            <a routerLink="/ecommerce/order-detail/{{data.id}}">
+                              <ngb-highlight [result]="data.id" [term]="searchTerm"></ngb-highlight>
+                            </a>
+                          </p>
+                        </td>
+                        <td>
+                          <small class="d-block text-[12px]">
+                            SĐT: <ngb-highlight [result]="data.sdt" [term]="searchTerm"></ngb-highlight>
+                          </small>
+                          <small class="d-block text-[12px]">
+                            Tuổi: <ngb-highlight [result]="data.tuoi" [term]="searchTerm"></ngb-highlight>
+                          </small>
+                          <small class="d-block text-[12px]">
+                            Đ/c: <ngb-highlight [result]="data.dchi" [term]="searchTerm"></ngb-highlight>
+                          </small>
+                        </td>
+                        <td>
+                          <ngb-highlight [result]="data.tong_tien | currency:'VND':'symbol'"
+                            [term]="searchTerm"></ngb-highlight>
+                        </td>
+                        <td>
+                          <ngb-highlight [result]="data.tong_diem | currency:'VND':'symbol'"
+                            [term]="searchTerm"></ngb-highlight>
+                        </td>
+                        <td>
+                          <ngb-highlight [result]="data.ngay_nhan" [term]="searchTerm"></ngb-highlight>
+                        </td>
+                        <td>
+                          <ngb-highlight [result]="data.ngay_nhap" [term]="searchTerm"></ngb-highlight>
+                        </td>
+                        <td class="status">
+                          <span class="badge "
+                            [ngClass]=" { 'bg-danger-subtle text-danger': data.trang_thai === 'HUY', 'bg-info-subtle text-info': data.trang_thai === 'DD', 'bg-secondary-subtle text-secondary': data.trang_thai === 'XN', 'bg-primary-subtle text-primary': data.trang_thai === 'DS', 'bg-success-subtle text-success': data.trang_thai === 'HT' }">
+                            {{ultils.f_ViewTextCode(orderStatus,data.trang_thai)}}
+                          </span>
+                        </td>
+                        <td class="text-center">
+                          <ul class="list-inline justify-content-center hstack gap-2 mb-0">
+                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                              ngbTooltip="Xem" placement="top">
+                              <a href="javascript:void(0);" routerLink="/ecommerce/order-detail/{{data.id}}"
+                                class="text-warning d-inline-block">
+                                <i class="ri-eye-fill fs-16"></i>
+                              </a>
+                            </li>
+                            <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                              ngbTooltip="Sửa" placement="top">
+                              <a href="javascript:void(0);" data-bs-toggle="modal"
+                                class="text-primary d-inline-block edit-item-btn" data-bs-toggle="modal" id="create-btn"
+                                data-bs-target="#showModal" (click)="editDataGet(data,content)">
+                                <i class="ri-pencil-fill fs-16"></i>
+                              </a>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row justify-content-md-between align-items-md-center gy-2">
+                  <div class="col col-sm-6">
+                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                      Hiển thi
+                      {{paginationService.startIndex}} đến
+                      {{paginationService.endIndex}} của {{paginationService.collectionSize}}
+                      bản ghi.
+                    </div>
+                  </div>
+                  <!-- Pagination -->
+                  <div class="col col-sm-6">
+                    <div class="text-sm-right float-end listjs-pagination">
+                      <ngb-pagination [collectionSize]="paginationService.collectionSize"
+                        [(page)]="paginationService.page" [pageSize]="paginationService.pageSize"
+                        (pageChange)="changePage()">
+                      </ngb-pagination>
+                    </div>
+                  </div>
+                  <!-- End Pagination -->
+                </div>
+              </ng-template>
             </li>
-            <li [ngbNavItem]="3">
-              <a ngbNavLink>
-                <i class="ri-checkbox-circle-line me-1 align-bottom"></i> Đã xác nhận
-              </a>
-
-            </li>
-            <li [ngbNavItem]="4">
-              <a ngbNavLink>
-                <i class="ri-flag-line me-1 align-bottom"></i> Hoàn thành
-              </a>
-            </li>
-            <li [ngbNavItem]="5">
-              <a ngbNavLink>
-                <i class="ri-truck-line me-1 align-bottom"></i> Đã ship
-              </a>
-            </li>
-            <li [ngbNavItem]="5">
-              <a ngbNavLink>
-                <i class="ri-close-circle-line me-1 align-bottom"></i> Đã huỷ đơn
-              </a>
-            </li>
-
+            }
           </ul>
 
           <!-- Tab panes -->

@@ -28,7 +28,6 @@ import { cloneDeep } from "lodash";
 @Component({
   selector: "app-product-category",
   templateUrl: "./product-category.component.html",
-  styleUrls: ["./product-category.component.scss"],
 })
 
 /**

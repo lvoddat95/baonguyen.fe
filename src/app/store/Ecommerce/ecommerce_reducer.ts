@@ -5,24 +5,38 @@ import {
   fetchProductListFailure,
   deleteProductSuccess,
 
+  fetchProductDetailData,
+  fetchProductDetailFailure,
+  fetchProductDetailSuccess,
+
   fetchOrderListData,
   fetchOrderListSuccess,
   fetchOrderListFailure,
+
+  fetchOrderDetailData,
+  fetchOrderDetailFailure,
+  fetchOrderDetailSuccess,
+
   updateOrderStatus,
   updateOrderStatusSuccess,
   updateOrderStatusFailure,
+
 } from "./ecommerce_action";
 
 export interface EcommerceState {
   Product: any[];
+  ProductDetail: any[];
   Order: any[];
+  OrderDetail: any[];
   loading: boolean;
   error: any;
 }
 
 export const initialState: EcommerceState = {
   Product: [],
+  ProductDetail: [],
   Order: [],
+  OrderDetail: [],
   loading: false,
   error: null,
 };
@@ -46,6 +60,17 @@ export const ecommercerReducer = createReducer(
     return { ...state, Product: updatedProduct, error: null };
   }),
 
+  // Product Detail
+  on(fetchProductDetailData, (state) => {
+    return { ...state, loading: true, error: null };
+  }),
+  on(fetchProductDetailSuccess, (state, { ProductDetail }) => {
+    return { ...state, ProductDetail, loading: false };
+  }),
+  on(fetchProductDetailFailure, (state, { error }) => {
+    return { ...state, error, loading: false };
+  }),
+
 
   // Order
   on(fetchOrderListData, (state) => {
@@ -57,9 +82,19 @@ export const ecommercerReducer = createReducer(
   on(fetchOrderListFailure, (state, { error }) => {
     return { ...state, error, loading: false };
   }),
+  // Order Detail
+  on(fetchOrderDetailData, (state) => {
+    return { ...state, loading: true, error: null };
+  }),
+  on(fetchOrderDetailSuccess, (state, { OrderDetail }) => {
+    return { ...state, OrderDetail, loading: false };
+  }),
+  on(fetchOrderDetailFailure, (state, { error }) => {
+    return { ...state, error, loading: false };
+  }),
 
 
- on(updateOrderStatus, (state) => ({
+  on(updateOrderStatus, (state) => ({
     ...state,
     updatingOrderStatus: true,
     updateOrderStatusError: null,

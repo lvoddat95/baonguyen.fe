@@ -19,7 +19,7 @@ export class RestApiService {
   /**
    * Product Rest Api
    */
-  // Get All
+  // Product Get All
   getProductData(
     phan_loai: string = "",
     id_product: number = 0,
@@ -39,7 +39,7 @@ export class RestApiService {
     );
   }
 
-  // Delete
+  // Product Delete
   deleteProductData(id: any): Observable<any> {
     return this.http.delete(
       GlobalComponent.API_URL + GlobalComponent.productDelete + id,
@@ -47,10 +47,19 @@ export class RestApiService {
     );
   }
 
+  // Product Detail
+  getProductById(id_product: number): Observable<any> {
+    return this.http.post(
+      GlobalComponent.API_URL + GlobalComponent.productDetail,
+      { data: JSON.stringify({ id_product: id_product }) },
+      httpOptions
+    );
+  }
+
   /**
    * Category Rest Api
    */
-  // Getl All
+  // Category Getl All
   getCategoryData(danh_muc: string): Observable<any> {
     return this.http.post(
       GlobalComponent.API_URL + GlobalComponent.category,
@@ -62,7 +71,7 @@ export class RestApiService {
   /**
   * Order Rest Api
   */
-  // Getl All
+  // Order Get All
   getOrderData(
     userid: number = 0,
     role: string = "USER",
@@ -77,7 +86,15 @@ export class RestApiService {
       httpOptions
     );
   }
-
+  // Order Detail
+  getOrderById(id_don: number): Observable<any> {
+    return this.http.post(
+      GlobalComponent.API_URL + GlobalComponent.orderDetail,
+      { data: JSON.stringify({ id_don: id_don }) },
+      httpOptions
+    );
+  }
+  // Order Update Status
   updateOrderStatus(
     id_don: number = 0,
     status: string = "",
