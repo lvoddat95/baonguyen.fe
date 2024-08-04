@@ -27,8 +27,8 @@ export class ProductCategoryComponent {
   sForm!: UntypedFormGroup;
   submitted = false;
   masterSelected!: boolean;
-  isAddProductCategoryLv2 = false;
-
+  isProductCategoryLv2 = false;
+  activeTab = 1;
   dataList?: any;
   allData: any;
   selectedFile: File | undefined;
@@ -92,17 +92,17 @@ export class ProductCategoryComponent {
         this.restApiService.upload(formData).subscribe((res: any) => {
           if (res.code == "000") {
             const imageUrl = res.data;
-            if (this.isAddProductCategoryLv2) {
+            if (this.isProductCategoryLv2) {
               this.onCategoryLv2Insert(this.form["title"].value, this.form["category"].value, imageUrl);
             } else {
               this.onCategoryInsert(this.form["title"].value, this.form["category"].value, imageUrl);
             }
           } else {
-            this.toastService.success(res.message, 'Lỗi upload ảnh!');
+            this.toastService.error(res.message, 'Lỗi upload ảnh!');
           }
         });
       } else {
-        if (this.isAddProductCategoryLv2) {
+        if (this.isProductCategoryLv2) {
           this.onCategoryLv2Insert(this.form["title"].value, this.form["category"].value, "");
         } else {
           this.onCategoryInsert(this.form["title"].value, this.form["category"].value, "");
@@ -119,10 +119,12 @@ export class ProductCategoryComponent {
         this.submitted = false;
         this.fileRemove();
         this.getAllData();
+        this.activeTab = 1;
       } else {
-        this.toastService.success(res.message, 'Lỗi!');
+        this.toastService.error(res.message, 'Lỗi!');
       }
     });
+
   }
 
   onCategoryLv2Insert(title: string, ma_cap_1: string, imageUrl: string | undefined) {
@@ -133,8 +135,9 @@ export class ProductCategoryComponent {
         this.submitted = false;
         this.fileRemove();
         this.getAllData();
+        this.activeTab = 2;
       } else {
-        this.toastService.success(res.message, 'Lỗi!');
+        this.toastService.error(res.message, 'Lỗi!');
       }
     });
   }
@@ -180,7 +183,7 @@ export class ProductCategoryComponent {
           this.dataList = this.paginationService.changePage(this.allData)
           this.paginationService.collectionSize = this.allData.length;
         } else {
-          this.toastService.success(res.message, 'Lỗi!');
+          this.toastService.error(res.message, 'Lỗi!');
         }
       });
   }
@@ -195,7 +198,7 @@ export class ProductCategoryComponent {
           this.dataList = this.paginationService.changePage(this.allData)
           this.paginationService.collectionSize = this.allData.length;
         } else {
-          this.toastService.success(res.message, 'Lỗi!');
+          this.toastService.error(res.message, 'Lỗi!');
         }
       });
   }
@@ -206,9 +209,9 @@ export class ProductCategoryComponent {
     let selectedIndex: number = optionElement["selectedIndex"];
     let dataParent = optionElement.options[selectedIndex].getAttribute("data-parent");
     if (dataParent && dataParent.length > 0) {
-      this.isAddProductCategoryLv2 = true;
+      this.isProductCategoryLv2 = true;
     } else {
-      this.isAddProductCategoryLv2 = false;
+      this.isProductCategoryLv2 = false;
     }
     console.log(dataParent)
   }
@@ -227,9 +230,11 @@ export class ProductCategoryComponent {
     this.checkedValGet = [];
     (document.getElementById("checkAll") as HTMLInputElement).checked = false;
     if (changeEvent.nextId === 1) {
+      this.isProductCategoryLv2 = false;
       this.getAllData();
     }
     if (changeEvent.nextId === 2) {
+      this.isProductCategoryLv2 = true;
       this.getAllDataLv2();
     }
   }
@@ -245,28 +250,28 @@ export class ProductCategoryComponent {
 
   // Delete Data
   deleteData(id: number) {
-    console.log(JSON.stringify(this.checkedValGet));
-
-    this.checkedValGet.forEach((data: any) => {
-      console.log(data)
-      // if (typeof id == "string") {
-      //   this.restApiService
-      //     .deleteCategogy(id)
-      //     .subscribe((res: any) => {
-      //       if (res.code == "000") {
-      //         this.getAllData();
-      //         this.checkedValGet = [];
-      //         const removeActionsElement = document.getElementById("remove-actions");
-      //         if (removeActionsElement) {
-      //           removeActionsElement.style.display = "none";
-      //         }
-      //         this.toastService.success("Xoá thành công.", 'Thành công');
-      //       } else {
-      //         this.toastService.success(res.message, 'Lỗi!');
-      //       }
-      //     });
-      // }
-    })
+    console.log(this.checkedValGet);
+    if (!this.isProductCategoryLv2) {
+      this.checkedValGet.forEach((data: any) => {
+        this.restApiService
+          .deleteCategogy(data.id)
+          .subscribe((res: any) => {
+            if (res.code == "000") {
+              this.getAllData();
+              this.checkedValGet = [];
+              const removeActionsElement = document.getElementById("remove-actions");
+              if (removeActionsElement) {
+                removeActionsElement.style.display = "none";
+              }
+              this.toastService.success("Xoá thành công.", 'Thành công');
+            } else {
+              this.toastService.error(res.message, 'Lỗi!');
+            }
+          });
+      })
+    } else {
+      this.toastService.error("Lỗi API xoá menu Lv2.", 'Lỗi!');
+    }
   }
 
   /**

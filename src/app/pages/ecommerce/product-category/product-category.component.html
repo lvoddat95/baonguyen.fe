@@ -81,9 +81,9 @@
                     </div>
 
                     <div class="text-start">
-                        <button *ngIf="!isAddProductCategoryLv2" type="submit" class="btn btn-primary"
+                        <button *ngIf="!isProductCategoryLv2" type="submit" class="btn btn-primary"
                             (click)="saveForm()">Thêm danh mục chính</button>
-                        <button *ngIf="isAddProductCategoryLv2" type="submit" class="btn btn-primary"
+                        <button *ngIf="isProductCategoryLv2" type="submit" class="btn btn-primary"
                             (click)="saveForm()">Thêm danh mục Lv2</button>
                     </div>
                 </form>
@@ -91,11 +91,11 @@
         </div>
         <div class="col-lg-8">
 
-                <ul ngbNav #nav="ngbNav" [activeId]="1" (navChange)="onNavChange($event)"
+                <ul ngbNav #nav="ngbNav" [activeId]="activeTab" (navChange)="onNavChange($event)"
                     class="nav nav-tabs nav-tabs-custom nav-success mb-3">
                     <li [ngbNavItem]="1">
                         <a ngbNavLink>
-                            <i class="ri-store-2-fill me-1 align-bottom"></i>Danh mục sản phẩm Lv1
+                            <i class="ri-store-2-fill me-1 align-bottom"></i>Danh mục sản phẩm chính
                         </a>
                         <ng-template ngbNavContent>
                             <div>
@@ -212,7 +212,7 @@
                                                             class="avatar-xs img-thumbnail" />
                                                     </td>
                                                     <td><span *ngIf="dataItem.parent"> — </span>{{dataItem.ten}}</td>
-                                                    <td>{{ultils.f_ViewTextCode(productCategory,dataItem.danh_muc)}}
+                                                    <td>{{ultils.f_ViewTextCode(productCategoryMenu,dataItem.ma_cap_1)}}
                                                     </td>
                                                 </tr>
                                             </ng-container>
