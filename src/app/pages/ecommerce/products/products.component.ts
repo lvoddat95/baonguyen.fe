@@ -31,8 +31,8 @@ import { fetchCategoryListData } from "src/app/store/Ecommerce/product-category/
 import { selectAllCategories } from "src/app/store/Ecommerce/product-category/product-category.selector";
 import { ToastService } from "src/app/core/services/toast.service";
 import { productAvailable, productCategory } from 'src/app/core/data';
-import { Ultils } from "src/app/shared/utils";
 import { ProductModel } from "src/app/store/Ecommerce/ecommerce_model";
+import { Ultils } from "src/app/core/services/ultils.service";
 
 @Component({
   selector: "app-products",
@@ -115,7 +115,7 @@ export class ProductsComponent {
       this.allproducts = cloneDeep(data);
       this.products = this.service.changePage(this.allproducts);
     });
-    
+
     this.store.select(selectAllCategories).subscribe((data) => {
       if (data && data.menu) {
         this.categories = data.menu;
@@ -146,7 +146,7 @@ export class ProductsComponent {
     console.log(id)
     console.log(this.checkedValGet)
 
-    
+
     // if (id) {
     //   this.store.dispatch(deleteTask({ id: this.deleteId.toString() }));
     // } else {

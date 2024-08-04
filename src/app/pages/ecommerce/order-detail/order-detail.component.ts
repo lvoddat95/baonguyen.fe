@@ -7,7 +7,6 @@ import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { OrderDetailModel } from 'src/app/store/Ecommerce/ecommerce_model';
-import { Ultils } from 'src/app/shared/utils';
 
 import { fetchOrderDetailData } from 'src/app/store/Ecommerce/ecommerce_action';
 import { selectOrderDetailData, selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
@@ -15,6 +14,7 @@ import { selectOrderDetailData, selectDataLoading } from 'src/app/store/Ecommerc
 import { selectAllCategories } from 'src/app/store/Ecommerce/product-category/product-category.selector';
 import { fetchCategoryListData } from 'src/app/store/Ecommerce/product-category/product-category.action';
 import { orderStatus } from 'src/app/core/data';
+import { Ultils } from 'src/app/core/services/ultils.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -29,23 +29,18 @@ export class OrderDetailComponent implements OnInit {
   // bread crumb items
   breadCrumbItems!: Array<{}>;
   OrderDetail!: OrderDetailModel[];
-
   dataInfo: any;
   listProduct: any;
-
   categories: any;
-  
-  ultils = new Ultils();
   orderStatus!: any;
+  ultils = new Ultils();
 
   constructor(
     public toastService: ToastService,
     private store: Store<{ data: RootReducerState }>,
     private route: ActivatedRoute
   ) {
-
   }
-
 
 
   ngOnInit(): void {
@@ -56,7 +51,7 @@ export class OrderDetailComponent implements OnInit {
       { label: 'Đơn hàng' },
       { label: 'Chi tiết', active: true }
     ];
-     this.orderStatus = orderStatus;
+    this.orderStatus = orderStatus;
     const idParam = this.route.snapshot.paramMap.get('id_don');
 
     if (idParam !== null) {
@@ -74,7 +69,7 @@ export class OrderDetailComponent implements OnInit {
 
       }
     }
-    
+
     this.store.dispatch(fetchCategoryListData({ 'danh_muc': '' }));
     this.store.select(selectAllCategories).subscribe((data) => {
       if (data && data.menu) {

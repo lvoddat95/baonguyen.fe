@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "velzon": {
+    "datok": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/velzon",
+            "outputPath": "dist/datok",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -127,10 +127,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "velzon:build:production"
+              "buildTarget": "datok:build:production"
             },
             "development": {
-              "buildTarget": "velzon:build:development"
+              "buildTarget": "datok:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -138,7 +138,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "velzon:build"
+            "buildTarget": "datok:build"
           }
         },
         "test": {

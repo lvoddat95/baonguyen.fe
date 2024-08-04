@@ -7,13 +7,13 @@ import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { ProductDetailModel } from 'src/app/store/Ecommerce/ecommerce_model';
-import { Ultils } from 'src/app/shared/utils';
 
 import { fetchProductDetailData } from 'src/app/store/Ecommerce/ecommerce_action';
 import { selectProductDetailData, selectDataLoading } from 'src/app/store/Ecommerce/ecommerce_selector';
 
 import { selectAllCategories } from 'src/app/store/Ecommerce/product-category/product-category.selector';
 import { fetchCategoryListData } from 'src/app/store/Ecommerce/product-category/product-category.action';
+import { Ultils } from 'src/app/core/services/ultils.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,9 +33,8 @@ export class ProductDetailComponent implements OnInit {
   dataSize: any;
   dataTang: any;
   dataNhan: any;
-
   categories: any;
-  
+
   ultils = new Ultils();
 
   constructor(
@@ -79,7 +78,7 @@ export class ProductDetailComponent implements OnInit {
 
       }
     }
-    
+
     this.store.dispatch(fetchCategoryListData({ 'danh_muc': '' }));
     this.store.select(selectAllCategories).subscribe((data) => {
       if (data && data.menu) {

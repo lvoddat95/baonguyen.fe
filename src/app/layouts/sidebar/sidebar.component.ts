@@ -143,7 +143,7 @@ export class SidebarComponent implements OnInit {
       let matchingMenuItem = items.find((x: any) => {
         if (environment.production) {
           let path = x.pathname
-          path = path.replace('/velzon/angular/master', '');
+          path = path.replace('/datok/angular/master', '');
           return path === pathName;
         } else {
           return x.pathname === pathName;

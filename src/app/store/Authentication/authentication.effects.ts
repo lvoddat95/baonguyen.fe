@@ -3,13 +3,21 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, catchError, exhaustMap, tap } from 'rxjs/operators';
 import { from, of } from 'rxjs';
 import { AuthenticationService } from '../../core/services/auth.service';
-import { login, loginSuccess, loginFailure, logout, logoutSuccess, Register} from './authentication.actions';
+import { login, loginSuccess, loginFailure, logout, logoutSuccess, Register } from './authentication.actions';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { md5Encrypt } from "src/app/shared/utils";
+import { Ultils } from 'src/app/core/services/ultils.service';
 
 @Injectable()
 export class AuthenticationEffects {
+  ultils = new Ultils();
+
+  constructor(
+    @Inject(Actions) private actions$: Actions,
+    private AuthenticationService: AuthenticationService,
+    private router: Router
+  ) { }
+
 
   Register$ = createEffect(() =>
     this.actions$.pipe(
@@ -27,10 +35,10 @@ export class AuthenticationEffects {
   );
 
   login$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(login),
-    exhaustMap(({ username, password, id, token_noti }) => {
-        return this.AuthenticationService.login(username, md5Encrypt(password), id, token_noti).pipe(
+    this.actions$.pipe(
+      ofType(login),
+      exhaustMap(({ username, password, id, token_noti }) => {
+        return this.AuthenticationService.login(username, this.ultils.md5Encrypt(password), id, token_noti).pipe(
           map((user) => {
             if (user.code == "000") {
               sessionStorage.setItem('toast', 'true');
@@ -41,10 +49,10 @@ export class AuthenticationEffects {
             return loginSuccess({ user });
           }),
           catchError((error) => of(loginFailure({ error })), // Closing parenthesis added here
-        ));
-    })
-  )
-);
+          ));
+      })
+    )
+  );
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
@@ -56,9 +64,5 @@ export class AuthenticationEffects {
     )
   );
 
-  constructor(
-    @Inject(Actions) private actions$: Actions,
-    private AuthenticationService: AuthenticationService,
-    private router: Router) { }
 
 }

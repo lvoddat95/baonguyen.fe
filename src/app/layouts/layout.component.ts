@@ -53,25 +53,5 @@ export class LayoutComponent implements OnInit {
     return this.layoutType === 'vertical';
   }
 
-  /**
-   * Check if the semibox layout is requested
-   */
-  isSemiboxLayoutRequested() {
-    return this.layoutType === 'semibox';
-  }
-
-  /**
-   * Check if the horizontal layout is requested
-   */
-  isHorizontalLayoutRequested() {
-    return this.layoutType === 'horizontal';
-  }
-
-  /**
-   * Check if the horizontal layout is requested
-   */
-  isTwoColumnLayoutRequested() {
-    return this.layoutType === 'twocolumn';
-  }
 
 }

@@ -14,10 +14,11 @@ const httpOptions = {
 export class SettingService {
     constructor(private http: HttpClient) { }
 
+
     // Danh sách video
     getVideoData(): Observable<any> {
         return this.http.post(
-            GlobalComponent.API_URL + GlobalComponent.video,
+            GlobalComponent.video,
             {},
             httpOptions
         );
@@ -34,7 +35,7 @@ export class SettingService {
             ngay_nh: ngay_nh,
         }];
         return this.http.post(
-            GlobalComponent.API_URL + GlobalComponent.videoInsert,
+            GlobalComponent.videoInsert,
             { data: JSON.stringify(data) },
             httpOptions
         );
@@ -44,7 +45,7 @@ export class SettingService {
         id: number,
     ): Observable<any> {
         return this.http.post(
-            GlobalComponent.API_URL + GlobalComponent.videoDelete,
+            GlobalComponent.videoDelete,
             { data: JSON.stringify({ id: id }) },
             httpOptions
         );

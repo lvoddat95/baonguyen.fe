@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-
+import { JsonpModule } from '@angular/http';
 // search module
 import { NgPipesModule } from "ngx-pipes";
 
@@ -17,6 +17,7 @@ import {
   HTTP_INTERCEPTORS,
 } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrModule } from 'ngx-toastr';
 import { environment } from "../environments/environment";
 import { initFirebaseBackend } from "./authUtils";
 import { ErrorInterceptor } from "./core/helpers/error.interceptor";
@@ -31,11 +32,12 @@ import { rootReducer } from "./store";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
+
 import { EcommerceEffects } from "./store/Ecommerce/ecommerce_effect";
 import { AuthenticationEffects } from "./store/Authentication/authentication.effects";
 import { CategoryEffects } from "./store/Ecommerce/product-category/product-category.effect";
 
-export function createTranslateLoader(http: HttpClient): any {
+export function createTranslateLoader(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 
@@ -50,11 +52,17 @@ if (environment.defaultauth === "firebase") {
       defaultLanguage: "en",
       loader: {
         provide: TranslateLoader,
-        useFactory: createTranslateLoader,
+        useFactory: (createTranslateLoader),
         deps: [HttpClient],
       },
     }),
     BrowserAnimationsModule,
+    ToastrModule.forRoot({   // Cấu hình Toastr tại đây
+      timeOut: 3000, // Thời gian tồn tại của toast
+      positionClass: 'toast-top-right', // Vị trí của toast trên màn hình
+      preventDuplicates: true, // Ngăn chặn trùng lặp các toast
+      progressBar: true,
+    }),
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,

@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { orderStatus } from 'src/app/core/data';
-import { Ultils } from "src/app/shared/utils";
+import { Ultils } from 'src/app/core/services/ultils.service';
 
 @Component({
   selector: 'app-orders',
@@ -55,7 +55,6 @@ export class OrdersComponent {
 
   orderStatus!: any;
   filteredData: any[] = [];
-
   ultils = new Ultils();
 
   constructor(

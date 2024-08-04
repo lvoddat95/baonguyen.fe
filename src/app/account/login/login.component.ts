@@ -13,8 +13,8 @@ import { AuthfakeauthenticationService } from "../../core/services/authfake.serv
 import { first } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import { login } from "src/app/store/Authentication/authentication.actions";
-import { md5Encrypt } from "src/app/shared/utils";
 import { ToastService } from "src/app/core/services/toast.service";
+import { Ultils } from "src/app/core/services/ultils.service";
 
 @Component({
   selector: "app-login",
@@ -32,11 +32,10 @@ export class LoginComponent implements OnInit {
   fieldTextType!: boolean;
   error = "";
   returnUrl!: string;
-
   toast!: false;
-
   // set the current year
   year: number = new Date().getFullYear();
+  ultils = new Ultils();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -89,7 +88,7 @@ export class LoginComponent implements OnInit {
     //   })
     // );
     this.authenticationService
-      .login(this.f["username"].value, md5Encrypt(this.f["password"].value), 0, "")
+      .login(this.f["username"].value, this.ultils.md5Encrypt(this.f["password"].value), 0, "")
       .subscribe((data: any) => {
         if (data.code == "000") {
           sessionStorage.setItem("toast", "true");
