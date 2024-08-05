@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
@@ -10,7 +8,7 @@ import Swal from 'sweetalert2';
 import { NgbModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { cloneDeep } from 'lodash';
 
-import { productAvailable, productCategory } from 'src/app/core/data';
+import { productCategory } from 'src/app/core/data';
 import { RestApiService } from 'src/app/core/services/rest-api.service';
 import { Ultils } from 'src/app/core/services/ultils.service';
 
@@ -42,7 +40,6 @@ export class ProductCategoryComponent {
     private formBuilder: UntypedFormBuilder,
     private restApiService: RestApiService,
     private toastService: ToastService,
-    private tokenStorageService: TokenStorageService,
     public paginationService: PaginationService,
     private store: Store<{ data: RootReducerState }>
   ) {

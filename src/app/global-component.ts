@@ -1,5 +1,5 @@
 // Api Calling
-// const API_URL: 'https://baonguyenbakery.io.vn/';
+// const API_URL = 'https://baonguyenbakery.io.vn/';
 const API_URL = 'https://localhost:7090/';
 
 export const GlobalComponent = {

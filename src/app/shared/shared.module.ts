@@ -13,6 +13,7 @@ import { ScrollspyDirective } from './scrollspy.directive';
 import { LandingScrollspyDirective } from './landingscrollspy.directive';
 import { ToastComponent } from './toast/toast.component';
 import { CurrencyInputDirective } from './currencyMask.directive';
+import { CurrencyMaskDirective } from './currency-mask.directive';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CurrencyInputDirective } from './currencyMask.directive';
     ScrollspyDirective,
     LandingScrollspyDirective,
     ToastComponent,
-    CurrencyInputDirective
+    CurrencyInputDirective,
+    CurrencyMaskDirective,
   ],
   imports: [
     CommonModule,
@@ -30,11 +32,17 @@ import { CurrencyInputDirective } from './currencyMask.directive';
     NgbAccordionModule,
     NgbDropdownModule,
     SlickCarouselModule,
-    CountUpModule
+    CountUpModule,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
-    BreadcrumbsComponent, ScrollspyDirective, LandingScrollspyDirective, ToastComponent, CurrencyInputDirective
+    BreadcrumbsComponent, 
+    ScrollspyDirective, 
+    LandingScrollspyDirective, 
+    ToastComponent, 
+    CurrencyInputDirective, 
+    CurrencyMaskDirective,
   ]
 })
 export class SharedModule { }

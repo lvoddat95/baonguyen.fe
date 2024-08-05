@@ -1,29 +1,34 @@
 <!-- Start Breadcrumbs -->
 <app-breadcrumbs title="Thêm mới sản phẩm mới" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
+<form [formGroup]="sForm">
 
-<div class="row">
-    <div class="col-lg-9">
-        <form>
+    <div class="row">
+        <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label" for="product-title-input">Tiêu đề</label>
-                        <input type="text" class="form-control" id="product-title-input"
-                            placeholder="Tên sản phẩm">
+                        <input required type="text" class="form-control" id="ten" formControlName="ten"
+                            placeholder="Tên sản phẩm" [ngClass]="{ 'is-invalid': submitted && form['ten'].errors }" />
+                        @if(submitted && form['ten'].errors){
+                        <div class="invalid-feedback" align="left">
+                            @if(form['ten'].errors['required']){
+                            <div>Thông tin bắt buộc nhập.</div>
+                            }
+                        </div>
+                        }
                     </div>
                     <div>
                         <label>Mô tả sản phẩm</label>
-                        <ckeditor [editor]="Editor" data="
-                            <b>Test nội dung</b>
-                        ">
-                        </ckeditor>
+                        <textarea required type="text" class="form-control" id="mo_ta" formControlName="mo_ta"
+                            rows="3"></textarea>
+                        <!-- <ckeditor id="mo_ta" formControlName="mo_ta" [editor]="ckeditor" [data]="editorContent" [config]="editorConfig"></ckeditor> -->
                     </div>
                 </div>
             </div>
-            <!-- end card -->
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Mô tả ngắn của sản phẩm</h5>
                 </div>
@@ -31,10 +36,7 @@
                     <p class="text-muted mb-2">Thêm mô tả ngắn cho sản phẩm</p>
                     <textarea class="form-control" placeholder="Nhập tối thiểu 100 ký tự" rows="3"></textarea>
                 </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-
+            </div> -->
 
 
             <div class="card">
@@ -148,111 +150,118 @@
                 <!-- end card header -->
             </div>
             <!-- end card -->
-            
-        </form>
 
 
-    </div>
-    <!-- end col -->
 
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <span>Đăng sản phẩm </span>
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="choices-publish-visibility-input" class="form-label">Hiển thị</label>
-                    <select class="form-select" id="choices-publish-visibility-input" data-choices
-                        data-choices-search-false>
-                        <option value="Public" selected>Hiện</option>
-                        <option value="Hidden">Ẩn</option>
-                    </select>
-                </div>
-                <div class="text-end">
-                    <button type="submit" class="btn btn-success w-sm">Đăng</button>
-                </div>
-            </div>
-            <!-- end card body -->
         </div>
-        <!-- end card -->
+        <!-- end col -->
 
-
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Danh mục sản phẩm</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted mb-2"> <a href="javascript:void(0);"
-                        class="float-end text-decoration-underline">Thêm mới</a>Chọn danh mục</p>
-                <select class="form-select" name="choices-category-input" data-choices data-choices-search-false>
-                    <option value="All">Tất cả</option>
-                    <option value="Appliances">Bánh ngọt</option>
-                    <option value="Fashion" selected>Bánh mặn</option>
-                </select>
-            </div>
-            <!-- end card body -->
-        </div>
-        <!-- end card -->
-
-        <!-- <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Thẻ sản phẩm</h5>
-            </div>
-            <div class="card-body">
-                <div class="hstack gap-3 align-items-start">
-                    <div class="flex-grow-1">
-                        <ng-select [items]="selectValue" [multiple]="true"></ng-select>
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <span>Đăng sản phẩm </span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="choices-publish-visibility-input" class="form-label">Hiển thị</label>
+                        <select class="form-select" id="choices-publish-visibility-input" data-choices
+                            data-choices-search-false>
+                            <option value="Public" selected>Hiện</option>
+                            <option value="Hidden">Ẩn</option>
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success w-sm">Đăng</button>
                     </div>
                 </div>
+                <!-- end card body -->
             </div>
-        </div> -->
+            <!-- end card -->
 
 
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Thư viện ảnh sản phẩm</h5>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Giá bán</h5>
+                </div>
+                <div class="card-body">
+                    <input required type="text" class="form-control" id="don_gia" formControlName="don_gia"
+                        appCurrencyMask placeholder="0"
+                        [ngClass]="{ 'is-invalid': submitted && form['don_gia'].errors }" />
+                    @if(submitted && form['don_gia'].errors){
+                    <div class="invalid-feedback" align="left">
+                        @if(form['don_gia'].errors['required']){
+                        <div>Thông tin bắt buộc nhập.</div>
+                        }
+                    </div>
+                    }
+                </div>
             </div>
-            <div class="card-body">
-                <div class="mb-4">
-                    <h5 class="fs-14 mb-1">Ảnh sản phẩm</h5>
-                    <p class="text-muted">Thiết lập ảnh sản phẩm.</p>
-                    <div class="text-center">
-                        <div class="position-relative d-inline-block">
-                            <div class="position-absolute top-100 start-100 translate-middle">
-                                <label for="product-image-input" class="mb-0" placement="right"
-                                    ngbTooltip="Chọn ảnh">
-                                    <div class="avatar-xs">
-                                        <div
-                                            class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
-                                            <i class="ri-image-fill"></i>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Danh mục sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-2"> <a href="javascript:void(0);"
+                            class="float-end text-decoration-underline">Thêm mới</a>Chọn danh mục</p>
+                    <select class="form-select" name="choices-category-input" data-choices data-choices-search-false>
+                        <option value="All">Tất cả</option>
+                        <option value="Appliances">Bánh ngọt</option>
+                        <option value="Fashion" selected>Bánh mặn</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Thư viện ảnh sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5 class="fs-14 mb-1">Ảnh sản phẩm</h5>
+                        <p class="text-muted">Thiết lập ảnh sản phẩm.</p>
+                        <div class="text-center">
+                            <div class="position-relative d-inline-block">
+                                <div class="position-absolute top-100 start-100 translate-middle">
+                                    <label for="product-image-input" class="mb-0" placement="right"
+                                        ngbTooltip="Chọn ảnh">
+                                        <div class="avatar-xs">
+                                            <div
+                                                class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                                <i class="ri-image-fill"></i>
+                                            </div>
                                         </div>
+                                    </label>
+                                    <input class="form-control d-none" value="" id="product-image-input" type="file"
+                                        accept="image/png, image/gif, image/jpeg" (change)="fileChange($event)">
+                                </div>
+                                <div class="avatar-lg">
+                                    <div class="avatar-title bg-light rounded">
+                                        <img src="" id="product-img" class="avatar-md h-auto" />
                                     </div>
-                                </label>
-                                <input class="form-control d-none" value="" id="product-image-input" type="file"
-                                    accept="image/png, image/gif, image/jpeg" (change)="fileChange($event)">
-                            </div>
-                            <div class="avatar-lg">
-                                <div class="avatar-title bg-light rounded">
-                                    <img src="" id="product-img" class="avatar-md h-auto" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <!-- <h5 class="fs-14 mb-1">Ảnh thư viện</h5>
+                    <div>
+                        <!-- <h5 class="fs-14 mb-1">Ảnh thư viện</h5>
                 <p class="text-muted">Chọn danh sách ảnh.</p>
                 <dropzone class="dropzone_sec"></dropzone> -->
-                    <!-- end dropzon-preview -->
+                        <!-- end dropzon-preview -->
+                    </div>
                 </div>
             </div>
+            <!-- end card -->
+
+
         </div>
-        <!-- end card -->
-
-
     </div>
-</div>
+
+</form>
+
 <!-- end row -->
