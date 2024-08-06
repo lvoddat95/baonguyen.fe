@@ -38,6 +38,8 @@ import lottie from 'lottie-web';
 import { SettingRoutingModule } from './setting-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { VideoComponent } from './video/video.component';
+import { RecommendComponent } from './recommend/recommend.component';
+import { BannerComponent } from './banner/banner.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: 'https://httpbin.org/post',
@@ -48,6 +50,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 @NgModule({
   declarations: [
     VideoComponent,
+    RecommendComponent,
+    BannerComponent,
   ],
   imports: [
     CommonModule,

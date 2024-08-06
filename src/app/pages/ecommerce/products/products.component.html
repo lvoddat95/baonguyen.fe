@@ -86,7 +86,7 @@
                 <th class="sort" (click)="onSort('ma_cap_1')">Danh mục</th>
                 <th class="text-center">Có Bonus ?</th>
                 <th class="text-center">Hiển thị</th>
-                <th class="text-center">Action</th>
+                <!-- <th class="text-center">Action</th> -->
               </tr>
             </thead>
             <tbody>
@@ -121,9 +121,9 @@
                     {{data.available ? 'Hiện' : 'Ẩn' }}
                   </span>
                 </td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <ul class="list-inline justify-content-center hstack gap-2 mb-0">
-                    <!-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                       ngbTooltip="Xem" placement="top">
                       <a  href="javascript:void(0);" routerLink="/ecommerce/order-details" class="text-warning d-inline-block">
                         <i class="ri-eye-fill fs-16"></i>
@@ -136,7 +136,7 @@
                         data-bs-target="#showModal" (click)="editDataGet(data,content)">
                         <i class="ri-pencil-fill fs-16"></i>
                       </a>
-                    </li> -->
+                    </li>
                     <li class="list-inline-item me-0" ngbTooltip="Xoá" placement="top" data-bs-toggle="tooltip"
                       data-bs-trigger="hover" (click)="confirm(deleteModel,data.id)">
                       <a href="javascript:void(0);" class="text-danger d-inline-block remove-item-btn"
@@ -145,7 +145,7 @@
                       </a>
                     </li>
                   </ul>
-                </td>
+                </td> -->
               </tr>
               }
             </tbody>

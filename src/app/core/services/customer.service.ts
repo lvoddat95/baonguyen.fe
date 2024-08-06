@@ -24,8 +24,18 @@ export class CustomerService {
             thanh_tien: thanh_tien,
         };
         return this.http.post(
-            GlobalComponent.AUTH_API + GlobalComponent.customerUpdateBonus,
+            GlobalComponent.customerUpdateBonus,
             { data: JSON.stringify(data) },
+            httpOptions
+        );
+    }
+
+
+    // Danh sách sinh nhât
+    getBirthdayData(thang: number): Observable<any> {
+        return this.http.post(
+            GlobalComponent.birthday,
+            { data: JSON.stringify({ thang: thang }) },
             httpOptions
         );
     }

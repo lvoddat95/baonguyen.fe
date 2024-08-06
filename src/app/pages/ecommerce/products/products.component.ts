@@ -74,6 +74,7 @@ export class ProductsComponent {
 
   constructor(
     public toastService: ToastService,
+    public restApiService: RestApiService,
     private modalService: NgbModal,
     public service: PaginationService,
     private store: Store<{ data: RootReducerState }>
@@ -124,6 +125,21 @@ export class ProductsComponent {
 
   }
 
+  getAllData() {
+    this.store.dispatch(fetchProductListData({ 'phan_loai': '', 'id_product': 0, 'gia': 'DESC', 'ma_cap_2': '' }));
+    this.store.select(selectDataLoading).subscribe((data) => {
+      if (data == false) {
+        document.getElementById("elmLoader")?.classList.add("d-none");
+      }
+    });
+
+    this.store.select(selectProductData).subscribe((data) => {
+      this.products = data;
+      this.allproducts = cloneDeep(data);
+      this.products = this.service.changePage(this.allproducts);
+    });
+  }
+
   changePage() {
     this.products = this.service.changePage(this.allproducts);
   }
@@ -133,8 +149,8 @@ export class ProductsComponent {
   }
 
   /**
-   * Delete Swal data
-   */
+    * Delete Model Open
+    */
   deleteId: any;
   confirm(content: any, id: any) {
     this.deleteId = id;
@@ -142,42 +158,37 @@ export class ProductsComponent {
   }
 
   // Delete Data
-  deleteData(id: any) {
-    console.log(id)
-    console.log(this.checkedValGet)
-
-
-    // if (id) {
-    //   this.store.dispatch(deleteTask({ id: this.deleteId.toString() }));
-    // } else {
-    //   this.store.dispatch(deleteTask({ id: this.checkedValGet.toString() }));
-    // }
-    // this.deleteId = ''
-    // this.masterSelected = false
+  deleteData(id: number) {
+    this.checkedValGet.forEach((data: any) => {
+      this.restApiService
+        .deleteProductData(data.id)
+        .subscribe((res: any) => {
+          if (res.code == "000") {
+            this.getAllData();
+            this.checkedValGet = [];
+            const removeActionsElement = document.getElementById("remove-actions");
+            if (removeActionsElement) {
+              removeActionsElement.style.display = "none";
+            }
+            this.toastService.success("Xoá thành công.", 'Thành công');
+          } else {
+            this.toastService.error(res.message, 'Lỗi!');
+          }
+        });
+    })
   }
 
   /**
-   * Multiple Delete
-   */
+  * Multiple Delete
+  */
   checkedValGet: any[] = [];
   deleteMultiple(content: any) {
-    var checkboxes: any = document.getElementsByName('checkAll');
-    var result
-    var checkedVal: any[] = [];
-    for (var i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked) {
-        result = checkboxes[i].value;
-        checkedVal.push(result);
-      }
-    }
-
-    if (checkedVal.length > 0) {
+    if (this.checkedValGet.length > 0) {
       this.modalService.open(content, { centered: true });
     }
     else {
       Swal.fire({ text: 'Chưa chọn item nào!', confirmButtonColor: '#299cdb', });
     }
-    this.checkedValGet = checkedVal;
   }
 
   // The master checkbox will check/ uncheck all items
@@ -192,28 +203,29 @@ export class ProductsComponent {
       }
     }
     this.checkedValGet = checkedVal;
-    checkedVal.length > 0
-      ? ((
-        document.getElementById("remove-actions") as HTMLElement
-      ).style.display = "block")
-      : ((
-        document.getElementById("remove-actions") as HTMLElement
-      ).style.display = "none");
+    const removeActionsElement = document.getElementById("remove-actions");
+    if (removeActionsElement) {
+      removeActionsElement.style.display = checkedVal.length > 0 ? "block" : "none";
+    }
   }
 
+
+  // Select Checkbox value Get
   onCheckboxChange(e: any) {
     var checkedVal: any[] = [];
-    var result
+    var result;
     for (var i = 0; i < this.products.length; i++) {
       if (this.products[i].state == true) {
         result = this.products[i];
         checkedVal.push(result);
       }
     }
-    this.checkedValGet = checkedVal
-    checkedVal.length > 0
-      ? (document.getElementById("remove-actions") as HTMLElement).style.display = "block"
-      : (document.getElementById("remove-actions") as HTMLElement).style.display = "none";
+    console.log(checkedVal)
+    this.checkedValGet = checkedVal;
+    const removeActionsElement = document.getElementById("remove-actions");
+    if (removeActionsElement) {
+      removeActionsElement.style.display = checkedVal.length > 0 ? "block" : "none";
+    }
   }
 
   // Filtering

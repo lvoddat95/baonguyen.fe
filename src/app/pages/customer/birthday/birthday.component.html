@@ -1,1 +1,83 @@
-<p>birthday works!</p>
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Sinh nhật trong tháng" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<!--Start row-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="tasksList">
+            <div class="card-header border-0">
+                <div class="d-flex align-items-center">
+                    <h5 class="card-title mb-0 flex-grow-1">Danh sách</h5>
+                </div>
+            </div>
+            <div class="card-body border border-dashed border-end-0 border-start-0">
+                <div class="row g-3">
+
+
+                    <div class="col-xxl-3 col-sm-4">
+                        <div class="input-light">
+                            <select class="form-control bg-light border-light" id="idStatus" [(ngModel)]="month"
+                                (ngModelChange)="monthFilter()" placeholder="Chọn tháng">
+                                <option [selected]="month" *ngFor="let month of months" [value]="month">Tháng {{ month }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end col-->
+
+                </div>
+                <!--end row-->
+            </div>
+            <!--end card-body-->
+            <div class="card-body">
+                <div class="table-responsive table-card mb-2">
+                    <table class="table">
+                        <thead>
+                            <tr class="bg-light text-muted">
+                                <th class="text-center">STT</th>
+                                <th class="sort" (click)="onSort('ten')">Tên</th>
+                                <th class="sort" (click)="onSort('ngay_sinh')">Ngày sinh</th>
+                                <th class="sort" (click)="onSort('dchi')">Địa chỉ</th>
+                                <th class="sort" (click)="onSort('sdt')">Số điện thoại</th>
+                                <th class="sort" (click)="onSort('gioi_tinh')">Giới tính</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(data of dataList; track $index ){
+                            <tr>
+                                <td class="text-center">{{$index+1}}</td>
+                                <td>{{data.ten}}</td>
+                                <td>{{data.ngay_sinh}}</td>
+                                <td>{{data.dchi}}</td>
+                                <td>{{data.sdt}}</td>
+                                <td>{{data.gioi_tinh}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-md-between align-items-md-center">
+                    <!-- Pagination -->
+                    <div class="col col-sm-12">
+                        <div class="text-sm-right float-sm-end listjs-pagination">
+                            <ngb-pagination [collectionSize]="allData?.length" [(page)]="paginationService.page"
+                                [pageSize]="paginationService.pageSize" (pageChange)="changePage()">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                    <!-- End Pagination -->
+                </div>
+                <!--end card-body-->
+            </div>
+            <!--end card-->
+        </div>
+        <!--end col-->
+    </div>
+    <!--end row-->
+
+
+</div>
+<!--End row-->
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

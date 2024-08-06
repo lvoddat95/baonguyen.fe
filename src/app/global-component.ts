@@ -1,6 +1,8 @@
 // Api Calling
 // const API_URL = 'https://baonguyenbakery.io.vn/';
+// const API_USERID_URL = 'https://baonguyenbakery.io.vn/api/UserId/';
 const API_URL = 'https://localhost:7090/';
+const API_USERID_URL = 'https://localhost:7090/api/UserId/';
 
 export const GlobalComponent = {
     headerToken: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` },
@@ -10,6 +12,8 @@ export const GlobalComponent = {
 
     // Upload file
     upload: API_URL + "Upload",
+
+    startUp: API_URL + 'StartUp',
 
     // Products Api
     product: API_URL + 'GetProductByCondition',
@@ -26,7 +30,8 @@ export const GlobalComponent = {
 
     // Customers Api
     customer: API_URL + 'customer',
-    customerUpdateBonus: API_URL + 'BonusForUser',
+    customerUpdateBonus: API_USERID_URL + 'BonusForUser',
+    birthday: API_USERID_URL + 'GetBirthday',
 
     // Orders Api
     order: API_URL + 'GetOrderByUser',
@@ -35,7 +40,16 @@ export const GlobalComponent = {
 
 
     // Settings Api
+    
     video: API_URL + 'GetVideoList',
     videoInsert: API_URL + 'InsertVideo',
     videoDelete: API_URL + 'DeleteVideo',
+
+    recommend: API_URL + 'StartUp',
+    recommendInsert: API_URL + 'InsertRecommend',
+    recommendDelete: API_URL + 'DeleteRecommend',
+
+    banner: API_URL + 'StartUp',
+    bannerInsert: API_URL + 'InsertBanner',
+    bannerDelete: API_URL + 'DeleteBanner',
 }

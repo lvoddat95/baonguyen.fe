@@ -72,8 +72,14 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 11,
+        label: 'Banner',
+        link: '/setting/banners',
+        parentId: 9
+      },
+      {
+        id: 11,
         label: 'Gợi ý',
-        link: '/setting/tips',
+        link: '/setting/recommend',
         parentId: 9
       },
       {

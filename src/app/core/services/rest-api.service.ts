@@ -43,12 +43,42 @@ export class RestApiService {
       httpOptions
     );
   }
+  // Thêm mới sản phẩm
+  insertProduct(
+    dataInfo: any,
+    listSize: any = [],
+    listNhan: any = [],
+    listTang: any = [],
+  ): Observable<any> {
+
+    const data = {
+      ten: dataInfo.ten,
+      mo_ta: dataInfo.mo_ta,
+      don_gia: dataInfo.don_gia,
+      anh: dataInfo.anh,
+      bonus: dataInfo.bonus,
+      available: dataInfo.available,
+      ma_cap_1: dataInfo.ma_cap_1,
+      ma_cap_2: dataInfo.ma_cap_2,
+    };
+    return this.http.post(
+      GlobalComponent.productInsert,
+      { 
+        data: JSON.stringify(data),
+        ds_1: JSON.stringify(listSize),
+        ds_2: JSON.stringify(listNhan),
+        ds_3: JSON.stringify(listTang),
+      },
+      httpOptions
+    );
+  }
 
   // Product Delete
   deleteProductData(id: any): Observable<any> {
-    return this.http.delete(
-      GlobalComponent.productDelete + id,
-      { responseType: "text" }
+    return this.http.post(
+      GlobalComponent.productDelete,
+      { data: JSON.stringify({ id_product: id }) },
+      httpOptions
     );
   }
 
