@@ -211,8 +211,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="choices-publish-visibility-input" class="form-label">Bonus</label>
-                        <select class="form-select" formControlName="bonus">
+                        <label for="choices-publish-visibility-input" class="form-label">Quy đổi điểm</label>
+                        <select class="form-select" formControlName="bonus" (ngModelChange)="changeBonus($event)">
                             <option value="true">Có</option>
                             <option value="false" selected>Không</option>
                         </select>
@@ -228,7 +228,8 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Giá bán</h5>
+                    <h5 class="card-title mb-0" *ngIf="isBonus">Điểm thưởng</h5>
+                    <h5 class="card-title mb-0" *ngIf="!isBonus">Giá bán</h5>
                 </div>
                 <div class="card-body">
                     <input type="text" class="form-control" id="don_gia" formControlName="don_gia" appCurrencyMask

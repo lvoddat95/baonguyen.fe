@@ -82,9 +82,9 @@
                 <th class="text-center"></th>
                 <th class="sort" (click)="onSort('ten')">Tên</th>
                 <th class="sort" (click)="onSort('mo_ta')">Mô tả</th>
-                <th class="sort" (click)="onSort('don_gia')">Giá</th>
+                <th class="sort" (click)="onSort('don_gia')">Giá bán</th>
+                <th class="sort" (click)="onSort('don_gia')">Điểm thưởng</th>
                 <th class="sort" (click)="onSort('ma_cap_1')">Danh mục</th>
-                <th class="text-center">Có Bonus ?</th>
                 <th class="text-center">Hiển thị</th>
                 <!-- <th class="text-center">Action</th> -->
               </tr>
@@ -108,13 +108,10 @@
                   </a>
                 </td>
                 <td>{{data.mo_ta}}</td>
-                <td>{{data.don_gia | currency:'VND':'symbol'}}</td>
+                <td><span *ngIf="!data.bonus">{{data.don_gia | currency:'VND':'symbol'}}</span></td>
+                <td><span *ngIf="data.bonus">{{data.don_gia | currency:'VND':''}}</span></td>
                 <td>{{ultils.f_ViewTextCode(categories,data.ma_cap_1)}}</td>
-                <td class="text-center">
-                  <span class="badge"
-                    [ngClass]=" { 'bg-secondary': data.bonus === false, 'bg-success': data.bonus === true}">
-                    {{ data.bonus ? 'Có' : 'Không' }}</span>
-                </td>
+                
                 <td class="text-center">
                   <span class="badge"
                     [ngClass]=" { 'bg-secondary-subtle text-secondary': data.available === false, 'bg-info-subtle text-info': data.available === true}">

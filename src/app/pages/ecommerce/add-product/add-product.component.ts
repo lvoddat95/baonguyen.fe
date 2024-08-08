@@ -218,7 +218,11 @@ export class AddProductComponent implements OnInit {
     (this.sForm.get('listTang') as UntypedFormArray).removeAt(index);
   }
 
-
+  isBonus: boolean = false;
+  changeBonus(event: any) {
+    const booleanValue = JSON.parse(event.toLowerCase());
+    this.isBonus = booleanValue;
+  }
 
 
   // File Upload
