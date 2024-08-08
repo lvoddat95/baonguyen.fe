@@ -4,6 +4,10 @@
 
 export const environment = {
   production: false,
+  // appURL: 'https://localhost:7090/',
+  // appUserIdURL: 'https://localhost:7090/api/UserId/',
+  appURL: 'https://baonguyenbakery.io.vn/',
+  appUserIdURL: 'https://baonguyenbakery.io.vn/api/UserId/',
   defaultauth: 'fakebackend',
   firebaseConfig: {
     apiKey: '',

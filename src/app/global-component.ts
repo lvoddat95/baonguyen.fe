@@ -1,8 +1,8 @@
+import { environment as env } from "../environments/environment";
+
 // Api Calling
-// const API_URL = 'https://baonguyenbakery.io.vn/';
-// const API_USERID_URL = 'https://baonguyenbakery.io.vn/api/UserId/';
-const API_URL = 'https://localhost:7090/';
-const API_USERID_URL = 'https://localhost:7090/api/UserId/';
+const API_URL = env.appURL;
+const API_USERID_URL = env.appUserIdURL;
 
 export const GlobalComponent = {
     headerToken: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` },
@@ -40,7 +40,7 @@ export const GlobalComponent = {
 
 
     // Settings Api
-    
+
     video: API_URL + 'GetVideoList',
     videoInsert: API_URL + 'InsertVideo',
     videoDelete: API_URL + 'DeleteVideo',
